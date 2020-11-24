@@ -14,7 +14,9 @@ export const Home: FunctionComponent<HomeProps> = ({
 }: HomeProps) => {
   return (
     <View>
-      <Text>Home sweet home</Text>
+      <Text>Insider</Text>
+      <Button title="Play" onPress={() => {}} />
+      <Button title="Options" onPress={() => {}} />
       <Button title="Rules" onPress={() => navigation.navigate("Rules")} />
     </View>
   )
