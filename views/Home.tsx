@@ -1,12 +1,21 @@
 import React, { FunctionComponent } from "react"
-import { View, Text } from "react-native"
+import { View, Text, Button } from "react-native"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { StackParamList } from "../App"
 
-interface HomeProps {}
+type ScreenNavigationProp = StackNavigationProp<StackParamList, "Home">
 
-export const Home: FunctionComponent<HomeProps> = ({}: HomeProps) => {
+interface HomeProps {
+  navigation: ScreenNavigationProp
+}
+
+export const Home: FunctionComponent<HomeProps> = ({
+  navigation,
+}: HomeProps) => {
   return (
     <View>
-      <Text>Home</Text>
+      <Text>Home sweet home</Text>
+      <Button title="Rules" onPress={() => navigation.navigate("Rules")} />
     </View>
   )
 }
