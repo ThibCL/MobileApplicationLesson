@@ -3,11 +3,9 @@ import { View, Text, TouchableOpacity } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import { GameContext, Player, Role } from "../GameContext"
-import { RouteProp } from "@react-navigation/native"
 import { styles } from "../generalStyle"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "Score">
-type ScreenRouteProp = RouteProp<StackParamList, "Score">
 
 interface ScoreProps {
   navigation: ScreenNavigationProp
@@ -19,7 +17,11 @@ export const Score: FunctionComponent<ScoreProps> = ({
   const game = useContext(GameContext)
 
   useEffect(() => {
-    const players = computeScore(game.players, true, game.playersElected[0])
+    const players = computeScore(
+      game.players,
+      game.wordFound,
+      game.playersElected[0]
+    )
     game.setPlayers(players)
   }, [])
 
@@ -27,14 +29,15 @@ export const Score: FunctionComponent<ScoreProps> = ({
     <View style={styles.container}>
       {game.players.map((player, index) => (
         <Text key={index} style={styles.title}>
-          {player.name} {player.score} ({player.scoreVar < 0 ? "-" : "+"}{" "}
+          {player.name} {player.score} ({player.scoreVar < 0 ? "" : "+"}
           {player.scoreVar})
         </Text>
       ))}
       <TouchableOpacity
         style={{ ...styles.buttonTouchable, backgroundColor: "white" }}
-        onPress={() => {
+        onPress={async () => {
           navigation.replace("Home")
+          await game.apiClient.saveGame(game.token, game.gameId!, game.players)
           game.eraseGame()
         }}
       >
@@ -43,8 +46,9 @@ export const Score: FunctionComponent<ScoreProps> = ({
 
       <TouchableOpacity
         style={{ ...styles.buttonTouchable, backgroundColor: "white" }}
-        onPress={() => {
-          navigation.replace("Roles")
+        onPress={async () => {
+          navigation.replace("CreatePlayer")
+          await game.apiClient.saveGame(game.token, game.gameId!, game.players)
           game.playAgain()
         }}
       >
@@ -59,24 +63,28 @@ export const Score: FunctionComponent<ScoreProps> = ({
 const computeScore = (
   players: Player[],
   wordFound: boolean,
-  playerElected: Player
+  playerElected: number
 ): Player[] => {
+  alert("Player electesd " + players[playerElected].name)
   const updatedPlayers = [...players]
   for (let player of updatedPlayers) {
+    player.scoreVar = 0
     switch (player.role) {
       case Role.Master:
         if (wordFound) player.scoreVar += 5
-        if (playerElected.role === Role.Traitor) player.scoreVar += 5
-        if (player.vote?.role === Role.Traitor) player.scoreVar += 5
+        if (players[playerElected].role === Role.Traitor) player.scoreVar += 5
+        if (player.vote && players[player.vote].role === Role.Traitor)
+          player.scoreVar += 5
         break
       case Role.Citizen:
         if (wordFound) player.scoreVar += 5
-        if (playerElected.role === Role.Traitor) player.scoreVar += 5
-        if (player.vote?.role === Role.Traitor) player.scoreVar += 5
+        if (players[playerElected].role === Role.Traitor) player.scoreVar += 5
+        if (player.vote && players[player.vote].role === Role.Traitor)
+          player.scoreVar += 5
         break
       case Role.Traitor:
         if (!wordFound) player.scoreVar -= 10
-        if (playerElected.role === Role.Traitor) player.scoreVar -= 5
+        if (players[playerElected].role === Role.Traitor) player.scoreVar -= 5
         else player.scoreVar += 15
 
         break

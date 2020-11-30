@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useState,
 } from "react"
-import { View, Text, Switch, Button } from "react-native"
+import { View, Text, Switch } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import { GameContext, Player, Role } from "../GameContext"
@@ -58,7 +58,8 @@ export const Roles: FunctionComponent<RolesProps> = ({
     const mstr = playersUpdated[masterIndex]
     playersUpdated[masterIndex] = playersUpdated[0]
     playersUpdated[0] = mstr
-    
+
+    console.log(playersUpdated)
     game.setPlayers(playersUpdated)
   }
 
@@ -116,7 +117,8 @@ export const Roles: FunctionComponent<RolesProps> = ({
             style={{ ...styles.buttonTouchable }}
             onPress={() => {
               game.setWord(words[wordSelected])
-              navigation.replace("Votes")
+              game.setWordFound(false)
+              navigation.replace("Timer")
             }}
           >
             <Text style={styles.buttonText}>Begin</Text>

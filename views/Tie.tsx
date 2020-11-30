@@ -2,12 +2,10 @@ import React, { FunctionComponent, useContext, useState } from "react"
 import { View, Text, TouchableOpacity } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
-import { GameContext, Player } from "../GameContext"
+import { GameContext } from "../GameContext"
 import { styles } from "../generalStyle"
-import { RouteProp } from "@react-navigation/native"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "Tie">
-type ScreenRouteProp = RouteProp<StackParamList, "Tie">
 
 interface TieProps {
   navigation: ScreenNavigationProp
@@ -15,7 +13,7 @@ interface TieProps {
 
 export const Tie: FunctionComponent<TieProps> = ({ navigation }: TieProps) => {
   const game = useContext(GameContext)
-  const [playerSelected, setPlayerSelected] = useState<Player>()
+  const [playerSelected, setPlayerSelected] = useState<number>()
 
   return (
     <View style={styles.container}>
@@ -25,16 +23,16 @@ export const Tie: FunctionComponent<TieProps> = ({ navigation }: TieProps) => {
         <TouchableOpacity
           key={index}
           style={
-            player === playerSelected
+            index === playerSelected
               ? styles.buttonTouchable
               : styles.buttonTouchableDisabled
           }
-          disabled={player === playerSelected}
+          disabled={index === playerSelected}
           onPress={() => {
             setPlayerSelected(player)
           }}
         >
-          <Text style={styles.buttonText}>{player.name}</Text>
+          <Text style={styles.buttonText}>{game.players[player].name}</Text>
         </TouchableOpacity>
       ))}
       {playerSelected ? (

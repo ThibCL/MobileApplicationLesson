@@ -2,7 +2,7 @@ import React, { FunctionComponent, useContext, useState } from "react"
 import { View, Text, TouchableOpacity, Button } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
-import { GameContext, Player } from "../GameContext"
+import { GameContext } from "../GameContext"
 import { styles } from "../generalStyle"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "Votes">
@@ -16,13 +16,13 @@ export const Votes: FunctionComponent<VotesProps> = ({
 }: VotesProps) => {
   const game = useContext(GameContext)
   const [playerIndex, setPlayerIndex] = useState<number>(0)
-  const [playerSelected, setPlayerSelected] = useState<Player>()
+  const [playerSelected, setPlayerSelected] = useState<number>()
 
-  const checkTie = (): Player[] => {
-    const vote = new Map<Player, number>()
+  const checkTie = (): number[] => {
+    const vote = new Map<number, number>()
     for (let player of game.players) {
       let voteCount: number | undefined
-      if (player.vote) {
+      if (player.vote != undefined) {
         voteCount = vote.get(player.vote)
 
         if (voteCount) {
@@ -34,7 +34,7 @@ export const Votes: FunctionComponent<VotesProps> = ({
     }
 
     let maxVote = 0
-    let playersElected: Player[] = []
+    let playersElected: number[] = []
     for (let [player, count] of vote) {
       if (count > maxVote) {
         playersElected = [player]
@@ -50,26 +50,24 @@ export const Votes: FunctionComponent<VotesProps> = ({
     <View>
       <Text style={styles.title}>{game.players[playerIndex].name}</Text>
 
-      {game.players
-        .filter((_player, index) => {
-          return index != 0 && index != playerIndex
-        })
-        .map((player, index) => (
+      {game.players.map((player, index) =>
+        index != 0 && index != playerIndex ? (
           <TouchableOpacity
             key={index}
             style={
-              player === playerSelected
+              index === playerSelected
                 ? styles.buttonTouchable
                 : styles.buttonTouchableDisabled
             }
-            disabled={player === playerSelected}
+            disabled={index === playerSelected}
             onPress={() => {
-              setPlayerSelected(player)
+              setPlayerSelected(index)
             }}
           >
             <Text style={styles.buttonText}>{player.name}</Text>
           </TouchableOpacity>
-        ))}
+        ) : null
+      )}
 
       {playerSelected === undefined ? null : (
         <TouchableOpacity

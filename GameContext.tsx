@@ -1,4 +1,6 @@
-import React, { FunctionComponent, useContext, useState } from "react"
+import React, { FunctionComponent, useState } from "react"
+import * as Google from "expo-google-app-auth"
+import { Client } from "./Api"
 
 export enum Role {
   Master = "Master",
@@ -7,9 +9,10 @@ export enum Role {
 }
 
 export type Player = {
+  id: number | undefined
   name: string
   role: Role
-  vote: Player | undefined
+  vote: number | undefined
   score: number
   scoreVar: number
 }
@@ -21,12 +24,21 @@ export type Options = {
 }
 
 type GameContextProps = {
+  apiClient: Client
+  user: Google.GoogleUser | null
+  setUser: (user: Google.GoogleUser) => void
+  token: string
+  setToken: (token: string) => void
   word: string
   setWord: (wrd: string) => void
+  wordFound: boolean
+  setWordFound: (wrdFound: boolean) => void
+  gameId: number | undefined
+  setGameId: (id: number) => void
   players: Player[]
   setPlayers: (plys: Player[]) => void
-  playersElected: Player[]
-  setPlayersElected: (plyslct: Player[]) => void
+  playersElected: number[]
+  setPlayersElected: (plyslct: number[]) => void
   options: Options
   setOptions: (opts: Options) => void
   eraseGame: () => void
@@ -34,8 +46,17 @@ type GameContextProps = {
 }
 
 export const GameContext = React.createContext<GameContextProps>({
+  apiClient: new Client(""),
+  token: "",
+  setToken: (_token) => {},
+  user: null,
+  setUser: (_user) => {},
   word: "",
-  setWord: (wrd) => {},
+  setWord: (_wrd) => {},
+  wordFound: false,
+  setWordFound: (_wrdFnd) => {},
+  gameId: undefined,
+  setGameId: (_id) => {},
   players: [],
   setPlayers: (plyrs) => {},
   playersElected: [],
@@ -53,11 +74,16 @@ interface GameProviderProps {
 export const GameProvider: FunctionComponent<GameProviderProps> = ({
   children,
 }: GameProviderProps) => {
+  const [apiClient, setApiClient] = useState<Client>(
+    new Client(process.env["API_URL"] || "http://192.168.0.16:7171")
+  )
+  const [token, setToken] = useState<string>("")
+  const [user, setUser] = useState<Google.GoogleUser | null>(null)
   const [word, setWord] = useState<string>("DefaultWord")
-  const [players, setPlayers] = useState<Player[]>([
-    
-  ])
-  const [playersElected, setPlayersElected] = useState<Player[]>([])
+  const [wordFound, setWordFound] = useState<boolean>(false)
+  const [gameId, setGameId] = useState<number | undefined>(undefined)
+  const [players, setPlayers] = useState<Player[]>([])
+  const [playersElected, setPlayersElected] = useState<number[]>([])
   const [options, setOptions] = useState<Options>({
     time: 5,
     voteAnyway: false,
@@ -65,71 +91,8 @@ export const GameProvider: FunctionComponent<GameProviderProps> = ({
   })
 
   const eraseGame = () => {
-    setPlayers([
-      {
-        name: "Thib",
-        score: 0,
-        vote: undefined,
-        scoreVar: 0,
-        role: Role.Citizen,
-      },
-      {
-        name: "Meg",
-        score: 0,
-        vote: undefined,
-        scoreVar: 0,
-        role: Role.Citizen,
-      },
-      {
-        name: "Elo",
-        score: 0,
-        vote: undefined,
-        scoreVar: 0,
-        role: Role.Citizen,
-      },
-      {
-        name: "Matho",
-        score: 0,
-        vote: undefined,
-        scoreVar: 0,
-        role: Role.Citizen,
-      },
-      {
-        name: "Arsene",
-        score: 0,
-        vote: undefined,
-        scoreVar: 0,
-        role: Role.Citizen,
-      },
-      {
-        name: "Flo",
-        score: 0,
-        vote: undefined,
-        scoreVar: 0,
-        role: Role.Citizen,
-      },
-      {
-        name: "Maman",
-        score: 0,
-        vote: undefined,
-        scoreVar: 0,
-        role: Role.Citizen,
-      },
-      {
-        name: "Papa",
-        score: 0,
-        vote: undefined,
-        scoreVar: 0,
-        role: Role.Citizen,
-      },
-      {
-        name: "Mamie",
-        score: 0,
-        vote: undefined,
-        scoreVar: 0,
-        role: Role.Citizen,
-      },
-    ])
+    setGameId(undefined)
+    setPlayers([])
     setWord("DefaultWord")
     setPlayersElected([])
   }
@@ -149,8 +112,17 @@ export const GameProvider: FunctionComponent<GameProviderProps> = ({
   return (
     <GameContext.Provider
       value={{
+        apiClient: apiClient,
+        token: token,
+        setToken: setToken,
+        user: user,
+        setUser: setUser,
         word: word,
         setWord: setWord,
+        wordFound: wordFound,
+        setWordFound: setWordFound,
+        gameId: gameId,
+        setGameId: setGameId,
         players: players,
         setPlayers: setPlayers,
         playersElected: playersElected,

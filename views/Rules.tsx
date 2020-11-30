@@ -1,12 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import React, { FunctionComponent } from "react"
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  StyleSheet,
-} from "react-native"
+import { Text, TouchableOpacity, ScrollView } from "react-native"
 import { StackParamList } from "../App"
 import { styles } from "../generalStyle"
 
