@@ -1,8 +1,8 @@
-import React, { FunctionComponent, useContext } from "react"
-import { View, Text, Button } from "react-native"
+import React, { FunctionComponent } from "react"
+import { View, Text, TouchableOpacity } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { GameContext } from "../GameContext"
 import { StackParamList } from "../App"
+import { styles } from "../generalStyle"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "Home">
 
@@ -13,20 +13,31 @@ interface HomeProps {
 export const Home: FunctionComponent<HomeProps> = ({
   navigation,
 }: HomeProps) => {
-  const game = useContext(GameContext)
-
   return (
-    <View>
-      <Text>Insider</Text>
-      <Button title="Play" onPress={() => {}} />
-      <Button title="Options" onPress={() => {}} />
-      <Button
-        title="Rules"
+    <View style={styles.container}>
+      <Text style={styles.title}>Insider</Text>
+      <TouchableOpacity style={styles.buttonTouchable}>
+        <Text style={styles.buttonText}>Play</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.buttonTouchable}>
+        <Text style={styles.buttonText}>Options</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.buttonTouchable}
         onPress={() => {
-          game.setPlayers(["Test", "de", "merde"])
           navigation.navigate("Rules")
         }}
-      />
+      >
+        <Text style={styles.buttonText}>Rules</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.buttonTouchable}
+        onPress={() => {
+          alert("Find a way to close the app")
+        }}
+      >
+        <Text style={styles.buttonText}>Quit</Text>
+      </TouchableOpacity>
     </View>
   )
 }
