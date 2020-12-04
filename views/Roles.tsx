@@ -68,10 +68,8 @@ export const Roles: FunctionComponent<RolesProps> = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Roles</Text>
-
       <View style={{ display: "flex", flexDirection: "row" }}>
-        <Text>{game.players[index].name}</Text>
+        <Text style={styles.title}>{game.players[index].name}</Text>
         <Switch
           onValueChange={() => {
             setIsEnabled(!isEnabled)
@@ -118,7 +116,7 @@ export const Roles: FunctionComponent<RolesProps> = ({
             style={{ ...styles.buttonTouchable }}
             onPress={() => {
               game.setWord(words[wordSelected])
-              navigation.replace("Home")
+              navigation.replace("Votes")
             }}
           >
             <Text style={styles.buttonText}>Begin</Text>
