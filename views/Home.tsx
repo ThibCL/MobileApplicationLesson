@@ -1,8 +1,9 @@
-import React, { FunctionComponent } from "react"
+import React, { FunctionComponent, useContext } from "react"
 import { View, Text, TouchableOpacity } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import { styles } from "../generalStyle"
+import { GameContext } from "../GameContext"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "Home">
 
@@ -13,10 +14,13 @@ interface HomeProps {
 export const Home: FunctionComponent<HomeProps> = ({
   navigation,
 }: HomeProps) => {
+  const game = useContext(GameContext)
+  console.log(game.word)
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Insider</Text>
-      <TouchableOpacity style={styles.buttonTouchable}>
+      <TouchableOpacity style={styles.buttonTouchable} onPress={() => {}}>
         <Text style={styles.buttonText}>Play</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.buttonTouchable}>
