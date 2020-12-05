@@ -15,7 +15,6 @@ export const Home: FunctionComponent<HomeProps> = ({
   navigation,
 }: HomeProps) => {
   const game = useContext(GameContext)
-  console.log(game.players)
 
   return (
     <View style={styles.container}>
