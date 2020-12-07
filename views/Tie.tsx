@@ -46,7 +46,7 @@ export const Tie: FunctionComponent<TieProps> = ({
         <TouchableOpacity
           style={{ ...styles.buttonTouchable, backgroundColor: "white" }}
           onPress={() => {
-            navigation.replace("Home")
+            navigation.replace("Score", playerSelected)
           }}
         >
           <Text style={{ ...styles.buttonText, color: "#338A3E" }}>

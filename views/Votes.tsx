@@ -85,7 +85,7 @@ export const Votes: FunctionComponent<VotesProps> = ({
               let playersElected = checkTie()
 
               if (playersElected.length === 1) {
-                navigation.replace("Home") //, playersElected[0])
+                navigation.replace("Score", playersElected[0])
               } else {
                 navigation.replace("Tie", playersElected)
               }
