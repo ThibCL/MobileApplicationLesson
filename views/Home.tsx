@@ -15,12 +15,16 @@ export const Home: FunctionComponent<HomeProps> = ({
   navigation,
 }: HomeProps) => {
   const game = useContext(GameContext)
-  console.log(game.word)
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Insider</Text>
-      <TouchableOpacity style={styles.buttonTouchable} onPress={() => {}}>
+      <TouchableOpacity
+        style={styles.buttonTouchable}
+        onPress={() => {
+          navigation.replace("Roles")
+        }}
+      >
         <Text style={styles.buttonText}>Play</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.buttonTouchable}>

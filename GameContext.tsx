@@ -9,6 +9,7 @@ export enum Role {
 export type Player = {
   name: string
   role: Role
+  vote: Player | undefined
   score: number
   scoreVar: number
 }
@@ -46,15 +47,51 @@ export const GameProvider: FunctionComponent<GameProviderProps> = ({
 }: GameProviderProps) => {
   const [word, setWord] = useState<string>("DefaultWord")
   const [players, setPlayers] = useState<Player[]>([
-    { name: "Thib", score: 0, scoreVar: 0, role: Role.Citizen },
-    { name: "Meg", score: 0, scoreVar: 0, role: Role.Citizen },
-    { name: "Elo", score: 0, scoreVar: 0, role: Role.Citizen },
-    { name: "Matho", score: 0, scoreVar: 0, role: Role.Citizen },
-    { name: "Arsene", score: 0, scoreVar: 0, role: Role.Citizen },
-    { name: "Flo", score: 0, scoreVar: 0, role: Role.Citizen },
-    { name: "Maman", score: 0, scoreVar: 0, role: Role.Citizen },
-    { name: "Papa", score: 0, scoreVar: 0, role: Role.Citizen },
-    { name: "Mamie", score: 0, scoreVar: 0, role: Role.Citizen },
+    {
+      name: "Thib",
+      score: 0,
+      vote: undefined,
+      scoreVar: 0,
+      role: Role.Citizen,
+    },
+    { name: "Meg", score: 0, vote: undefined, scoreVar: 0, role: Role.Citizen },
+    { name: "Elo", score: 0, vote: undefined, scoreVar: 0, role: Role.Citizen },
+    {
+      name: "Matho",
+      score: 0,
+      vote: undefined,
+      scoreVar: 0,
+      role: Role.Citizen,
+    },
+    {
+      name: "Arsene",
+      score: 0,
+      vote: undefined,
+      scoreVar: 0,
+      role: Role.Citizen,
+    },
+    { name: "Flo", score: 0, vote: undefined, scoreVar: 0, role: Role.Citizen },
+    {
+      name: "Maman",
+      score: 0,
+      vote: undefined,
+      scoreVar: 0,
+      role: Role.Citizen,
+    },
+    {
+      name: "Papa",
+      score: 0,
+      vote: undefined,
+      scoreVar: 0,
+      role: Role.Citizen,
+    },
+    {
+      name: "Mamie",
+      score: 0,
+      vote: undefined,
+      scoreVar: 0,
+      role: Role.Citizen,
+    },
   ])
   const [options, setOptions] = useState<Options>({
     time: 5,
