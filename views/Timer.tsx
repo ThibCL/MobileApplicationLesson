@@ -5,22 +5,32 @@ import { StackParamList } from "../App"
 import { styles } from "../generalStyle"
 import { GameContext } from "../GameContext"
 
-// //Change every FILE to the name of the view
-// //Don't forget to add the route in the App.tsx file
-
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "Timer">
 
 interface TimerProps {
    navigation: ScreenNavigationProp
+   this.state ={
+     time: 360,
+     isOn: false
+
+   }
  }
 
  export const Timer: FunctionComponent<TimerProps> = ({
    navigation,
  }: TimerProps) => {
+   const StartTimer = () => {this.setState({
+    isOn: true})
+    setInterval(() => this.setState({
+      time: this.state.time-1
+    }), 1000);)
+   }
+  
+
    return (
      <View style={styles.container}>
        <TouchableOpacity style={styles.buttonTouchable} onPress={() => StartTimer>
-        <Text style={styles.buttonText}>Start</Text>
+        <Text style={styles.buttonText}>Start/Pause</Text>
       </TouchableOpacity>
      </View>
    )
