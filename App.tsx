@@ -14,8 +14,8 @@ export type StackParamList = {
   Rules: undefined
   Roles: undefined
   Votes: undefined
-  Tie: Player[]
-  Score: Player
+  Tie: undefined
+  Score: undefined
 }
 
 const Stack = createStackNavigator<StackParamList>()

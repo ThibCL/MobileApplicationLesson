@@ -11,18 +11,15 @@ type ScreenRouteProp = RouteProp<StackParamList, "Score">
 
 interface ScoreProps {
   navigation: ScreenNavigationProp
-  route: ScreenRouteProp
 }
 
 export const Score: FunctionComponent<ScoreProps> = ({
   navigation,
-  route,
 }: ScoreProps) => {
   const game = useContext(GameContext)
-  const playerElected = route.params
 
   useEffect(() => {
-    const players = computeScore(game.players, true, playerElected)
+    const players = computeScore(game.players, true, game.playersElected[0])
     game.setPlayers(players)
   }, [])
 
@@ -38,6 +35,7 @@ export const Score: FunctionComponent<ScoreProps> = ({
         style={{ ...styles.buttonTouchable, backgroundColor: "white" }}
         onPress={() => {
           navigation.replace("Home")
+          game.eraseGame()
         }}
       >
         <Text style={{ ...styles.buttonText, color: "#338A3E" }}>Home</Text>
@@ -47,6 +45,7 @@ export const Score: FunctionComponent<ScoreProps> = ({
         style={{ ...styles.buttonTouchable, backgroundColor: "white" }}
         onPress={() => {
           navigation.replace("Roles")
+          game.playAgain()
         }}
       >
         <Text style={{ ...styles.buttonText, color: "#338A3E" }}>

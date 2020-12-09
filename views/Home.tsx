@@ -14,8 +14,6 @@ interface HomeProps {
 export const Home: FunctionComponent<HomeProps> = ({
   navigation,
 }: HomeProps) => {
-  const game = useContext(GameContext)
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Insider</Text>

@@ -11,22 +11,17 @@ type ScreenRouteProp = RouteProp<StackParamList, "Tie">
 
 interface TieProps {
   navigation: ScreenNavigationProp
-  route: ScreenRouteProp
 }
 
-export const Tie: FunctionComponent<TieProps> = ({
-  navigation,
-  route,
-}: TieProps) => {
+export const Tie: FunctionComponent<TieProps> = ({ navigation }: TieProps) => {
   const game = useContext(GameContext)
   const [playerSelected, setPlayerSelected] = useState<Player>()
-  const playersElected = route.params
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{game.players[0].name}</Text>
       <Text>There is a tie, you have to vote</Text>
-      {playersElected.map((player, index) => (
+      {game.playersElected.map((player, index) => (
         <TouchableOpacity
           key={index}
           style={
@@ -46,7 +41,8 @@ export const Tie: FunctionComponent<TieProps> = ({
         <TouchableOpacity
           style={{ ...styles.buttonTouchable, backgroundColor: "white" }}
           onPress={() => {
-            navigation.replace("Score", playerSelected)
+            game.setPlayersElected([playerSelected])
+            navigation.replace("Score")
           }}
         >
           <Text style={{ ...styles.buttonText, color: "#338A3E" }}>
