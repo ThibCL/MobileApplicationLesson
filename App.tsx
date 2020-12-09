@@ -7,13 +7,15 @@ import { Rules } from "./views/Rules"
 import { Roles } from "./views/Roles"
 import { Votes } from "./views/Votes"
 import { Tie } from "./views/Tie"
+import { Score } from "./views/Score"
 
 export type StackParamList = {
   Home: undefined
   Rules: undefined
   Roles: undefined
   Votes: undefined
-  Tie: Player[]
+  Tie: undefined
+  Score: undefined
 }
 
 const Stack = createStackNavigator<StackParamList>()
@@ -28,6 +30,7 @@ export default function App() {
           <Stack.Screen name="Roles" component={Roles} />
           <Stack.Screen name="Votes" component={Votes} />
           <Stack.Screen name="Tie" component={Tie} />
+          <Stack.Screen name="Score" component={Score} />
         </Stack.Navigator>
       </NavigationContainer>
     </GameProvider>

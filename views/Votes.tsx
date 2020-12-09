@@ -83,11 +83,12 @@ export const Votes: FunctionComponent<VotesProps> = ({
               setPlayerIndex(playerIndex + 1)
             } else {
               let playersElected = checkTie()
+              game.setPlayersElected(playersElected)
 
               if (playersElected.length === 1) {
-                navigation.replace("Home") //, playersElected[0])
+                navigation.replace("Score")
               } else {
-                navigation.replace("Tie", playersElected)
+                navigation.replace("Tie")
               }
             }
           }}
