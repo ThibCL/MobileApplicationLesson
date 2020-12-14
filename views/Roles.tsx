@@ -58,7 +58,7 @@ export const Roles: FunctionComponent<RolesProps> = ({
     const mstr = playersUpdated[masterIndex]
     playersUpdated[masterIndex] = playersUpdated[0]
     playersUpdated[0] = mstr
-
+    
     game.setPlayers(playersUpdated)
   }
 
