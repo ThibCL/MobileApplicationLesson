@@ -5,6 +5,7 @@ import { StackParamList } from "../App"
 import { GameContext, Player, Role } from "../GameContext"
 import { styles } from "../generalStyle"
 import {cloneDeep} from 'lodash';
+import { Roles } from "./Roles"
 
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "CreatePlayer">
