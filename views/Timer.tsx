@@ -39,28 +39,17 @@ interface TimerProps {
        :( <Text style={styles.title}>Debate to find the impostor</Text>)}
        <p>{Math.floor((timer-time)/60)}:{(timer-time)%60}</p>
        
-       {isOn ? (
+        
          <TouchableOpacity
          style={styles.buttonTouchable}
          onPress={() => {
-           setIsOn(false)
+           setIsOn(!isOn)
          }}
        >
-         <Text style={styles.buttonText}>Pause</Text>
+         <Text style={styles.buttonText}>{isOn ? ("Pause") : ("Start") }</Text>
        </TouchableOpacity>
-       )
-       :(
-        <TouchableOpacity
-        style={styles.buttonTouchable}
-        onPress={() => {
-          setIsOn(true)
-        }}
-      >
-        <Text style={styles.buttonText}>Start</Text>
-      </TouchableOpacity>
+       
       
-       )
-       }
       {!found ? (
          <TouchableOpacity
          style={styles.buttonTouchable}
