@@ -7,12 +7,9 @@ import { Rules } from "./views/Rules"
 import { Roles } from "./views/Roles"
 import { Votes } from "./views/Votes"
 import { Tie } from "./views/Tie"
-<<<<<<< HEAD
 import { Score } from "./views/Score"
 import { Timer } from "./views/Timer"
-=======
-import {Timer} from "./views/Timer"
->>>>>>> Timer fonctionel mais ultra moche et temps fixe
+
 
 export type StackParamList = {
   Home: undefined
