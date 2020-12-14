@@ -31,7 +31,7 @@ export const Home: FunctionComponent<HomeProps> = ({
       <TouchableOpacity
         style={styles.buttonTouchable}
         onPress={() => {
-          navigation.navigate("Rules")
+          navigation.navigate("Timer")
         }}
       >
         <Text style={styles.buttonText}>Rules</Text>
