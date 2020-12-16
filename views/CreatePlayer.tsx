@@ -17,9 +17,10 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
 }: CreatePlayerProps) => {
   const game = useContext(GameContext)
 
-  const [listPlay, setListPlay]=useState([{ name: "", score: 0, vote: undefined, scoreVar: 0, role: Role.Citizen },
+  const [listPlay, setListPlay]=useState<Player[]>([{ name: "", score: 0, vote: undefined, scoreVar: 0, role: Role.Citizen },
     { name: "", score: 0, vote: undefined, scoreVar: 0, role: Role.Citizen },
     { name: "", score: 0, vote: undefined, scoreVar: 0, role: Role.Citizen }])
+  if (game.players.length>0){setListPlay(game.players)}
   var allDifferent = true
   const validation = () =>{
       allDifferent= true
