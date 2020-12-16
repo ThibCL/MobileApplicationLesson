@@ -37,7 +37,7 @@ interface TimerProps {
      <View style={styles.container}>
        { !found ? ( <Text style={styles.title}>Find the word !</Text>)
        :( <Text style={styles.title}>Debate to find the impostor</Text>)}
-       <p>{Math.floor((timer-time)/60)}:{(timer-time)%60}</p>
+       <Text>{Math.floor((timer-time)/60)}:{(timer-time)%60}</Text>
        
         
          <TouchableOpacity
