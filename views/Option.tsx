@@ -15,10 +15,13 @@ interface OptionsProps {
 export const Option: FunctionComponent<OptionsProps> = ({
   navigation,
 }: OptionsProps) => {
+    
     const game = useContext(GameContext)
     const [alwaysVote, setAlwaysVote] = useState(game.options.voteAnyway)
     const [timerDuration,setTimerDuration] = useState (game.options.time)
     const [numChoice,setNumChoice] = useState (game.options.numberChoices)
+   
+
     return(
     <View style={styles.container}>
     <Text style={styles.title}>Options</Text>
@@ -71,6 +74,7 @@ export const Option: FunctionComponent<OptionsProps> = ({
     <TouchableOpacity 
         style={styles.buttonTouchable } 
         onPress={() =>   {game.setOptions({time : timerDuration, voteAnyway : alwaysVote, numberChoices : numChoice })
+        
                           navigation.replace("Home") }}      >
           <Text style={styles.buttonText}>Validate options </Text>
         </TouchableOpacity>
