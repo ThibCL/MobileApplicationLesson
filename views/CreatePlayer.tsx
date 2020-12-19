@@ -4,6 +4,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import { GameContext, Player, Role } from "../GameContext"
 import { styles } from "../generalStyle"
+import {cloneDeep} from 'lodash';
 
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "CreatePlayer">
@@ -22,6 +23,7 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
     { name: "", score: 0, vote: undefined, scoreVar: 0, role: Role.Citizen }])
   if (game.players.length>0){setListPlay(game.players)}
   var allDifferent = true
+  
   const validation = () =>{
       allDifferent= true
       listPlay.forEach((elem)=>console.log(elem.name))
@@ -37,20 +39,33 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
       }
   }
 
-  const temp = (truc: number,text: string)=>{
-    listPlay[truc].name = text
-    return listPlay
-  }
+  
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Insert Players Names</Text>
-      {listPlay.map((listPlay,index)=>
-      
-      <TextInput
+      {listPlay.map((elem, index)=>
+       <View style={{flexDirection:"row"}} > 
+       
+       <TextInput
       key={index}
       placeholder='name'
-      onChangeText={(text) => setListPlay(temp(index,text))}
+      style={{justifyContent: 'flex-start',}}
+      onChangeText={(text) =>  { let temp = cloneDeep(listPlay)
+         temp[index].name = text 
+         setListPlay(temp)}}
       />
+       
+        <TouchableOpacity 
+      style={styles.buttonTouchableRight }
+      onPress={() => { if (listPlay.length>3) {let temporaire = cloneDeep(listPlay)
+        temporaire.splice(index,1)
+        {setListPlay(temporaire)}}
+    }}>
+        <Text style={styles.buttonText}>Delete Player</Text>
+      </TouchableOpacity>  
+       
+      </View>
+      
 
     )}
 
@@ -60,14 +75,6 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
         if (listPlay.length < 10) {setListPlay(listPlay.concat({ name: "", score: 0, vote: undefined, scoreVar: 0, role: Role.Citizen }))}
     }}>
         <Text style={styles.buttonText}>AddPlayer</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.buttonTouchable}
-        onPress={() => {
-            if (listPlay.length > 3) {setListPlay(listPlay.slice(1,listPlay.length-1))}
-        }}
-      >
-        <Text style={styles.buttonText}>DeletePlayer</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.buttonTouchable}
