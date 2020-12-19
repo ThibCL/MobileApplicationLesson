@@ -20,7 +20,7 @@ export const Home: FunctionComponent<HomeProps> = ({
       <TouchableOpacity
         style={styles.buttonTouchable}
         onPress={() => {
-          navigation.replace("Roles")
+          navigation.replace("CreatePlayer")
         }}
       >
         <Text style={styles.buttonText}>Play</Text>

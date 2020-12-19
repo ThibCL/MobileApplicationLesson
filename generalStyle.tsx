@@ -18,6 +18,16 @@ export const styles = StyleSheet.create({
     backgroundColor: "#7F0000",
     borderRadius: 10,
   },
+  buttonTouchableRight: {
+    margin: 5,
+    width: "50%",
+    justifyContent: 'flex-end',
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    backgroundColor: "#7F0000",
+    borderRadius: 10,
+  },
+ 
   buttonTouchableDisabled: {
     margin: 5,
     width: "100%",
