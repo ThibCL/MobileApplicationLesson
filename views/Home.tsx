@@ -20,19 +20,20 @@ export const Home: FunctionComponent<HomeProps> = ({
       <TouchableOpacity
         style={styles.buttonTouchable}
         onPress={() => {
-          navigation.replace("CreatePlayer")
+          navigation.navigate("CreatePlayer")
         }}
       >
         <Text style={styles.buttonText}>Play</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.buttonTouchable}>
+      <TouchableOpacity style={styles.buttonTouchable}
+      onPress={() => {
+          navigation.replace("Option")
+        }}>
         <Text style={styles.buttonText}>Options</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.buttonTouchable}
-        onPress={() => {
-          navigation.navigate("Timer")
-        }}
+        
       >
         <Text style={styles.buttonText}>Rules</Text>
       </TouchableOpacity>
