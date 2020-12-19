@@ -53,16 +53,24 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
       onChangeText={(text) =>  { let temp = cloneDeep(listPlay)
          temp[index].name = text 
          setListPlay(temp)}}
+      value = {elem.name}
       />
        
-        <TouchableOpacity 
+        {(listPlay.length>3) ? ( <TouchableOpacity 
       style={styles.buttonTouchableRight }
-      onPress={() => { if (listPlay.length>3) {let temporaire = cloneDeep(listPlay)
+      onPress={() =>   { 
+        let temporaire = cloneDeep(listPlay)
         temporaire.splice(index,1)
-        {setListPlay(temporaire)}}
-    }}>
+        setListPlay(temporaire)}
+       
+    }>
         <Text style={styles.buttonText}>Delete Player</Text>
-      </TouchableOpacity>  
+      </TouchableOpacity> 
+      ) : ( <TouchableOpacity 
+        style={styles.buttonTouchableDisabled } >
+          <Text style={styles.buttonText}>Delete Player</Text>
+        </TouchableOpacity> 
+        )}
        
       </View>
       
