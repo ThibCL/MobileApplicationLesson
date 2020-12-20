@@ -4,6 +4,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import { styles } from "../generalStyle"
 import { GameContext, Options } from "../GameContext"
+import { Timer } from "./Timer"
 
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "Option">
@@ -27,23 +28,30 @@ export const Option: FunctionComponent<OptionsProps> = ({
     <Text style={styles.title}>Options</Text>
     <Text style={styles.textNormal}>Number of words to choose from</Text>
     <View style={{flexDirection:"row"}} > 
-    {(numChoice>1) ? (<TouchableOpacity 
-        style={styles.buttonTouchablePetit } 
-        onPress={() =>   {setNumChoice(numChoice-1) }}      >
+    <TouchableOpacity
+          disabled={numChoice<2}
+          style={{
+            ...(numChoice<2
+              ? styles.buttonTouchableDisabled
+              : styles.buttonTouchable),
+          }}
+          onPress={() =>   {setNumChoice(numChoice-1) }}
+        >
           <Text style={styles.buttonText}>-</Text>
-        </TouchableOpacity> ) : (<TouchableOpacity 
-        style={styles.buttonTouchablePetitDisabled } >
-          <Text style={styles.buttonText}>-</Text>
-        </TouchableOpacity>)}
+          </TouchableOpacity>
         <Text style ={{flex : 1}}>{numChoice} words</Text>
-        {(numChoice<6) ? (<TouchableOpacity 
-        style={styles.buttonTouchablePetit } 
-        onPress={() =>   {setNumChoice(numChoice+1) }}      >
+        
+        <TouchableOpacity
+          disabled={numChoice>6}
+          style={{
+            ...(numChoice>6
+              ? styles.buttonTouchableDisabled
+              : styles.buttonTouchable),
+          }}
+          onPress={() =>   {setNumChoice(numChoice+1) }}
+        >
           <Text style={styles.buttonText}>+</Text>
-        </TouchableOpacity> ) : (<TouchableOpacity 
-        style={styles.buttonTouchablePetitDisabled } >
-          <Text style={styles.buttonText}>+</Text>
-        </TouchableOpacity>)}
+          </TouchableOpacity>
     </View>
     <Text style={styles.textNormal}>Always vote</Text>
     <Switch
@@ -52,28 +60,38 @@ export const Option: FunctionComponent<OptionsProps> = ({
           }}
           value={alwaysVote} />
     <Text style={styles.textNormal}>Duration of timer </Text>
+    
+     
     <View style={{flexDirection:"row"}} > 
-    {(timerDuration>1) ? (<TouchableOpacity 
-        style={styles.buttonTouchablePetit } 
-        onPress={() =>   {setTimerDuration(timerDuration-1) }}      >
+    <TouchableOpacity
+          disabled={timerDuration<2}
+          style={{
+            ...(timerDuration<2
+              ? styles.buttonTouchableDisabled
+              : styles.buttonTouchable),
+          }}
+          onPress={() =>   {setTimerDuration(timerDuration-1) }}
+        >
           <Text style={styles.buttonText}>-</Text>
-        </TouchableOpacity> ) : (<TouchableOpacity 
-        style={styles.buttonTouchablePetitDisabled } >
-          <Text style={styles.buttonText}>-</Text>
-        </TouchableOpacity>)}
+          </TouchableOpacity>
         <Text style ={{flex : 1}}>{timerDuration} minutes</Text>
-        {(timerDuration<10) ? (<TouchableOpacity 
-        style={styles.buttonTouchablePetit } 
-        onPress={() =>   {setTimerDuration(timerDuration+1) }}      >
+        
+        <TouchableOpacity
+          disabled={timerDuration>10}
+          style={{
+            ...(timerDuration>10
+              ? styles.buttonTouchableDisabled
+              : styles.buttonTouchable),
+          }}
+          onPress={() =>   {setTimerDuration(timerDuration+1) }}
+        >
           <Text style={styles.buttonText}>+</Text>
-        </TouchableOpacity> ) : (<TouchableOpacity 
-        style={styles.buttonTouchablePetitDisabled } >
-          <Text style={styles.buttonText}>+</Text>
-        </TouchableOpacity>)}
+          </TouchableOpacity>
     </View>
+   
     <TouchableOpacity 
         style={styles.buttonTouchable } 
-        onPress={() =>   {game.setOptions({time : timerDuration, voteAnyway : alwaysVote, numberChoices : numChoice })
+        onPress={() =>   {game.setOptions({time : timerDuration*60, voteAnyway : alwaysVote, numberChoices : numChoice })
         
                           navigation.replace("Home") }}      >
           <Text style={styles.buttonText}>Validate options </Text>
