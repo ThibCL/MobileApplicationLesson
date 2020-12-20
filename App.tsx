@@ -11,6 +11,7 @@ import { Score } from "./views/Score"
 import { Timer } from "./views/Timer"
 import { Option } from "./views/Option"
 import { CreatePlayer } from "./views/CreatePlayer"
+import {RecapVotes} from "./views/RecapVotes"
 
 export type StackParamList = {
   Home: undefined
@@ -22,6 +23,7 @@ export type StackParamList = {
   Timer : undefined 
   CreatePlayer: undefined
   Option : undefined
+  RecapVotes: undefined
 }
 
 const Stack = createStackNavigator<StackParamList>()
@@ -40,6 +42,8 @@ export default function App() {
           <Stack.Screen name="Timer" component={Timer} />
           <Stack.Screen name="CreatePlayer" component={CreatePlayer} />
           <Stack.Screen name="Option" component={Option} />
+          <Stack.Screen name="RecapVotes" component={RecapVotes} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </GameProvider>
