@@ -32,7 +32,7 @@ export const RecapVotes: FunctionComponent<RecapVotesProps> = ({
       <TouchableOpacity
         style={styles.buttonTouchable}
         onPress={() => {
-          //navigation.replace("Score")
+          navigation.replace("Score")
         }}
       >
         <Text style={styles.buttonText}>Next </Text>
