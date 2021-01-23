@@ -38,8 +38,7 @@ export const Home: FunctionComponent<HomeProps> = ({
     })
   })
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Insider</Text>
+    <View style={{ ...styles.container, ...styles.view }}>
       <TouchableOpacity
         style={styles.buttonTouchable}
         onPress={() => {

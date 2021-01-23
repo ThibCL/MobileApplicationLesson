@@ -14,6 +14,7 @@ import { Option } from "./views/Option"
 import { CreatePlayer } from "./views/CreatePlayer"
 import { RecapVotes } from "./views/RecapVotes"
 import { Auth } from "./views/Auth"
+import { navigatorStyle } from "./generalStyle"
 
 export type StackParamList = {
   Home: undefined
@@ -37,18 +38,66 @@ export default function App() {
     <GameProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Auth">
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Rules" component={Rules} />
-          <Stack.Screen name="History" component={History} />
-          <Stack.Screen name="Roles" component={Roles} />
-          <Stack.Screen name="Votes" component={Votes} />
-          <Stack.Screen name="Tie" component={Tie} />
-          <Stack.Screen name="Score" component={Score} />
-          <Stack.Screen name="Timer" component={Timer} />
-          <Stack.Screen name="CreatePlayer" component={CreatePlayer} />
-          <Stack.Screen name="Option" component={Option} />
-          <Stack.Screen name="RecapVotes" component={RecapVotes} />
-          <Stack.Screen name="Auth" component={Auth} />
+          <Stack.Screen
+            name="Home"
+            options={{ ...navigatorStyle, title: "Insider" }}
+            component={Home}
+          />
+          <Stack.Screen
+            name="Rules"
+            options={{ ...navigatorStyle }}
+            component={Rules}
+          />
+          <Stack.Screen
+            name="History"
+            options={{ ...navigatorStyle }}
+            component={History}
+          />
+          <Stack.Screen
+            name="Roles"
+            options={{ ...navigatorStyle }}
+            component={Roles}
+          />
+          <Stack.Screen
+            name="Votes"
+            options={{ ...navigatorStyle }}
+            component={Votes}
+          />
+          <Stack.Screen
+            name="Tie"
+            options={{ ...navigatorStyle }}
+            component={Tie}
+          />
+          <Stack.Screen
+            name="Score"
+            options={{ ...navigatorStyle }}
+            component={Score}
+          />
+          <Stack.Screen
+            name="Timer"
+            options={{ ...navigatorStyle }}
+            component={Timer}
+          />
+          <Stack.Screen
+            name="CreatePlayer"
+            options={{ ...navigatorStyle }}
+            component={CreatePlayer}
+          />
+          <Stack.Screen
+            name="Option"
+            options={{ ...navigatorStyle }}
+            component={Option}
+          />
+          <Stack.Screen
+            name="RecapVotes"
+            options={{ ...navigatorStyle, title: "Votes result" }}
+            component={RecapVotes}
+          />
+          <Stack.Screen
+            name="Auth"
+            options={{ ...navigatorStyle }}
+            component={Auth}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </GameProvider>

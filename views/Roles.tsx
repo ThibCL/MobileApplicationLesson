@@ -68,7 +68,7 @@ export const Roles: FunctionComponent<RolesProps> = ({
   }, [])
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, ...styles.view }}>
       <View style={{ display: "flex", flexDirection: "row" }}>
         <Text style={styles.title}>{game.players[index].name}</Text>
         <Switch

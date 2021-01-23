@@ -16,7 +16,7 @@ export const Tie: FunctionComponent<TieProps> = ({ navigation }: TieProps) => {
   const [playerSelected, setPlayerSelected] = useState<number>()
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, ...styles.view }}>
       <Text style={styles.title}>{game.players[0].name}</Text>
       <Text>There is a tie, you have to vote</Text>
       {game.playersElected.map((player, index) => (

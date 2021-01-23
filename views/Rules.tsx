@@ -15,7 +15,6 @@ export const Rules: FunctionComponent<RulesProps> = ({
 }: RulesProps) => {
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>Rules</Text>
       <Text style={{ margin: 10 }}>
         The application is a game where players ask questions to the game master
         to find the secret word, but among them there is a traitor that already

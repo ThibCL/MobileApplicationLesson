@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useContext } from "react"
-import { View, Text, Button } from "react-native"
+import { View, Text, TouchableOpacity } from "react-native"
+import { styles } from "../generalStyle"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import * as Google from "expo-google-app-auth"
@@ -52,8 +53,10 @@ export const Auth: FunctionComponent<AuthProps> = ({
   }
 
   return (
-    <View>
-      <Button onPress={login} title="Sign in with google" />
+    <View style={{ ...styles.container, ...styles.view }}>
+      <TouchableOpacity style={styles.buttonTouchable} onPress={login}>
+        <Text style={styles.buttonText}>Sign in with Google</Text>
+      </TouchableOpacity>
     </View>
   )
 }

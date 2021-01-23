@@ -71,14 +71,15 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Insert Players Names</Text>
+    <View style={{ ...styles.container, alignItems: "center" }}>
+      <Text style={{ ...styles.title, color: "black" }}>
+        Insert Players Names
+      </Text>
       {listPlay.map((elem, index) => (
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ width: "100%", flexDirection: "row" }}>
           <TextInput
             key={index}
             placeholder="name"
-            style={{ justifyContent: "flex-start" }}
             onChangeText={(text) => {
               let temp = [...listPlay]
               temp[index].name = text
@@ -89,6 +90,7 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
 
           {listPlay.length > 3 ? (
             <TouchableOpacity
+              key={index}
               style={styles.buttonTouchableRight}
               onPress={async () => {
                 let temporaire = [...listPlay]

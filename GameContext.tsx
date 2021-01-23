@@ -75,7 +75,11 @@ export const GameProvider: FunctionComponent<GameProviderProps> = ({
   children,
 }: GameProviderProps) => {
   const [apiClient, setApiClient] = useState<Client>(
-    new Client(process.env["API_URL"] || "http://192.168.0.16:7171")
+    new Client(
+      process.env["API_URL"] ||
+        "https://gameinsider.herokuapp.com" ||
+        "http://192.168.0.16:7171"
+    )
   )
   const [token, setToken] = useState<string>("")
   const [user, setUser] = useState<Google.GoogleUser | null>(null)

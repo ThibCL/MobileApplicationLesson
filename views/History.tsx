@@ -33,8 +33,13 @@ export const History: FunctionComponent<HistoryProps> = ({
   }, [])
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, alignItems: "center" }}>
       <FlatList
+        ListHeaderComponent={
+          <Text style={{ ...styles.title, color: "black" }}>
+            Previous games
+          </Text>
+        }
         data={games}
         renderItem={({ item }) => (
           <View>

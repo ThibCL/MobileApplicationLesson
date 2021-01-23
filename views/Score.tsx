@@ -26,11 +26,18 @@ export const Score: FunctionComponent<ScoreProps> = ({
   }, [])
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, ...styles.view }}>
       {game.players.map((player, index) => (
-        <Text key={index} style={styles.title}>
-          {player.name} {player.score} ({player.scoreVar < 0 ? "" : "+"}
-          {player.scoreVar})
+        <Text
+          key={index}
+          style={{ fontSize: 24, margin: 5, fontWeight: "bold" }}
+        >
+          <Text>{player.name} </Text>
+          <Text style={{ color: "grey" }}>{player.score} </Text>
+          <Text style={{ color: player.scoreVar < 0 ? "red" : "green" }}>
+            ({player.scoreVar < 0 ? "" : "+"}
+            {player.scoreVar})
+          </Text>
         </Text>
       ))}
       <TouchableOpacity

@@ -38,7 +38,7 @@ export const Timer: FunctionComponent<TimerProps> = ({
   })
 
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, ...styles.view }}>
       {!found ? (
         <Text style={styles.title}>Find the word !</Text>
       ) : (
