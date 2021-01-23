@@ -65,7 +65,6 @@ const computeScore = (
   wordFound: boolean,
   playerElected: number
 ): Player[] => {
-  alert("Player electesd " + players[playerElected].name)
   const updatedPlayers = [...players]
   for (let player of updatedPlayers) {
     player.scoreVar = 0

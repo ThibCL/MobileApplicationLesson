@@ -40,7 +40,7 @@ export const Tie: FunctionComponent<TieProps> = ({ navigation }: TieProps) => {
           style={{ ...styles.buttonTouchable, backgroundColor: "white" }}
           onPress={() => {
             game.setPlayersElected([playerSelected])
-            navigation.replace("Score")
+            navigation.replace("RecapVotes")
           }}
         >
           <Text style={{ ...styles.buttonText, color: "#338A3E" }}>

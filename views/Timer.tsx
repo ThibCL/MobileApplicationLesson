@@ -23,7 +23,7 @@ export const Timer: FunctionComponent<TimerProps> = ({
   const [time, setTime] = useState(0)
   const [isOn, setIsOn] = useState(false)
   const [found, setFound] = useState(false)
-  const [timer, setTimer] = useState(300)
+  const [timer, setTimer] = useState(game.options.time * 60)
 
   useEffect(() => {
     if (isOn && time < timer) {

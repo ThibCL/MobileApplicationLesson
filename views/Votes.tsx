@@ -84,7 +84,7 @@ export const Votes: FunctionComponent<VotesProps> = ({
               game.setPlayersElected(playersElected)
 
               if (playersElected.length === 1) {
-                navigation.replace("Score")
+                navigation.replace("RecapVotes")
               } else {
                 navigation.replace("Tie")
               }

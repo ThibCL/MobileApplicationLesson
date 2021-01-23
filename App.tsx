@@ -48,7 +48,6 @@ export default function App() {
           <Stack.Screen name="CreatePlayer" component={CreatePlayer} />
           <Stack.Screen name="Option" component={Option} />
           <Stack.Screen name="RecapVotes" component={RecapVotes} />
-
           <Stack.Screen name="Auth" component={Auth} />
         </Stack.Navigator>
       </NavigationContainer>
