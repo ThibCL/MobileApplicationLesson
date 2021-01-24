@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useState,
 } from "react"
-import { View, Text, Switch, Button } from "react-native"
+import { View, Text, Switch } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import { GameContext, Player, Role } from "../GameContext"
@@ -58,7 +58,8 @@ export const Roles: FunctionComponent<RolesProps> = ({
     const mstr = playersUpdated[masterIndex]
     playersUpdated[masterIndex] = playersUpdated[0]
     playersUpdated[0] = mstr
-    
+
+    console.log(playersUpdated)
     game.setPlayers(playersUpdated)
   }
 
@@ -67,61 +68,81 @@ export const Roles: FunctionComponent<RolesProps> = ({
   }, [])
 
   return (
-    <View style={styles.container}>
-      <View style={{ display: "flex", flexDirection: "row" }}>
-        <Text style={styles.title}>{game.players[index].name}</Text>
-        <Switch
-          onValueChange={() => {
-            setIsEnabled(!isEnabled)
+    <View style={{ ...styles.container, ...styles.view }}>
+      <View
+        style={{
+          width: "80%",
+          borderWidth: 1,
+          backgroundColor: "#CCCCCC",
+        }}
+      >
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            borderBottomWidth: 1,
           }}
-          value={isEnabled}
-        />
+        >
+          <Text style={{ ...styles.title, flex: 1 }}>
+            {game.players[index].name}
+          </Text>
+          <Switch
+            style={{ flex: 1 }}
+            onValueChange={() => {
+              setIsEnabled(!isEnabled)
+            }}
+            value={isEnabled}
+          />
+        </View>
+        {isEnabled ? (
+          <RoleDisplayer
+            player={game.players[index]}
+            words={words}
+            wordSelected={wordSelected}
+            setWordSelected={setWordSelected}
+          />
+        ) : null}
       </View>
-      {isEnabled ? (
-        <RoleDisplayer
-          player={game.players[index]}
-          words={words}
-          wordSelected={wordSelected}
-          setWordSelected={setWordSelected}
-        />
-      ) : null}
-
-      <View style={{ display: "flex", flexDirection: "row" }}>
+      <View
+        style={{
+          width: "80%",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
         <TouchableOpacity
           disabled={index <= 0}
           style={{
             ...(index <= 0
               ? styles.buttonTouchableDisabled
               : styles.buttonTouchable),
+            width: "100%",
           }}
           onPress={() => {
             setIsEnabled(false)
             setIndex(index - 1)
           }}
         >
-          <Text style={styles.buttonText}>Prievous</Text>
+          <Text style={{ ...styles.buttonText }}>Prievous</Text>
         </TouchableOpacity>
-        {index < game.players.length - 1 ? (
-          <TouchableOpacity
-            style={{ ...styles.buttonTouchable }}
-            onPress={() => {
+        <TouchableOpacity
+          style={{ ...styles.buttonTouchable, width: "100%" }}
+          onPress={() => {
+            if (index < game.players.length - 1) {
               setIsEnabled(false)
               setIndex(index + 1)
-            }}
-          >
-            <Text style={styles.buttonText}>Next</Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            style={{ ...styles.buttonTouchable }}
-            onPress={() => {
+            } else {
               game.setWord(words[wordSelected])
-              navigation.replace("Votes")
-            }}
-          >
-            <Text style={styles.buttonText}>Begin</Text>
-          </TouchableOpacity>
-        )}
+              game.setWordFound(false)
+              navigation.replace("Timer")
+            }
+          }}
+        >
+          <Text style={styles.buttonText}>
+            {index < game.players.length - 1 ? "Next" : "Begin"}
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   )
@@ -141,24 +162,24 @@ const RoleDisplayer: FunctionComponent<RoleDisplayerProps> = ({
   setWordSelected,
 }: RoleDisplayerProps) => {
   return (
-    <View>
-      <Text>{player.role}</Text>
+    <View style={{ alignItems: "center" }}>
+      <Text style={{ fontSize: 20, color: "black" }}>{player.role}</Text>
 
       {player.role === Role.Master
         ? words.map((word, index) => (
             <TouchableOpacity
               key={index}
-              style={
-                index === wordSelected
+              style={{
+                ...(index === wordSelected
                   ? styles.buttonTouchable
-                  : styles.buttonTouchableDisabled
-              }
+                  : styles.buttonTouchableDisabled),
+              }}
               disabled={index === wordSelected}
               onPress={() => {
                 setWordSelected(index)
               }}
             >
-              <Text style={styles.buttonText}>{word}</Text>
+              <Text style={{ ...styles.buttonText }}>{word.toUpperCase()}</Text>
             </TouchableOpacity>
           ))
         : null}

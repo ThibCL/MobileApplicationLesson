@@ -1,12 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack"
 import React, { FunctionComponent } from "react"
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  StyleSheet,
-} from "react-native"
+import { Text, TouchableOpacity, ScrollView } from "react-native"
 import { StackParamList } from "../App"
 import { styles } from "../generalStyle"
 
@@ -21,7 +15,6 @@ export const Rules: FunctionComponent<RulesProps> = ({
 }: RulesProps) => {
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>Rules</Text>
       <Text style={{ margin: 10 }}>
         The application is a game where players ask questions to the game master
         to find the secret word, but among them there is a traitor that already

@@ -1,4 +1,9 @@
-import React, { FunctionComponent, useContext,useState, useEffect } from "react"
+import React, {
+  FunctionComponent,
+  useContext,
+  useState,
+  useEffect,
+} from "react"
 import { View, Text, TouchableOpacity } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
@@ -8,63 +13,64 @@ import { GameContext } from "../GameContext"
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "Timer">
 
 interface TimerProps {
-   navigation: ScreenNavigationProp
-  
- }
+  navigation: ScreenNavigationProp
+}
 
- export const Timer: FunctionComponent<TimerProps> = ({
-   navigation,
- }: TimerProps) => {
+export const Timer: FunctionComponent<TimerProps> = ({
+  navigation,
+}: TimerProps) => {
+  const game = useContext(GameContext)
   const [time, setTime] = useState(0)
   const [isOn, setIsOn] = useState(false)
   const [found, setFound] = useState(false)
-  const [timer, setTimer] = useState(300)
-  
+  const [timer, setTimer] = useState(game.options.time * 60)
 
   useEffect(() => {
     if (isOn && time < timer) {
       const interval = setInterval(() => {
         setTime(time + 1)
-      }, 1000)    
+      }, 1000)
       return () => clearInterval(interval)
-      }
-    if (time==timer){
+    }
+    if (time == timer) {
       navigation.replace("Votes")
     }
-  } )
+  })
 
-   return (
-     <View style={styles.container}>
-       { !found ? ( <Text style={styles.title}>Find the word !</Text>)
-       :( <Text style={styles.title}>Debate to find the impostor</Text>)}
-       <Text>{Math.floor((timer-time)/60)}:{(timer-time)%60}</Text>
-       
-        
-         <TouchableOpacity
-         style={styles.buttonTouchable}
-         onPress={() => {
-           setIsOn(!isOn)
-         }}
-       >
-         <Text style={styles.buttonText}>{isOn ? ("Pause") : ("Start") }</Text>
-       </TouchableOpacity>
-       
-      
+  return (
+    <View style={{ ...styles.container, ...styles.view }}>
       {!found ? (
-         <TouchableOpacity
-         style={styles.buttonTouchable}
-         onPress={() => {
-           setTimer(time)
-           setTime(0)
-           setFound(true)
-         }}
-       >
-         <Text style={styles.buttonText}>Word Found</Text>
-       </TouchableOpacity>
-      ) : null}
+        <Text style={styles.title}>Find the word !</Text>
+      ) : (
+        <Text style={styles.title}>Debate to find the impostor</Text>
+      )}
+      <Text style={{ fontSize: 20 }}>
+        {Math.floor((timer - time) / 60)}:{(timer - time) % 60 < 10 ? "0" : ""}
+        {(timer - time) % 60}
+      </Text>
 
-       
-        
-     </View>
-   )
- }
+      <TouchableOpacity
+        style={styles.buttonTouchable}
+        onPress={() => {
+          setIsOn(!isOn)
+        }}
+      >
+        <Text style={styles.buttonText}>{isOn ? "Pause" : "Start"}</Text>
+      </TouchableOpacity>
+
+      {!found && isOn ? (
+        <TouchableOpacity
+          style={styles.buttonTouchable}
+          onPress={() => {
+            setTimer(time)
+            setTime(0)
+            setFound(true)
+            game.setWordFound(true)
+          }}
+        >
+          <Text style={styles.buttonText}>Word Found</Text>
+        </TouchableOpacity>
+      ) : null}
+    </View>
+  )
+}
