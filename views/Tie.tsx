@@ -29,13 +29,13 @@ export const Tie: FunctionComponent<TieProps> = ({ navigation }: TieProps) => {
           }
           disabled={index === playerSelected}
           onPress={() => {
-            setPlayerSelected(player)
+            setPlayerSelected(index)
           }}
         >
           <Text style={styles.buttonText}>{game.players[player].name}</Text>
         </TouchableOpacity>
       ))}
-      {playerSelected ? (
+      {playerSelected != undefined ? (
         <TouchableOpacity
           style={{ ...styles.buttonTouchable, backgroundColor: "white" }}
           onPress={() => {

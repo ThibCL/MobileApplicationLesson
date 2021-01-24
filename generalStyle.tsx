@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
   buttonTouchablePetit: {
     margin: 5,
     width: "5%",
-    flex : 1,
+    flex: 1,
     paddingHorizontal: 12,
     paddingVertical: 10,
     backgroundColor: "#7F0000",
@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
 
   buttonTouchableDisabled: {
     margin: 5,
-    width: "100%",
+    width: "80%",
     paddingHorizontal: 12,
     paddingVertical: 10,
     backgroundColor: "grey",
@@ -52,7 +52,7 @@ export const styles = StyleSheet.create({
   buttonTouchablePetitDisabled: {
     margin: 5,
     width: "5%",
-    flex : 1,
+    flex: 1,
     paddingHorizontal: 12,
     paddingVertical: 10,
     backgroundColor: "grey",
@@ -65,11 +65,10 @@ export const styles = StyleSheet.create({
     fontSize: 16,
   },
   textNormal: {
-    color : "#338A3E",
+    color: "#338A3E",
     fontSize: 14,
     fontWeight: "bold",
   },
-
 })
 
 export const navigatorStyle = {

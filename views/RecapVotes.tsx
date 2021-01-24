@@ -33,9 +33,24 @@ export const RecapVotes: FunctionComponent<RecapVotesProps> = ({
   }, [])
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        ...styles.container,
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
       {game.players.map((elem, index) => (
-        <Text style={{ fontSize: 22, margin: 7 }}>
+        <Text
+          key={index}
+          style={{
+            fontSize: 22,
+            margin: 7,
+            textAlign: "center",
+            flex: 1,
+          }}
+        >
           <Text
             style={{
               color: elem.role == Role.Traitor ? "red" : "green",
@@ -49,12 +64,12 @@ export const RecapVotes: FunctionComponent<RecapVotesProps> = ({
         </Text>
       ))}
       <TouchableOpacity
-        style={styles.buttonTouchable}
+        style={{ ...styles.buttonTouchable }}
         onPress={() => {
           navigation.replace("Score")
         }}
       >
-        <Text style={styles.buttonText}>Next </Text>
+        <Text style={{ ...styles.buttonText }}>Next </Text>
       </TouchableOpacity>
     </View>
   )

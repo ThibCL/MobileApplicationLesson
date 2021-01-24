@@ -44,8 +44,9 @@ export const Timer: FunctionComponent<TimerProps> = ({
       ) : (
         <Text style={styles.title}>Debate to find the impostor</Text>
       )}
-      <Text>
-        {Math.floor((timer - time) / 60)}:{(timer - time) % 60}
+      <Text style={{ fontSize: 20 }}>
+        {Math.floor((timer - time) / 60)}:{(timer - time) % 60 < 10 ? "0" : ""}
+        {(timer - time) % 60}
       </Text>
 
       <TouchableOpacity
@@ -57,7 +58,7 @@ export const Timer: FunctionComponent<TimerProps> = ({
         <Text style={styles.buttonText}>{isOn ? "Pause" : "Start"}</Text>
       </TouchableOpacity>
 
-      {!found ? (
+      {!found && isOn ? (
         <TouchableOpacity
           style={styles.buttonTouchable}
           onPress={() => {

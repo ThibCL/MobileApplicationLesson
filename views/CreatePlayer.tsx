@@ -71,15 +71,42 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
   }
 
   return (
-    <View style={{ ...styles.container, alignItems: "center" }}>
-      <Text style={{ ...styles.title, color: "black" }}>
+    <View
+      style={{
+        ...styles.container,
+        alignItems: "center",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <Text
+        style={{
+          ...styles.title,
+          textAlignVertical: "center",
+          color: "black",
+          flex: 1,
+        }}
+      >
         Insert Players Names
       </Text>
       {listPlay.map((elem, index) => (
-        <View style={{ width: "100%", flexDirection: "row" }}>
+        <View
+          key={index}
+          style={{
+            flex: 1,
+            borderWidth: 1,
+            borderColor: "#7F0000",
+            margin: 5,
+            justifyContent: "center",
+            width: "90%",
+            display: "flex",
+            flexDirection: "row",
+            backgroundColor: "#CCCCCC",
+          }}
+        >
           <TextInput
-            key={index}
-            placeholder="name"
+            style={{ flex: 3, textAlign: "center" }}
+            placeholder="Name"
             onChangeText={(text) => {
               let temp = [...listPlay]
               temp[index].name = text
@@ -89,9 +116,12 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
           />
 
           {listPlay.length > 3 ? (
-            <TouchableOpacity
-              key={index}
-              style={styles.buttonTouchableRight}
+            <Text
+              style={{
+                flex: 1,
+                textAlign: "center",
+                textAlignVertical: "center",
+              }}
               onPress={async () => {
                 let temporaire = [...listPlay]
                 temporaire.splice(index, 1)
@@ -105,20 +135,16 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
                 setListPlay(temporaire)
               }}
             >
-              <Text style={styles.buttonText}>Delete Player</Text>
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity style={styles.buttonTouchableDisabled}>
-              <Text style={styles.buttonText}>Delete Player</Text>
-            </TouchableOpacity>
-          )}
+              X
+            </Text>
+          ) : null}
         </View>
       ))}
 
-      <TouchableOpacity
-        style={styles.buttonTouchable}
-        onPress={() => {
-          if (listPlay.length < 10) {
+      {listPlay.length < 10 ? (
+        <TouchableOpacity
+          style={styles.buttonTouchable}
+          onPress={() => {
             setListPlay(
               listPlay.concat({
                 id: undefined,
@@ -129,11 +155,12 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
                 role: Role.Citizen,
               })
             )
-          }
-        }}
-      >
-        <Text style={styles.buttonText}>AddPlayer</Text>
-      </TouchableOpacity>
+          }}
+        >
+          <Text style={styles.buttonText}>AddPlayer</Text>
+        </TouchableOpacity>
+      ) : null}
+
       <TouchableOpacity
         style={styles.buttonTouchable}
         onPress={async () => {
