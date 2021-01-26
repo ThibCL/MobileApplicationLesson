@@ -17,6 +17,21 @@ export const Home: FunctionComponent<HomeProps> = ({
 }: HomeProps) => {
   const game = useContext(GameContext)
 
+  const getOption = async () => {
+    try {
+      const option = await game.apiClient.getDefaultOption(game.token)
+      if (option != undefined) {
+        game.setOptions(option)
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  useEffect(() => {
+    getOption()
+  }, [])
+
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -42,6 +57,9 @@ export const Home: FunctionComponent<HomeProps> = ({
       <TouchableOpacity
         style={styles.buttonTouchable}
         onPress={() => {
+          let opt = game.options
+          opt.id = 0
+          game.setOptions(opt)
           navigation.replace("CreatePlayer")
         }}
       >
@@ -58,7 +76,7 @@ export const Home: FunctionComponent<HomeProps> = ({
       <TouchableOpacity
         style={styles.buttonTouchable}
         onPress={() => {
-          navigation.replace("Option")
+          navigation.replace("Option", { default: true })
         }}
       >
         <Text style={styles.buttonText}>Options</Text>

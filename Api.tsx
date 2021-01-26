@@ -1,4 +1,4 @@
-import { Player } from "./GameContext"
+import { Game, Options, Player } from "./GameContext"
 
 const getGameEndpoint = "/getGame"
 
@@ -10,7 +10,10 @@ export class Client {
   }
 
   //Game
-  getGame = async (token: string, gameId: string): Promise<Player[]> => {
+  getGame = async (
+    token: string,
+    gameId: string
+  ): Promise<{ id: number; name: string; players: Player[] }> => {
     try {
       const gameResp = await fetch(this.url + getGameEndpoint + "/" + gameId, {
         method: "GET",
@@ -23,7 +26,7 @@ export class Client {
       return gameBody.game.players
     } catch (e) {
       console.log("getGame did not work")
-      return []
+      return { id: 0, name: "", players: [] }
     }
   }
 
@@ -43,7 +46,9 @@ export class Client {
 
   listGames = async (
     token: string
-  ): Promise<{ id: number; players: Player[] }[]> => {
+  ): Promise<
+    { id: number; name: string; players: Player[]; option: Options }[]
+  > => {
     try {
       const listGamesResp = await fetch(this.url + "/listGames", {
         method: "GET",
@@ -63,9 +68,15 @@ export class Client {
 
   saveGame = async (
     token: string,
-    gameId: number | undefined,
+    game: Game,
+    players: Player[],
+    option: Options
+  ): Promise<{
+    id: number
+    name: string
     players: Player[]
-  ): Promise<{ id: number; players: Player[] }> => {
+    option: Options
+  }> => {
     try {
       const addGameResp = await fetch(this.url + "/addGame", {
         method: "POST",
@@ -75,20 +86,24 @@ export class Client {
         },
         body: JSON.stringify({
           game: {
-            id: gameId,
+            ...game,
             players: players,
+            option: option,
           },
         }),
       })
 
-      console.log(addGameResp)
       const addGameBody = await addGameResp.json()
-      console.log(addGameBody)
 
       return addGameBody.game
     } catch (e) {
       console.log(e)
-      return { id: 0, players: [] }
+      return {
+        id: 0,
+        name: "",
+        players: [],
+        option: { id: 0, number_choices: 3, vote_anyway: false, time: 5 },
+      }
     }
   }
 
@@ -107,6 +122,42 @@ export class Client {
           "Content-Type": "application/json",
           "x-access-token": token,
         },
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  //Option
+  getDefaultOption = async (token: string): Promise<Options> => {
+    try {
+      const getDefaultOptionResp = await fetch(this.url + "/defaultOption", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-token": token,
+        },
+      })
+      const getDefaultOptionBody = await getDefaultOptionResp.json()
+
+      return getDefaultOptionBody.option
+    } catch (e) {
+      console.log(e)
+      return { id: 0, number_choices: 3, vote_anyway: false, time: 5 }
+    }
+  }
+
+  saveDefaultOption = async (token: string, option: Options): Promise<void> => {
+    try {
+      await fetch(this.url + "/saveDefaultOption", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-access-token": token,
+        },
+        body: JSON.stringify({
+          option: option,
+        }),
       })
     } catch (e) {
       console.log(e)

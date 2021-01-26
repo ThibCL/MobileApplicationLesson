@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from "react"
+import React, { FunctionComponent, useEffect, useState } from "react"
 import * as Google from "expo-google-app-auth"
 import { Client } from "./Api"
 
@@ -6,6 +6,11 @@ export enum Role {
   Master = "Master",
   Traitor = "Traitor",
   Citizen = "Citizen",
+}
+
+export type Game = {
+  id: number | undefined
+  name: string
 }
 
 export type Player = {
@@ -18,9 +23,10 @@ export type Player = {
 }
 
 export type Options = {
+  id: number
   time: number
-  voteAnyway: boolean
-  numberChoices: number
+  vote_anyway: boolean
+  number_choices: number
 }
 
 type GameContextProps = {
@@ -33,8 +39,8 @@ type GameContextProps = {
   setWord: (wrd: string) => void
   wordFound: boolean
   setWordFound: (wrdFound: boolean) => void
-  gameId: number | undefined
-  setGameId: (id: number) => void
+  game: Game
+  setGame: (gm: Game) => void
   players: Player[]
   setPlayers: (plys: Player[]) => void
   playersElected: number[]
@@ -55,13 +61,18 @@ export const GameContext = React.createContext<GameContextProps>({
   setWord: (_wrd) => {},
   wordFound: false,
   setWordFound: (_wrdFnd) => {},
-  gameId: undefined,
-  setGameId: (_id) => {},
+  game: { id: undefined, name: "" },
+  setGame: (_gm) => {},
   players: [],
   setPlayers: (plyrs) => {},
   playersElected: [],
   setPlayersElected: (plyrslct) => {},
-  options: { time: 5, voteAnyway: false, numberChoices: 1 },
+  options: {
+    id: 0,
+    time: 5,
+    vote_anyway: false,
+    number_choices: 1,
+  },
   setOptions: (opt) => {},
   eraseGame: () => {},
   playAgain: () => {},
@@ -85,17 +96,18 @@ export const GameProvider: FunctionComponent<GameProviderProps> = ({
   const [user, setUser] = useState<Google.GoogleUser | null>(null)
   const [word, setWord] = useState<string>("DefaultWord")
   const [wordFound, setWordFound] = useState<boolean>(false)
-  const [gameId, setGameId] = useState<number | undefined>(undefined)
+  const [game, setGame] = useState<Game>({ id: undefined, name: "" })
   const [players, setPlayers] = useState<Player[]>([])
   const [playersElected, setPlayersElected] = useState<number[]>([])
   const [options, setOptions] = useState<Options>({
+    id: 0,
     time: 5,
-    voteAnyway: false,
-    numberChoices: 3,
+    vote_anyway: false,
+    number_choices: 3,
   })
 
   const eraseGame = () => {
-    setGameId(undefined)
+    setGame({ id: undefined, name: "" })
     setPlayers([])
     setWord("DefaultWord")
     setPlayersElected([])
@@ -125,8 +137,8 @@ export const GameProvider: FunctionComponent<GameProviderProps> = ({
         setWord: setWord,
         wordFound: wordFound,
         setWordFound: setWordFound,
-        gameId: gameId,
-        setGameId: setGameId,
+        game: game,
+        setGame: setGame,
         players: players,
         setPlayers: setPlayers,
         playersElected: playersElected,

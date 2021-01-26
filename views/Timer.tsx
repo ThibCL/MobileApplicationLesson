@@ -33,7 +33,12 @@ export const Timer: FunctionComponent<TimerProps> = ({
       return () => clearInterval(interval)
     }
     if (time == timer) {
-      navigation.replace("Votes")
+      if (game.options.vote_anyway || found) {
+        navigation.replace("Votes")
+      } else {
+        game.setPlayersElected([-1])
+        navigation.replace("Score")
+      }
     }
   })
 
