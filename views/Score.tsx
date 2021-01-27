@@ -1,4 +1,9 @@
-import React, { FunctionComponent, useContext, useEffect } from "react"
+import React, {
+  FunctionComponent,
+  useContext,
+  useEffect,
+  useState,
+} from "react"
 import { View, Text, TouchableOpacity } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
@@ -16,6 +21,8 @@ export const Score: FunctionComponent<ScoreProps> = ({
 }: ScoreProps) => {
   const game = useContext(GameContext)
 
+  const [maxScore, setMaxScore] = useState<number>(0)
+
   useEffect(() => {
     const players = computeScore(
       game.players,
@@ -23,15 +30,42 @@ export const Score: FunctionComponent<ScoreProps> = ({
       game.playersElected[0]
     )
     game.setPlayers(players)
+
+    let max = 0
+    for (let player of players) {
+      if (player.score > max) {
+        max = player.score
+      }
+    }
+    if (max >= game.options.score_limit) {
+      game.setGame({ ...game.game, finished: true })
+    }
+    setMaxScore(max)
   }, [])
 
   return (
-    <View style={{ ...styles.container, ...styles.view }}>
-      <Text style={{ ...styles.title }}>{game.game.name}</Text>
+    <View
+      style={{
+        ...styles.container,
+        alignItems: "center",
+        justifyContent: "space-around",
+      }}
+    >
+      <Text style={{ ...styles.title }}>
+        {game.game.name}
+        {game.game.finished ? " is finished" : null}
+      </Text>
       {game.players.map((player, index) => (
         <Text
           key={index}
-          style={{ fontSize: 24, margin: 5, fontWeight: "bold" }}
+          style={{
+            fontSize: 24,
+            margin: 5,
+            fontWeight: "bold",
+            borderColor: "red",
+            borderWidth:
+              player.score === maxScore && game.game.finished ? 2 : 0,
+          }}
         >
           <Text>{player.name} </Text>
           <Text style={{ color: "grey" }}>{player.score} </Text>
@@ -60,18 +94,22 @@ export const Score: FunctionComponent<ScoreProps> = ({
       <TouchableOpacity
         style={{ ...styles.buttonTouchable, backgroundColor: "white" }}
         onPress={async () => {
-          navigation.replace("CreatePlayer")
           await game.apiClient.saveGame(
             game.token,
             game.game,
             game.players,
             game.options
           )
-          game.playAgain()
+          if (game.game.finished) {
+            game.newGame(game.game, game.players, game.options)
+          } else {
+            game.playAgain()
+          }
+          navigation.replace("CreatePlayer")
         }}
       >
         <Text style={{ ...styles.buttonText, color: "#338A3E" }}>
-          Play again
+          {game.game.finished ? "New game" : "Play again"}
         </Text>
       </TouchableOpacity>
     </View>

@@ -21,13 +21,18 @@ export const History: FunctionComponent<HistoryProps> = ({
 }: HistoryProps) => {
   const game = useContext(GameContext)
   const [games, setGames] = useState<
-    { id: number; name: string; players: Player[]; option: Options }[]
+    {
+      id: number
+      name: string
+      finished: boolean
+      players: Player[]
+      option: Options
+    }[]
   >([])
   const [gameExpanded, setGameExpanded] = useState<number>(0)
 
   const getGames = async () => {
     const listGames = await game.apiClient.listGames(game.token)
-    console.log(listGames)
     setGames(listGames)
   }
 
@@ -55,39 +60,67 @@ export const History: FunctionComponent<HistoryProps> = ({
             }}
             key={item.id}
           >
-            <Text
+            <View
               style={{
-                fontSize: 16,
-                fontWeight: "bold",
                 padding: 5,
                 borderBottomWidth: 1,
-              }}
-              onPress={() => {
-                if (item.id === gameExpanded) {
-                  setGameExpanded(0)
-                } else {
-                  setGameExpanded(item.id)
-                }
+                display: "flex",
+                flexDirection: "row",
               }}
             >
-              {item.name}
-            </Text>
+              <Text
+                style={{ fontSize: 16, fontWeight: "bold", flex: 3 }}
+                onPress={() => {
+                  if (item.id === gameExpanded) {
+                    setGameExpanded(0)
+                  } else {
+                    setGameExpanded(item.id)
+                  }
+                }}
+              >
+                {item.name}
+              </Text>
+              {item.finished ? (
+                <Text
+                  style={{
+                    flex: 1,
+                    textAlign: "center",
+                    color: "grey",
+                    borderWidth: 1,
+                    borderColor: "grey",
+                    borderRadius: 10,
+                    backgroundColor: "lightgrey",
+                  }}
+                >
+                  Finished
+                </Text>
+              ) : null}
+            </View>
+
             {gameExpanded === item.id ? (
               <GameDisplayer players={item.players}></GameDisplayer>
             ) : null}
             <View style={{ display: "flex", flexDirection: "row" }}>
               <TouchableOpacity
-                style={{ ...styles.buttonTouchable, width: "45%" }}
+                style={{
+                  ...styles.buttonTouchable,
+                  width: "45%",
+                }}
                 onPress={() => {
-                  console.log(item)
-                  game.setGame(item)
-                  game.setPlayers(item.players)
-                  game.setOptions(item.option)
+                  if (item.finished) {
+                    game.newGame(item, item.players, item.option)
+                  } else {
+                    game.setGame(item)
+                    game.setPlayers(item.players)
+                    game.setOptions(item.option)
+                  }
                   navigation.pop()
                   navigation.replace("CreatePlayer")
                 }}
               >
-                <Text style={styles.buttonText}>Continue</Text>
+                <Text style={styles.buttonText}>
+                  {item.finished ? "New game" : "Continue"}
+                </Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={{ ...styles.buttonTouchable, width: "45%" }}

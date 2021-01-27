@@ -216,7 +216,7 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
             }
 
             game.setOptions(addGame.option)
-            game.setGame({ id: addGame.id, name: gName })
+            game.setGame({ id: addGame.id, name: gName, finished: false })
             game.setPlayers(addGame.players)
             navigation.replace("Roles")
           } else {

@@ -11,6 +11,7 @@ export enum Role {
 export type Game = {
   id: number | undefined
   name: string
+  finished: boolean
 }
 
 export type Player = {
@@ -27,6 +28,7 @@ export type Options = {
   time: number
   vote_anyway: boolean
   number_choices: number
+  score_limit: number
 }
 
 type GameContextProps = {
@@ -49,6 +51,7 @@ type GameContextProps = {
   setOptions: (opts: Options) => void
   eraseGame: () => void
   playAgain: () => void
+  newGame: (game: Game, players: Player[], option: Options) => void
 }
 
 export const GameContext = React.createContext<GameContextProps>({
@@ -61,7 +64,7 @@ export const GameContext = React.createContext<GameContextProps>({
   setWord: (_wrd) => {},
   wordFound: false,
   setWordFound: (_wrdFnd) => {},
-  game: { id: undefined, name: "" },
+  game: { id: undefined, name: "", finished: false },
   setGame: (_gm) => {},
   players: [],
   setPlayers: (plyrs) => {},
@@ -72,10 +75,12 @@ export const GameContext = React.createContext<GameContextProps>({
     time: 5,
     vote_anyway: false,
     number_choices: 1,
+    score_limit: 100,
   },
   setOptions: (opt) => {},
   eraseGame: () => {},
   playAgain: () => {},
+  newGame: (_g, _p, _o) => {},
 })
 
 interface GameProviderProps {
@@ -96,7 +101,11 @@ export const GameProvider: FunctionComponent<GameProviderProps> = ({
   const [user, setUser] = useState<Google.GoogleUser | null>(null)
   const [word, setWord] = useState<string>("DefaultWord")
   const [wordFound, setWordFound] = useState<boolean>(false)
-  const [game, setGame] = useState<Game>({ id: undefined, name: "" })
+  const [game, setGame] = useState<Game>({
+    id: undefined,
+    name: "",
+    finished: false,
+  })
   const [players, setPlayers] = useState<Player[]>([])
   const [playersElected, setPlayersElected] = useState<number[]>([])
   const [options, setOptions] = useState<Options>({
@@ -104,10 +113,11 @@ export const GameProvider: FunctionComponent<GameProviderProps> = ({
     time: 5,
     vote_anyway: false,
     number_choices: 3,
+    score_limit: 100,
   })
 
   const eraseGame = () => {
-    setGame({ id: undefined, name: "" })
+    setGame({ id: undefined, name: "", finished: false })
     setPlayers([])
     setWord("DefaultWord")
     setPlayersElected([])
@@ -123,6 +133,23 @@ export const GameProvider: FunctionComponent<GameProviderProps> = ({
     setPlayers(updatedPlayers)
     setWord("DefaultWord")
     setPlayersElected([])
+  }
+
+  const newGame = (
+    previousGame: Game,
+    previousPlayers: Player[],
+    previousOption: Options
+  ) => {
+    setWord("DefaultWord")
+    setGame({ ...previousGame, id: 0, finished: false })
+    setPlayers(
+      previousPlayers.map((player: Player, index: number) => {
+        player.id = -index
+        player.score = 0
+        return player
+      })
+    )
+    setOptions({ ...previousOption, id: 0 })
   }
 
   return (
@@ -147,6 +174,7 @@ export const GameProvider: FunctionComponent<GameProviderProps> = ({
         setOptions: setOptions,
         eraseGame: eraseGame,
         playAgain: playAgain,
+        newGame: newGame,
       }}
     >
       {children}
