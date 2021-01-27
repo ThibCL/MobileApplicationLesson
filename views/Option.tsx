@@ -4,21 +4,24 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import { styles } from "../generalStyle"
 import { GameContext, Options } from "../GameContext"
-import { Timer } from "./Timer"
+import { RouteProp } from "@react-navigation/native"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "Option">
+type ScreenRouteProp = RouteProp<StackParamList, "Option">
 
 interface OptionsProps {
   navigation: ScreenNavigationProp
+  route: ScreenRouteProp
 }
 
 export const Option: FunctionComponent<OptionsProps> = ({
   navigation,
+  route,
 }: OptionsProps) => {
   const game = useContext(GameContext)
-  const [alwaysVote, setAlwaysVote] = useState(game.options.voteAnyway)
+  const [alwaysVote, setAlwaysVote] = useState(game.options.vote_anyway)
   const [timerDuration, setTimerDuration] = useState(game.options.time)
-  const [numChoice, setNumChoice] = useState(game.options.numberChoices)
+  const [numChoice, setNumChoice] = useState(game.options.number_choices)
 
   return (
     <View style={styles.container}>
@@ -100,14 +103,25 @@ export const Option: FunctionComponent<OptionsProps> = ({
 
       <TouchableOpacity
         style={styles.buttonTouchable}
-        onPress={() => {
-          game.setOptions({
+        onPress={async () => {
+          const opt: Options = {
+            id: game.options.id,
             time: timerDuration,
-            voteAnyway: alwaysVote,
-            numberChoices: numChoice,
-          })
-
-          navigation.replace("Home")
+            vote_anyway: alwaysVote,
+            number_choices: numChoice,
+          }
+          game.setOptions(opt)
+          if (route.params.default) {
+            try {
+              console.log(opt)
+              await game.apiClient.saveDefaultOption(game.token, opt)
+            } catch (e) {
+              console.log(e)
+            }
+            navigation.replace("Home")
+          } else {
+            navigation.replace("CreatePlayer")
+          }
         }}
       >
         <Text style={styles.buttonText}>Validate options </Text>

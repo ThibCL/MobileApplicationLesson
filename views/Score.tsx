@@ -27,6 +27,7 @@ export const Score: FunctionComponent<ScoreProps> = ({
 
   return (
     <View style={{ ...styles.container, ...styles.view }}>
+      <Text style={{ ...styles.title }}>{game.game.name}</Text>
       {game.players.map((player, index) => (
         <Text
           key={index}
@@ -44,7 +45,12 @@ export const Score: FunctionComponent<ScoreProps> = ({
         style={{ ...styles.buttonTouchable, backgroundColor: "white" }}
         onPress={async () => {
           navigation.replace("Home")
-          await game.apiClient.saveGame(game.token, game.gameId!, game.players)
+          await game.apiClient.saveGame(
+            game.token,
+            game.game,
+            game.players,
+            game.options
+          )
           game.eraseGame()
         }}
       >
@@ -55,7 +61,12 @@ export const Score: FunctionComponent<ScoreProps> = ({
         style={{ ...styles.buttonTouchable, backgroundColor: "white" }}
         onPress={async () => {
           navigation.replace("CreatePlayer")
-          await game.apiClient.saveGame(game.token, game.gameId!, game.players)
+          await game.apiClient.saveGame(
+            game.token,
+            game.game,
+            game.players,
+            game.options
+          )
           game.playAgain()
         }}
       >
@@ -78,19 +89,22 @@ const computeScore = (
     switch (player.role) {
       case Role.Master:
         if (wordFound) player.scoreVar += 5
-        if (players[playerElected].role === Role.Traitor) player.scoreVar += 5
+        if (playerElected > 0 && players[playerElected].role === Role.Traitor)
+          player.scoreVar += 5
         if (player.vote && players[player.vote].role === Role.Traitor)
           player.scoreVar += 5
         break
       case Role.Citizen:
         if (wordFound) player.scoreVar += 5
-        if (players[playerElected].role === Role.Traitor) player.scoreVar += 5
+        if (playerElected > 0 && players[playerElected].role === Role.Traitor)
+          player.scoreVar += 5
         if (player.vote && players[player.vote].role === Role.Traitor)
           player.scoreVar += 5
         break
       case Role.Traitor:
-        if (!wordFound) player.scoreVar -= 10
-        if (players[playerElected].role === Role.Traitor) player.scoreVar -= 5
+        if (!wordFound) player.scoreVar -= 20
+        if (playerElected > 0 && players[playerElected].role === Role.Traitor)
+          player.scoreVar -= 5
         else player.scoreVar += 15
 
         break

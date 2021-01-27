@@ -41,6 +41,7 @@ export const RecapVotes: FunctionComponent<RecapVotesProps> = ({
         flexDirection: "column",
       }}
     >
+      <Text style={{ ...styles.title }}>{game.game.name}</Text>
       {game.players.map((elem, index) => (
         <Text
           key={index}
@@ -54,6 +55,8 @@ export const RecapVotes: FunctionComponent<RecapVotesProps> = ({
           <Text
             style={{
               color: elem.role == Role.Traitor ? "red" : "green",
+              textDecorationLine:
+                game.playersElected[0] === index ? "line-through" : "none",
             }}
           >
             {elem.name}

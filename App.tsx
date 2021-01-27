@@ -26,7 +26,7 @@ export type StackParamList = {
   Tie: undefined
   Timer: undefined
   CreatePlayer: undefined
-  Option: undefined
+  Option: { default: boolean }
   RecapVotes: undefined
   Auth: undefined
 }

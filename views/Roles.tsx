@@ -29,7 +29,7 @@ export const Roles: FunctionComponent<RolesProps> = ({
   const game = useContext(GameContext)
 
   const [words, setWords] = useState<string[]>(
-    randomWords(game.options.numberChoices)
+    randomWords(game.options.number_choices)
   )
   const [wordSelected, setWordSelected] = useState<number>(0)
   const [index, setIndex] = useState<number>(0)
@@ -59,7 +59,6 @@ export const Roles: FunctionComponent<RolesProps> = ({
     playersUpdated[masterIndex] = playersUpdated[0]
     playersUpdated[0] = mstr
 
-    console.log(playersUpdated)
     game.setPlayers(playersUpdated)
   }
 
@@ -68,7 +67,14 @@ export const Roles: FunctionComponent<RolesProps> = ({
   }, [])
 
   return (
-    <View style={{ ...styles.container, ...styles.view }}>
+    <View
+      style={{
+        ...styles.container,
+        ...styles.view,
+        justifyContent: "space-around",
+      }}
+    >
+      <Text style={{ ...styles.title }}>{game.game.name}</Text>
       <View
         style={{
           width: "80%",
