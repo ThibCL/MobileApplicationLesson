@@ -105,6 +105,7 @@ export const Score: FunctionComponent<ScoreProps> = ({
           } else {
             game.playAgain()
           }
+          navigation.push("Home")
           navigation.replace("CreatePlayer")
         }}
       >

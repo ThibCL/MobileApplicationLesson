@@ -30,6 +30,7 @@ export const Home: FunctionComponent<HomeProps> = ({
 
   useEffect(() => {
     getOption()
+    game.eraseGame()
   }, [])
 
   useEffect(() => {

@@ -177,6 +177,7 @@ export const Option: FunctionComponent<OptionsProps> = ({
             }
             navigation.replace("Home")
           } else {
+            navigation.pop()
             navigation.replace("CreatePlayer")
           }
         }}
@@ -186,7 +187,12 @@ export const Option: FunctionComponent<OptionsProps> = ({
       <TouchableOpacity
         style={styles.buttonTouchable}
         onPress={() => {
-          navigation.replace("Home")
+          if (route.params.default) {
+            navigation.replace("Home")
+          } else {
+            navigation.pop()
+            navigation.replace("CreatePlayer")
+          }
         }}
       >
         <Text style={styles.buttonText}>Cancel changes </Text>

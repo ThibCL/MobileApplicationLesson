@@ -1,7 +1,10 @@
-import React from "react"
+import React, { useContext } from "react"
 import { NavigationContainer } from "@react-navigation/native"
-import { createStackNavigator } from "@react-navigation/stack"
-import { GameProvider, Player } from "./GameContext"
+import {
+  createStackNavigator,
+  StackNavigationProp,
+} from "@react-navigation/stack"
+import { GameContext, GameProvider, Player } from "./GameContext"
 import { Home } from "./views/Home"
 import { Rules } from "./views/Rules"
 import { History } from "./views/History"
@@ -15,6 +18,7 @@ import { CreatePlayer } from "./views/CreatePlayer"
 import { RecapVotes } from "./views/RecapVotes"
 import { Auth } from "./views/Auth"
 import { navigatorStyle } from "./generalStyle"
+import { Alert, Button } from "react-native"
 
 export type StackParamList = {
   Home: undefined
@@ -34,6 +38,8 @@ export type StackParamList = {
 const Stack = createStackNavigator<StackParamList>()
 
 export default function App() {
+  const game = useContext(GameContext)
+
   return (
     <GameProvider>
       <NavigationContainer>
@@ -55,17 +61,89 @@ export default function App() {
           />
           <Stack.Screen
             name="Roles"
-            options={{ ...navigatorStyle }}
+            options={({ navigation }) => ({
+              ...navigatorStyle,
+              headerRight: () => (
+                <Button
+                  color="#7F0000"
+                  title="Home"
+                  onPress={() => {
+                    Alert.alert(
+                      "Return home",
+                      "Are you sure you wanna quit? The game will be lost.",
+                      [
+                        {
+                          text: "Yes",
+                          onPress: () => {
+                            game.eraseGame()
+                            navigation.replace("Home")
+                          },
+                        },
+                        { text: "Cancel", onPress: () => {} },
+                      ]
+                    )
+                  }}
+                />
+              ),
+            })}
             component={Roles}
           />
           <Stack.Screen
             name="Votes"
-            options={{ ...navigatorStyle }}
+            options={({ navigation }) => ({
+              ...navigatorStyle,
+              headerRight: () => (
+                <Button
+                  color="#7F0000"
+                  title="Home"
+                  onPress={() => {
+                    Alert.alert(
+                      "Return home",
+                      "Are you sure you wanna quit? The game will be lost.",
+                      [
+                        {
+                          text: "Yes",
+                          onPress: () => {
+                            game.eraseGame()
+                            navigation.replace("Home")
+                          },
+                        },
+                        { text: "Cancel", onPress: () => {} },
+                      ]
+                    )
+                  }}
+                />
+              ),
+            })}
             component={Votes}
           />
           <Stack.Screen
             name="Tie"
-            options={{ ...navigatorStyle }}
+            options={({ navigation }) => ({
+              ...navigatorStyle,
+              headerRight: () => (
+                <Button
+                  color="#7F0000"
+                  title="Home"
+                  onPress={() => {
+                    Alert.alert(
+                      "Return home",
+                      "Are you sure you wanna quit? The game will be lost.",
+                      [
+                        {
+                          text: "Yes",
+                          onPress: () => {
+                            game.eraseGame()
+                            navigation.replace("Home")
+                          },
+                        },
+                        { text: "Cancel", onPress: () => {} },
+                      ]
+                    )
+                  }}
+                />
+              ),
+            })}
             component={Tie}
           />
           <Stack.Screen
@@ -75,12 +153,60 @@ export default function App() {
           />
           <Stack.Screen
             name="Timer"
-            options={{ ...navigatorStyle }}
+            options={({ navigation }) => ({
+              ...navigatorStyle,
+              headerRight: () => (
+                <Button
+                  color="#7F0000"
+                  title="Home"
+                  onPress={() => {
+                    Alert.alert(
+                      "Return home",
+                      "Are you sure you wanna quit? The game will be lost.",
+                      [
+                        {
+                          text: "Yes",
+                          onPress: () => {
+                            game.eraseGame()
+                            navigation.replace("Home")
+                          },
+                        },
+                        { text: "Cancel", onPress: () => {} },
+                      ]
+                    )
+                  }}
+                />
+              ),
+            })}
             component={Timer}
           />
           <Stack.Screen
             name="CreatePlayer"
-            options={{ ...navigatorStyle }}
+            options={({ navigation }) => ({
+              ...navigatorStyle,
+              headerRight: () => (
+                <Button
+                  color="#7F0000"
+                  title="Home"
+                  onPress={() => {
+                    Alert.alert(
+                      "Return home",
+                      "Are you sure you wanna quit? The game will be lost.",
+                      [
+                        {
+                          text: "Yes",
+                          onPress: () => {
+                            game.eraseGame()
+                            navigation.replace("Home")
+                          },
+                        },
+                        { text: "Cancel", onPress: () => {} },
+                      ]
+                    )
+                  }}
+                />
+              ),
+            })}
             component={CreatePlayer}
           />
           <Stack.Screen
@@ -90,7 +216,32 @@ export default function App() {
           />
           <Stack.Screen
             name="RecapVotes"
-            options={{ ...navigatorStyle, title: "Votes result" }}
+            options={({ navigation }) => ({
+              ...navigatorStyle,
+              title: "Votes result",
+              headerRight: () => (
+                <Button
+                  color="#7F0000"
+                  title="Home"
+                  onPress={() => {
+                    Alert.alert(
+                      "Return home",
+                      "Are you sure you wanna quit? The game will be lost.",
+                      [
+                        {
+                          text: "Yes",
+                          onPress: () => {
+                            game.eraseGame()
+                            navigation.replace("Home")
+                          },
+                        },
+                        { text: "Cancel", onPress: () => {} },
+                      ]
+                    )
+                  }}
+                />
+              ),
+            })}
             component={RecapVotes}
           />
           <Stack.Screen
