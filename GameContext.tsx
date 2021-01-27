@@ -11,6 +11,7 @@ export enum Role {
 export type Game = {
   id: number | undefined
   name: string
+  finished: boolean
 }
 
 export type Player = {
@@ -27,6 +28,7 @@ export type Options = {
   time: number
   vote_anyway: boolean
   number_choices: number
+  score_limit: number
 }
 
 type GameContextProps = {
@@ -61,7 +63,7 @@ export const GameContext = React.createContext<GameContextProps>({
   setWord: (_wrd) => {},
   wordFound: false,
   setWordFound: (_wrdFnd) => {},
-  game: { id: undefined, name: "" },
+  game: { id: undefined, name: "", finished: false },
   setGame: (_gm) => {},
   players: [],
   setPlayers: (plyrs) => {},
@@ -72,6 +74,7 @@ export const GameContext = React.createContext<GameContextProps>({
     time: 5,
     vote_anyway: false,
     number_choices: 1,
+    score_limit: 100,
   },
   setOptions: (opt) => {},
   eraseGame: () => {},
@@ -96,7 +99,11 @@ export const GameProvider: FunctionComponent<GameProviderProps> = ({
   const [user, setUser] = useState<Google.GoogleUser | null>(null)
   const [word, setWord] = useState<string>("DefaultWord")
   const [wordFound, setWordFound] = useState<boolean>(false)
-  const [game, setGame] = useState<Game>({ id: undefined, name: "" })
+  const [game, setGame] = useState<Game>({
+    id: undefined,
+    name: "",
+    finished: false,
+  })
   const [players, setPlayers] = useState<Player[]>([])
   const [playersElected, setPlayersElected] = useState<number[]>([])
   const [options, setOptions] = useState<Options>({
@@ -104,10 +111,11 @@ export const GameProvider: FunctionComponent<GameProviderProps> = ({
     time: 5,
     vote_anyway: false,
     number_choices: 3,
+    score_limit: 100,
   })
 
   const eraseGame = () => {
-    setGame({ id: undefined, name: "" })
+    setGame({ id: undefined, name: "", finished: false })
     setPlayers([])
     setWord("DefaultWord")
     setPlayersElected([])

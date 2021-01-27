@@ -19,13 +19,26 @@ export const Option: FunctionComponent<OptionsProps> = ({
   route,
 }: OptionsProps) => {
   const game = useContext(GameContext)
-  const [alwaysVote, setAlwaysVote] = useState(game.options.vote_anyway)
-  const [timerDuration, setTimerDuration] = useState(game.options.time)
-  const [numChoice, setNumChoice] = useState(game.options.number_choices)
+  const [alwaysVote, setAlwaysVote] = useState<boolean>(
+    game.options.vote_anyway
+  )
+  const [timerDuration, setTimerDuration] = useState<number>(game.options.time)
+  const [numChoice, setNumChoice] = useState<number>(
+    game.options.number_choices
+  )
+  const [scoreLimit, setScoreLimit] = useState<number>(game.options.score_limit)
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.textNormal}>Number of words to choose from</Text>
+    <View
+      style={{
+        ...styles.container,
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+    >
+      <Text style={{ ...styles.textNormal }}>
+        Number of words to choose from
+      </Text>
       <View style={{ flexDirection: "row" }}>
         <TouchableOpacity
           disabled={numChoice < 2}
@@ -41,7 +54,11 @@ export const Option: FunctionComponent<OptionsProps> = ({
         >
           <Text style={{ ...styles.buttonText, flex: 1 }}>-</Text>
         </TouchableOpacity>
-        <Text style={{ flex: 1 }}>{numChoice} words</Text>
+        <Text
+          style={{ flex: 1, textAlign: "center", textAlignVertical: "center" }}
+        >
+          {numChoice} words
+        </Text>
 
         <TouchableOpacity
           disabled={numChoice > 6}
@@ -82,7 +99,11 @@ export const Option: FunctionComponent<OptionsProps> = ({
         >
           <Text style={{ ...styles.buttonText, flex: 1 }}>-</Text>
         </TouchableOpacity>
-        <Text style={{ flex: 1 }}>{timerDuration} minutes</Text>
+        <Text
+          style={{ flex: 1, textAlignVertical: "center", textAlign: "center" }}
+        >
+          {timerDuration} minutes
+        </Text>
 
         <TouchableOpacity
           disabled={timerDuration > 10}
@@ -101,6 +122,41 @@ export const Option: FunctionComponent<OptionsProps> = ({
         </TouchableOpacity>
       </View>
 
+      <Text style={{ ...styles.textNormal }}>Number of points to win</Text>
+      <View style={{ flexDirection: "row" }}>
+        <TouchableOpacity
+          disabled={scoreLimit <= 20}
+          style={{
+            ...(scoreLimit <= 20
+              ? styles.buttonTouchableDisabled
+              : styles.buttonTouchable),
+            flex: 1,
+          }}
+          onPress={() => {
+            setScoreLimit(scoreLimit - 5)
+          }}
+        >
+          <Text style={{ ...styles.buttonText, flex: 1 }}>-</Text>
+        </TouchableOpacity>
+        <Text
+          style={{ flex: 1, textAlignVertical: "center", textAlign: "center" }}
+        >
+          {scoreLimit} points
+        </Text>
+
+        <TouchableOpacity
+          style={{
+            ...styles.buttonTouchable,
+            flex: 1,
+          }}
+          onPress={() => {
+            setScoreLimit(scoreLimit + 5)
+          }}
+        >
+          <Text style={styles.buttonText}>+</Text>
+        </TouchableOpacity>
+      </View>
+
       <TouchableOpacity
         style={styles.buttonTouchable}
         onPress={async () => {
@@ -109,6 +165,7 @@ export const Option: FunctionComponent<OptionsProps> = ({
             time: timerDuration,
             vote_anyway: alwaysVote,
             number_choices: numChoice,
+            score_limit: scoreLimit,
           }
           game.setOptions(opt)
           if (route.params.default) {

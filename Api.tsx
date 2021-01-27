@@ -13,7 +13,12 @@ export class Client {
   getGame = async (
     token: string,
     gameId: string
-  ): Promise<{ id: number; name: string; players: Player[] }> => {
+  ): Promise<{
+    id: number
+    name: string
+    finished: boolean
+    players: Player[]
+  }> => {
     try {
       const gameResp = await fetch(this.url + getGameEndpoint + "/" + gameId, {
         method: "GET",
@@ -26,7 +31,7 @@ export class Client {
       return gameBody.game.players
     } catch (e) {
       console.log("getGame did not work")
-      return { id: 0, name: "", players: [] }
+      return { id: 0, name: "", finished: false, players: [] }
     }
   }
 
@@ -47,7 +52,13 @@ export class Client {
   listGames = async (
     token: string
   ): Promise<
-    { id: number; name: string; players: Player[]; option: Options }[]
+    {
+      id: number
+      name: string
+      finished: boolean
+      players: Player[]
+      option: Options
+    }[]
   > => {
     try {
       const listGamesResp = await fetch(this.url + "/listGames", {
@@ -74,6 +85,7 @@ export class Client {
   ): Promise<{
     id: number
     name: string
+    finished: boolean
     players: Player[]
     option: Options
   }> => {
@@ -101,8 +113,15 @@ export class Client {
       return {
         id: 0,
         name: "",
+        finished: false,
         players: [],
-        option: { id: 0, number_choices: 3, vote_anyway: false, time: 5 },
+        option: {
+          id: 0,
+          number_choices: 3,
+          vote_anyway: false,
+          time: 5,
+          score_limit: 100,
+        },
       }
     }
   }
@@ -143,7 +162,13 @@ export class Client {
       return getDefaultOptionBody.option
     } catch (e) {
       console.log(e)
-      return { id: 0, number_choices: 3, vote_anyway: false, time: 5 }
+      return {
+        id: 0,
+        number_choices: 3,
+        vote_anyway: false,
+        time: 5,
+        score_limit: 100,
+      }
     }
   }
 
