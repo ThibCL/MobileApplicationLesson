@@ -108,15 +108,7 @@ export const History: FunctionComponent<HistoryProps> = ({
                 }}
                 onPress={() => {
                   if (item.finished) {
-                    game.setGame({ ...item, id: 0, finished: false })
-                    game.setPlayers(
-                      item.players.map((player: Player, index: number) => {
-                        player.id = -index
-                        player.score = 0
-                        return player
-                      })
-                    )
-                    game.setOptions({ ...item.option, id: 0 })
+                    game.newGame(item, item.players, item.option)
                   } else {
                     game.setGame(item)
                     game.setPlayers(item.players)

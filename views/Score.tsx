@@ -91,25 +91,27 @@ export const Score: FunctionComponent<ScoreProps> = ({
         <Text style={{ ...styles.buttonText, color: "#338A3E" }}>Home</Text>
       </TouchableOpacity>
 
-      {game.game.finished ? null : (
-        <TouchableOpacity
-          style={{ ...styles.buttonTouchable, backgroundColor: "white" }}
-          onPress={async () => {
-            navigation.replace("CreatePlayer")
-            await game.apiClient.saveGame(
-              game.token,
-              game.game,
-              game.players,
-              game.options
-            )
+      <TouchableOpacity
+        style={{ ...styles.buttonTouchable, backgroundColor: "white" }}
+        onPress={async () => {
+          await game.apiClient.saveGame(
+            game.token,
+            game.game,
+            game.players,
+            game.options
+          )
+          if (game.game.finished) {
+            game.newGame(game.game, game.players, game.options)
+          } else {
             game.playAgain()
-          }}
-        >
-          <Text style={{ ...styles.buttonText, color: "#338A3E" }}>
-            Play again
-          </Text>
-        </TouchableOpacity>
-      )}
+          }
+          navigation.replace("CreatePlayer")
+        }}
+      >
+        <Text style={{ ...styles.buttonText, color: "#338A3E" }}>
+          {game.game.finished ? "New game" : "Play again"}
+        </Text>
+      </TouchableOpacity>
     </View>
   )
 }

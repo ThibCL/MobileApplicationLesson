@@ -51,6 +51,7 @@ type GameContextProps = {
   setOptions: (opts: Options) => void
   eraseGame: () => void
   playAgain: () => void
+  newGame: (game: Game, players: Player[], option: Options) => void
 }
 
 export const GameContext = React.createContext<GameContextProps>({
@@ -79,6 +80,7 @@ export const GameContext = React.createContext<GameContextProps>({
   setOptions: (opt) => {},
   eraseGame: () => {},
   playAgain: () => {},
+  newGame: (_g, _p, _o) => {},
 })
 
 interface GameProviderProps {
@@ -133,6 +135,23 @@ export const GameProvider: FunctionComponent<GameProviderProps> = ({
     setPlayersElected([])
   }
 
+  const newGame = (
+    previousGame: Game,
+    previousPlayers: Player[],
+    previousOption: Options
+  ) => {
+    setWord("DefaultWord")
+    setGame({ ...previousGame, id: 0, finished: false })
+    setPlayers(
+      previousPlayers.map((player: Player, index: number) => {
+        player.id = -index
+        player.score = 0
+        return player
+      })
+    )
+    setOptions({ ...previousOption, id: 0 })
+  }
+
   return (
     <GameContext.Provider
       value={{
@@ -155,6 +174,7 @@ export const GameProvider: FunctionComponent<GameProviderProps> = ({
         setOptions: setOptions,
         eraseGame: eraseGame,
         playAgain: playAgain,
+        newGame: newGame,
       }}
     >
       {children}
