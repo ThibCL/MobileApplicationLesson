@@ -206,7 +206,7 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
           if (valid.different) {
             const addGame = await game.apiClient.saveGame(
               game.token,
-              game.game,
+              { ...game.game, name: gameName },
               listPlay,
               game.options
             )
@@ -214,6 +214,8 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
             if (gameName.trim() === "") {
               gName = "Game " + addGame.id
             }
+
+            game.setOptions(addGame.option)
             game.setGame({ id: addGame.id, name: gName })
             game.setPlayers(addGame.players)
             navigation.replace("Roles")

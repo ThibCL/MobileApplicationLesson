@@ -39,7 +39,7 @@ export const Tie: FunctionComponent<TieProps> = ({ navigation }: TieProps) => {
         <TouchableOpacity
           style={{ ...styles.buttonTouchable, backgroundColor: "white" }}
           onPress={() => {
-            game.setPlayersElected([playerSelected])
+            game.setPlayersElected([game.playersElected[playerSelected]])
             navigation.replace("RecapVotes")
           }}
         >
