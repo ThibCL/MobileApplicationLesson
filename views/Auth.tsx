@@ -1,10 +1,11 @@
 import React, { FunctionComponent, useContext } from "react"
-import { View, Text, TouchableOpacity } from "react-native"
+import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native"
 import { styles } from "../generalStyle"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import * as Google from "expo-google-app-auth"
 import { GameContext } from "../GameContext"
+import { useState } from "react"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "Auth">
 
@@ -16,6 +17,8 @@ export const Auth: FunctionComponent<AuthProps> = ({
   navigation,
 }: AuthProps) => {
   const game = useContext(GameContext)
+
+  const [loading, setLoading] = useState<boolean>(false)
 
   const signInWithGoogleAsync = async () => {
     const result = await Google.logInAsync({
@@ -42,21 +45,28 @@ export const Auth: FunctionComponent<AuthProps> = ({
         navigation.replace("Home")
       } else {
         alert("User does not exist")
+        setLoading(false)
       }
     } else {
       alert("Error when log in")
+      setLoading(false)
     }
   }
 
   const login = () => {
+    setLoading(true)
     signInWithGoogleAsync()
   }
 
   return (
     <View style={{ ...styles.container, ...styles.view }}>
-      <TouchableOpacity style={styles.buttonTouchable} onPress={login}>
-        <Text style={styles.buttonText}>Sign in with Google</Text>
-      </TouchableOpacity>
+      {loading ? (
+        <ActivityIndicator size="large" color="#7F0000" />
+      ) : (
+        <TouchableOpacity style={styles.buttonTouchable} onPress={login}>
+          <Text style={styles.buttonText}>Sign in with Google</Text>
+        </TouchableOpacity>
+      )}
     </View>
   )
 }
