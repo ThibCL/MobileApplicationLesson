@@ -4,13 +4,8 @@ import React, {
   useEffect,
   useState,
 } from "react"
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  ActivityIndicator,
-} from "react-native"
+import { View, Text, FlatList, TouchableOpacity } from "react-native"
+import Icon from "react-native-vector-icons/AntDesign"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import { GameContext, Options, Player } from "../GameContext"
@@ -76,42 +71,49 @@ export const History: FunctionComponent<HistoryProps> = ({
               backgroundColor: "#DDDDDD",
             }}
           >
-            <View
-              style={{
-                padding: 5,
-                borderBottomWidth: 1,
-                display: "flex",
-                flexDirection: "row",
+            <TouchableOpacity
+              activeOpacity={1.0}
+              onPress={() => {
+                if (item.id === gameExpanded) {
+                  setGameExpanded(0)
+                } else {
+                  setGameExpanded(item.id)
+                }
               }}
             >
-              <Text
-                style={{ fontSize: 16, fontWeight: "bold", flex: 3 }}
-                onPress={() => {
-                  if (item.id === gameExpanded) {
-                    setGameExpanded(0)
-                  } else {
-                    setGameExpanded(item.id)
-                  }
+              <View
+                style={{
+                  padding: 5,
+                  borderBottomWidth: 1,
+                  display: "flex",
+                  flexDirection: "row",
                 }}
               >
-                {item.name}
-              </Text>
-              {item.finished ? (
-                <Text
-                  style={{
-                    flex: 1,
-                    textAlign: "center",
-                    color: "grey",
-                    borderWidth: 1,
-                    borderColor: "grey",
-                    borderRadius: 10,
-                    backgroundColor: "lightgrey",
-                  }}
-                >
-                  Finished
+                <Text style={{ fontSize: 16, fontWeight: "bold", flex: 3 }}>
+                  {item.name}
                 </Text>
-              ) : null}
-            </View>
+                {item.finished ? (
+                  <Text
+                    style={{
+                      flex: 1,
+                      textAlign: "center",
+                      color: "grey",
+                      borderWidth: 1,
+                      borderColor: "grey",
+                      borderRadius: 10,
+                      backgroundColor: "lightgrey",
+                    }}
+                  >
+                    Finished
+                  </Text>
+                ) : null}
+                {gameExpanded === item.id ? (
+                  <Icon name="down" size={20} />
+                ) : (
+                  <Icon name="left" size={20} />
+                )}
+              </View>
+            </TouchableOpacity>
 
             {gameExpanded === item.id ? (
               <GameDisplayer players={item.players}></GameDisplayer>

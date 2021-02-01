@@ -3,9 +3,11 @@ import { StyleSheet } from "react-native"
 export const styles = StyleSheet.create({
   container: {
     height: "100%",
-    backgroundColor: "#BCBCBC",
+    backgroundColor: "#f5f5f5",
   },
   view: {
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -20,39 +22,11 @@ export const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     width: "80%",
-    backgroundColor: "#7F0000",
+    backgroundColor: "#39796b",
   },
-  buttonTouchablePetit: {
-    margin: 5,
-    width: "5%",
-    flex: 1,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    backgroundColor: "#7F0000",
-    borderRadius: 10,
-  },
-  buttonTouchableRight: {
-    margin: 5,
-    width: "50%",
-    justifyContent: "flex-end",
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    backgroundColor: "#7F0000",
-    borderRadius: 10,
-  },
-
   buttonTouchableDisabled: {
     margin: 5,
     width: "80%",
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    backgroundColor: "grey",
-    borderRadius: 10,
-  },
-  buttonTouchablePetitDisabled: {
-    margin: 5,
-    width: "5%",
-    flex: 1,
     paddingHorizontal: 12,
     paddingVertical: 10,
     backgroundColor: "grey",
@@ -72,7 +46,7 @@ export const styles = StyleSheet.create({
 })
 
 export const navigatorStyle = {
-  headerStyle: { backgroundColor: "#7F0000" },
-  headerTintColor: "#338A3E",
-  headerTitleStyle: {},
+  headerStyle: { backgroundColor: "#004d40" },
+  headerTintColor: "#FFFFFF",
+  headerTitleStyle: { fontFamily: "serif" },
 }

@@ -5,6 +5,7 @@ import React, {
   useState,
 } from "react"
 import { View, Text, TouchableOpacity, TextInput } from "react-native"
+import Icon from "react-native-vector-icons/AntDesign"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import { GameContext, Player, Role } from "../GameContext"
@@ -142,7 +143,7 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
             }}
           >
             <TextInput
-              style={{ flex: 3, textAlign: "center" }}
+              style={{ flex: 7, textAlign: "center" }}
               placeholder="Name"
               onChangeText={(text) => {
                 let temp = [...listPlay]
@@ -153,11 +154,10 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
             />
 
             {listPlay.length > 3 ? (
-              <Text
+              <TouchableOpacity
                 style={{
                   flex: 1,
-                  textAlign: "center",
-                  textAlignVertical: "center",
+                  justifyContent: "center",
                 }}
                 onPress={async () => {
                   let temporaire = [...listPlay]
@@ -172,8 +172,8 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
                   setListPlay(temporaire)
                 }}
               >
-                X
-              </Text>
+                <Icon name="closecircleo" size={20} />
+              </TouchableOpacity>
             ) : null}
           </View>
         ))}

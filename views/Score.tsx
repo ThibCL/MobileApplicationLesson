@@ -5,6 +5,7 @@ import React, {
   useState,
 } from "react"
 import { View, Text, TouchableOpacity } from "react-native"
+import { Bar } from "react-native-progress"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import { GameContext, Player, Role } from "../GameContext"
@@ -56,24 +57,26 @@ export const Score: FunctionComponent<ScoreProps> = ({
         {game.game.finished ? " is finished" : null}
       </Text>
       {game.players.map((player, index) => (
-        <Text
-          key={index}
-          style={{
-            fontSize: 24,
-            margin: 5,
-            fontWeight: "bold",
-            borderColor: "red",
-            borderWidth:
-              player.score === maxScore && game.game.finished ? 2 : 0,
-          }}
-        >
-          <Text>{player.name} </Text>
-          <Text style={{ color: "grey" }}>{player.score} </Text>
-          <Text style={{ color: player.scoreVar < 0 ? "red" : "green" }}>
-            ({player.scoreVar < 0 ? "" : "+"}
-            {player.scoreVar})
+        <View key={index}>
+          <Text
+            style={{
+              fontSize: 24,
+              margin: 5,
+              fontWeight: "bold",
+              borderColor: "red",
+              borderWidth:
+                player.score === maxScore && game.game.finished ? 2 : 0,
+            }}
+          >
+            <Text>{player.name} </Text>
+            <Text style={{ color: "grey" }}>{player.score} </Text>
+            <Text style={{ color: player.scoreVar < 0 ? "red" : "green" }}>
+              ({player.scoreVar < 0 ? "" : "+"}
+              {player.scoreVar})
+            </Text>
           </Text>
-        </Text>
+          <Bar progress={player.score / game.options.score_limit} />
+        </View>
       ))}
       <TouchableOpacity
         style={{ ...styles.buttonTouchable, backgroundColor: "white" }}
