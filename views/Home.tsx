@@ -5,6 +5,7 @@ import { StackParamList } from "../App"
 import { styles } from "../generalStyle"
 import { GameContext } from "../GameContext"
 import * as Google from "expo-google-app-auth"
+import RNExitApp from "react-native-exit-app"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "Home">
 
@@ -93,7 +94,7 @@ export const Home: FunctionComponent<HomeProps> = ({
       <TouchableOpacity
         style={styles.buttonTouchable}
         onPress={() => {
-          alert("Find a way to close the app")
+          RNExitApp.exitApp()
         }}
       >
         <Text style={styles.buttonText}>Quit</Text>

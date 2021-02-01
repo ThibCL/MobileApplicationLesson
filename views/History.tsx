@@ -4,7 +4,13 @@ import React, {
   useEffect,
   useState,
 } from "react"
-import { View, Text, FlatList, TouchableOpacity } from "react-native"
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import { GameContext, Options, Player } from "../GameContext"
@@ -20,6 +26,7 @@ export const History: FunctionComponent<HistoryProps> = ({
   navigation,
 }: HistoryProps) => {
   const game = useContext(GameContext)
+  const [loading, setLoading] = useState<boolean>(true)
   const [games, setGames] = useState<
     {
       id: number
@@ -32,8 +39,10 @@ export const History: FunctionComponent<HistoryProps> = ({
   const [gameExpanded, setGameExpanded] = useState<number>(0)
 
   const getGames = async () => {
+    setLoading(true)
     const listGames = await game.apiClient.listGames(game.token)
     setGames(listGames)
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -51,6 +60,11 @@ export const History: FunctionComponent<HistoryProps> = ({
             Previous games
           </Text>
         }
+        ListEmptyComponent={<Text>You have no previous game</Text>}
+        onRefresh={async () => {
+          await getGames()
+        }}
+        refreshing={loading}
         data={games}
         renderItem={({ item }) => (
           <View
