@@ -78,14 +78,13 @@ export const Score: FunctionComponent<ScoreProps> = ({
       <TouchableOpacity
         style={{ ...styles.buttonTouchable, backgroundColor: "white" }}
         onPress={async () => {
-          navigation.replace("Home")
           await game.apiClient.saveGame(
             game.token,
             game.game,
             game.players,
             game.options
           )
-          game.eraseGame()
+          navigation.replace("Home")
         }}
       >
         <Text style={{ ...styles.buttonText, color: "#338A3E" }}>Home</Text>
