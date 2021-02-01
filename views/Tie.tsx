@@ -1,8 +1,13 @@
-import React, { FunctionComponent, useContext, useState } from "react"
+import React, {
+  FunctionComponent,
+  useContext,
+  useDebugValue,
+  useState,
+} from "react"
 import { View, Text, TouchableOpacity } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
-import { GameContext } from "../GameContext"
+import { GameContext, Player } from "../GameContext"
 import { styles } from "../generalStyle"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "Tie">
@@ -14,12 +19,16 @@ interface TieProps {
 export const Tie: FunctionComponent<TieProps> = ({ navigation }: TieProps) => {
   const game = useContext(GameContext)
   const [playerSelected, setPlayerSelected] = useState<number>()
+  const [listPlayers, setListPlayers] = useState<Player[]>(game.players)
+  const [playersElected, setPlayersElected] = useState<number[]>(
+    game.playersElected
+  )
 
   return (
     <View style={{ ...styles.container, ...styles.view }}>
-      <Text style={styles.title}>{game.players[0].name}</Text>
+      <Text style={styles.title}>{listPlayers[0].name}</Text>
       <Text>There is a tie, you have to vote</Text>
-      {game.playersElected.map((player, index) => (
+      {playersElected.map((player, index) => (
         <TouchableOpacity
           key={index}
           style={
@@ -32,7 +41,7 @@ export const Tie: FunctionComponent<TieProps> = ({ navigation }: TieProps) => {
             setPlayerSelected(index)
           }}
         >
-          <Text style={styles.buttonText}>{game.players[player].name}</Text>
+          <Text style={styles.buttonText}>{listPlayers[player].name}</Text>
         </TouchableOpacity>
       ))}
       {playerSelected != undefined ? (

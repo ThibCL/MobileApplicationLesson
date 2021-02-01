@@ -63,18 +63,29 @@ export const Timer: FunctionComponent<TimerProps> = ({
         <Text style={styles.buttonText}>{isOn ? "Pause" : "Start"}</Text>
       </TouchableOpacity>
 
-      {!found && isOn ? (
-        <TouchableOpacity
-          style={styles.buttonTouchable}
-          onPress={() => {
-            setTimer(time)
-            setTime(0)
-            setFound(true)
-            game.setWordFound(true)
-          }}
-        >
-          <Text style={styles.buttonText}>Word Found</Text>
-        </TouchableOpacity>
+      {isOn ? (
+        !found ? (
+          <TouchableOpacity
+            style={styles.buttonTouchable}
+            onPress={() => {
+              setTimer(time)
+              setTime(0)
+              setFound(true)
+              game.setWordFound(true)
+            }}
+          >
+            <Text style={styles.buttonText}>Word Found</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={styles.buttonTouchable}
+            onPress={() => {
+              setTime(timer)
+            }}
+          >
+            <Text style={styles.buttonText}>Skip</Text>
+          </TouchableOpacity>
+        )
       ) : null}
     </View>
   )

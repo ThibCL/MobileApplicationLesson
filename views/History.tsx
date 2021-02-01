@@ -7,7 +7,7 @@ import React, {
 import { View, Text, FlatList, TouchableOpacity } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
-import { Game, GameContext, Options, Player } from "../GameContext"
+import { GameContext, Options, Player } from "../GameContext"
 import { styles } from "../generalStyle"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "History">
@@ -43,6 +43,9 @@ export const History: FunctionComponent<HistoryProps> = ({
   return (
     <View style={{ ...styles.container }}>
       <FlatList
+        keyExtractor={(item) => {
+          return item.id.toString()
+        }}
         ListHeaderComponent={
           <Text style={{ ...styles.title, color: "black" }}>
             Previous games
@@ -58,7 +61,6 @@ export const History: FunctionComponent<HistoryProps> = ({
               borderRadius: 5,
               backgroundColor: "#DDDDDD",
             }}
-            key={item.id}
           >
             <View
               style={{
@@ -153,7 +155,7 @@ const GameDisplayer: FunctionComponent<GameDisplayerProps> = ({
     <View>
       {players.map((value) => (
         <Text
-          key={value.id}
+          key={value.id?.toString()}
           style={{
             fontSize: 14,
             padding: 5,

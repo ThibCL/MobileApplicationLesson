@@ -34,17 +34,18 @@ export const Roles: FunctionComponent<RolesProps> = ({
   const [wordSelected, setWordSelected] = useState<number>(0)
   const [index, setIndex] = useState<number>(0)
   const [isEnabled, setIsEnabled] = useState<boolean>(false)
+  const [listPlayers, setListPlayers] = useState<Player[]>(game.players)
 
   const distributeRoles = () => {
     let masterIndex = 0
-    let roles: Role[] = Array(game.players.length).fill(Role.Citizen)
+    let roles: Role[] = Array(listPlayers.length).fill(Role.Citizen)
     let total = 0
     for (let dist of distribution) {
       roles.fill(dist.role, total, total + dist.number)
       total += dist.number
     }
 
-    const playersUpdated = [...game.players]
+    const playersUpdated = [...listPlayers]
     for (let i = 0; i < playersUpdated.length; i++) {
       let rd = Math.floor(roles.length * Math.random())
       let role = roles.splice(rd, 1)[0]
@@ -59,7 +60,7 @@ export const Roles: FunctionComponent<RolesProps> = ({
     playersUpdated[masterIndex] = playersUpdated[0]
     playersUpdated[0] = mstr
 
-    game.setPlayers(playersUpdated)
+    setListPlayers(playersUpdated)
   }
 
   useEffect(() => {
@@ -90,7 +91,7 @@ export const Roles: FunctionComponent<RolesProps> = ({
           }}
         >
           <Text style={{ ...styles.title, flex: 1 }}>
-            {game.players[index].name}
+            {listPlayers[index].name}
           </Text>
           <Switch
             style={{ flex: 1 }}
@@ -102,7 +103,7 @@ export const Roles: FunctionComponent<RolesProps> = ({
         </View>
         {isEnabled ? (
           <RoleDisplayer
-            player={game.players[index]}
+            player={listPlayers[index]}
             words={words}
             wordSelected={wordSelected}
             setWordSelected={setWordSelected}
@@ -130,23 +131,24 @@ export const Roles: FunctionComponent<RolesProps> = ({
             setIndex(index - 1)
           }}
         >
-          <Text style={{ ...styles.buttonText }}>Prievous</Text>
+          <Text style={{ ...styles.buttonText }}>Previous</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={{ ...styles.buttonTouchable, width: "100%" }}
           onPress={() => {
-            if (index < game.players.length - 1) {
+            if (index < listPlayers.length - 1) {
               setIsEnabled(false)
               setIndex(index + 1)
             } else {
               game.setWord(words[wordSelected])
               game.setWordFound(false)
+              game.setPlayers(listPlayers)
               navigation.replace("Timer")
             }
           }}
         >
           <Text style={styles.buttonText}>
-            {index < game.players.length - 1 ? "Next" : "Begin"}
+            {index < listPlayers.length - 1 ? "Next" : "Begin"}
           </Text>
         </TouchableOpacity>
       </View>

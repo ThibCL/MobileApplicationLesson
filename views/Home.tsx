@@ -77,7 +77,7 @@ export const Home: FunctionComponent<HomeProps> = ({
       <TouchableOpacity
         style={styles.buttonTouchable}
         onPress={() => {
-          navigation.replace("Option", { default: true })
+          navigation.navigate("Option", { default: true })
         }}
       >
         <Text style={styles.buttonText}>Options</Text>

@@ -107,7 +107,7 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
         onPress={() => {
           game.setGame({ ...game.game, name: gameName })
           game.setPlayers(listPlay)
-          navigation.replace("Option", { default: false })
+          navigation.navigate("Option", { default: false })
         }}
       >
         <Text style={styles.buttonText}>Option</Text>

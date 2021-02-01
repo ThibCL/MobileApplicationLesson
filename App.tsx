@@ -75,7 +75,6 @@ export default function App() {
                         {
                           text: "Yes",
                           onPress: () => {
-                            game.eraseGame()
                             navigation.replace("Home")
                           },
                         },
@@ -104,7 +103,6 @@ export default function App() {
                         {
                           text: "Yes",
                           onPress: () => {
-                            game.eraseGame()
                             navigation.replace("Home")
                           },
                         },
@@ -133,7 +131,6 @@ export default function App() {
                         {
                           text: "Yes",
                           onPress: () => {
-                            game.eraseGame()
                             navigation.replace("Home")
                           },
                         },
@@ -167,7 +164,6 @@ export default function App() {
                         {
                           text: "Yes",
                           onPress: () => {
-                            game.eraseGame()
                             navigation.replace("Home")
                           },
                         },
@@ -196,7 +192,6 @@ export default function App() {
                         {
                           text: "Yes",
                           onPress: () => {
-                            game.eraseGame()
                             navigation.replace("Home")
                           },
                         },
@@ -231,7 +226,6 @@ export default function App() {
                         {
                           text: "Yes",
                           onPress: () => {
-                            game.eraseGame()
                             navigation.replace("Home")
                           },
                         },
