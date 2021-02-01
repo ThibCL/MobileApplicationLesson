@@ -1,9 +1,6 @@
 import React, { useContext } from "react"
 import { NavigationContainer } from "@react-navigation/native"
-import {
-  createStackNavigator,
-  StackNavigationProp,
-} from "@react-navigation/stack"
+import { createStackNavigator } from "@react-navigation/stack"
 import { GameContext, GameProvider, Player } from "./GameContext"
 import { Home } from "./views/Home"
 import { Rules } from "./views/Rules"
@@ -38,15 +35,17 @@ export type StackParamList = {
 const Stack = createStackNavigator<StackParamList>()
 
 export default function App() {
-  const game = useContext(GameContext)
-
   return (
     <GameProvider>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Auth">
           <Stack.Screen
             name="Home"
-            options={{ ...navigatorStyle, title: "Insider" }}
+            options={{
+              ...navigatorStyle,
+              title: "Insider",
+              headerTitleAlign: "center",
+            }}
             component={Home}
           />
           <Stack.Screen

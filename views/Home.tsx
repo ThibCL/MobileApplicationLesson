@@ -49,7 +49,7 @@ export const Home: FunctionComponent<HomeProps> = ({
             navigation.replace("Auth")
           }}
         >
-          <Image source={{ uri: game.user?.photoUrl, width: 50, height: 50 }} />
+          <Text>Deco</Text>
         </TouchableOpacity>
       ),
     })

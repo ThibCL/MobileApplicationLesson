@@ -5,6 +5,7 @@ import React, {
   useEffect,
 } from "react"
 import { View, Text, TouchableOpacity } from "react-native"
+import { CountdownCircleTimer } from "react-native-countdown-circle-timer"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import { styles } from "../generalStyle"
@@ -49,10 +50,22 @@ export const Timer: FunctionComponent<TimerProps> = ({
       ) : (
         <Text style={styles.title}>Debate to find the impostor</Text>
       )}
-      <Text style={{ fontSize: 20 }}>
-        {Math.floor((timer - time) / 60)}:{(timer - time) % 60 < 10 ? "0" : ""}
-        {(timer - time) % 60}
-      </Text>
+      <CountdownCircleTimer
+        key={found}
+        isPlaying={isOn}
+        duration={timer - time}
+        colors={[
+          ["#004777", 0.4],
+          ["#F7B801", 0.4],
+          ["#A30000", 0.2],
+        ]}
+      >
+        <Text style={{ fontSize: 20 }}>
+          {Math.floor((timer - time) / 60)}:
+          {(timer - time) % 60 < 10 ? "0" : ""}
+          {(timer - time) % 60}
+        </Text>
+      </CountdownCircleTimer>
 
       <TouchableOpacity
         style={styles.buttonTouchable}
