@@ -44,14 +44,14 @@ export const Timer: FunctionComponent<TimerProps> = ({
   })
 
   return (
-    <View style={{ ...styles.container, ...styles.view }}>
+    <View style={{ ...styles.container }}>
       {!found ? (
         <Text style={styles.title}>Find the word !</Text>
       ) : (
         <Text style={styles.title}>Debate to find the impostor</Text>
       )}
       <CountdownCircleTimer
-        key={found}
+        key={found ? "found" : "notFound"}
         isPlaying={isOn}
         duration={timer - time}
         colors={[

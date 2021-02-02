@@ -48,7 +48,7 @@ export const Votes: FunctionComponent<VotesProps> = ({
   }
 
   return (
-    <View style={{ ...styles.container, ...styles.view }}>
+    <View style={{ ...styles.container }}>
       <Text style={styles.title}>{listPlayers[playerIndex].name}</Text>
 
       {listPlayers.map((player, index) =>

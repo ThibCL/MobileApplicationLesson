@@ -71,7 +71,6 @@ export const Roles: FunctionComponent<RolesProps> = ({
     <View
       style={{
         ...styles.container,
-        ...styles.view,
         justifyContent: "space-around",
       }}
     >

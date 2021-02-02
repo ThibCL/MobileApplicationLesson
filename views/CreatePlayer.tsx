@@ -10,6 +10,8 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import { GameContext, Player, Role } from "../GameContext"
 import { styles } from "../generalStyle"
+import { FlatList } from "react-native-gesture-handler"
+import UserAvatar from "react-native-user-avatar"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "CreatePlayer">
 
@@ -86,7 +88,6 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
     <View
       style={{
         ...styles.container,
-        alignItems: "center",
         display: "flex",
         flexDirection: "column",
       }}
@@ -115,68 +116,72 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
       </TouchableOpacity>
 
       <View style={{ flex: 7 }}>
-        <Text
-          style={{
-            textAlign: "center",
-            textAlignVertical: "center",
-            fontSize: 16,
-            fontWeight: "bold",
-            color: "black",
-            flex: 1,
+        <FlatList
+          keyExtractor={(_item, index) => {
+            return index.toString()
           }}
-        >
-          Insert Players Names
-        </Text>
-        {listPlay.map((elem, index) => (
-          <View
-            key={index}
-            style={{
-              flex: 2,
-              borderWidth: 1,
-              borderColor: "#7F0000",
-              margin: 5,
-              justifyContent: "center",
-              width: "90%",
-              display: "flex",
-              flexDirection: "row",
-              backgroundColor: "#CCCCCC",
-            }}
-          >
-            <TextInput
-              style={{ flex: 7, textAlign: "center" }}
-              placeholder="Name"
-              onChangeText={(text) => {
-                let temp = [...listPlay]
-                temp[index].name = text
-                setListPlay(temp)
+          ListHeaderComponent={<Text>Insert Players Names</Text>}
+          data={listPlay}
+          renderItem={({ item, index }) => (
+            <View
+              style={{
+                margin: 5,
+                display: "flex",
+                flexDirection: "row",
               }}
-              value={elem.name}
-            />
-
-            {listPlay.length > 3 ? (
-              <TouchableOpacity
+            >
+              <UserAvatar
+                size={100}
+                name={item.name === "" ? "Name" : item.name}
+              />
+              <TextInput
                 style={{
-                  flex: 1,
-                  justifyContent: "center",
+                  flex: 7,
+                  padding: 2,
+
+                  color: "white",
+                  textAlign: "center",
+                  backgroundColor: "#39796b",
+                  borderRadius: 50,
+                  borderWidth: 1,
+                  borderColor: "black",
                 }}
-                onPress={async () => {
-                  let temporaire = [...listPlay]
-                  temporaire.splice(index, 1)
-                  if (elem.id != undefined) {
-                    await game.apiClient.deletePlayer(
-                      game.token,
-                      game.game.id,
-                      elem.id
-                    )
-                  }
-                  setListPlay(temporaire)
+                placeholder="Name"
+                placeholderTextColor="grey"
+                onChangeText={(text) => {
+                  let temp = [...listPlay]
+                  temp[index].name = text
+                  setListPlay(temp)
                 }}
-              >
-                <Icon name="closecircleo" size={20} />
-              </TouchableOpacity>
-            ) : null}
-          </View>
-        ))}
+                value={item.name}
+              />
+
+              {listPlay.length > 3 ? (
+                <TouchableOpacity
+                  style={{
+                    flex: 1,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                  onPress={async () => {
+                    let temporaire = [...listPlay]
+                    temporaire.splice(index, 1)
+                    if (item.id != undefined) {
+                      await game.apiClient.deletePlayer(
+                        game.token,
+                        game.game.id,
+                        item.id
+                      )
+                    }
+                    setListPlay(temporaire)
+                  }}
+                >
+                  <Icon name="closecircleo" size={20} />
+                </TouchableOpacity>
+              ) : null}
+            </View>
+          )}
+        />
       </View>
 
       {listPlay.length < 10 ? (

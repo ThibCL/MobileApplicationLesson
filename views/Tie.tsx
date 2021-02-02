@@ -1,9 +1,4 @@
-import React, {
-  FunctionComponent,
-  useContext,
-  useDebugValue,
-  useState,
-} from "react"
+import React, { FunctionComponent, useContext, useState } from "react"
 import { View, Text, TouchableOpacity } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
@@ -25,7 +20,7 @@ export const Tie: FunctionComponent<TieProps> = ({ navigation }: TieProps) => {
   )
 
   return (
-    <View style={{ ...styles.container, ...styles.view }}>
+    <View style={{ ...styles.container }}>
       <Text style={styles.title}>{listPlayers[0].name}</Text>
       <Text>There is a tie, you have to vote</Text>
       {playersElected.map((player, index) => (

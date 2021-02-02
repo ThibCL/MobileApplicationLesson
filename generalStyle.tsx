@@ -4,12 +4,7 @@ export const styles = StyleSheet.create({
   container: {
     height: "100%",
     backgroundColor: "#f5f5f5",
-  },
-  view: {
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
-    justifyContent: "center",
-    alignItems: "center",
+    borderTopLeftRadius: 50,
   },
   title: {
     color: "#338A3E",
@@ -17,12 +12,13 @@ export const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   buttonTouchable: {
+    alignItems: "center",
+    justifyContent: "center",
     margin: 5,
     paddingHorizontal: 12,
     paddingVertical: 10,
-    borderRadius: 10,
-    width: "80%",
-    backgroundColor: "#39796b",
+    borderRadius: 50,
+    backgroundColor: "#004d40",
   },
   buttonTouchableDisabled: {
     margin: 5,
@@ -34,6 +30,7 @@ export const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: "center",
+    textAlignVertical: "center",
     color: "white",
     fontWeight: "bold",
     fontSize: 16,
@@ -47,6 +44,7 @@ export const styles = StyleSheet.create({
 
 export const navigatorStyle = {
   headerStyle: { backgroundColor: "#004d40" },
+  headerTitleAlign: "center",
   headerTintColor: "#FFFFFF",
   headerTitleStyle: { fontFamily: "serif" },
 }
