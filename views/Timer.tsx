@@ -44,62 +44,92 @@ export const Timer: FunctionComponent<TimerProps> = ({
   })
 
   return (
-    <View style={{ ...styles.container }}>
-      {!found ? (
-        <Text style={styles.title}>Find the word !</Text>
-      ) : (
-        <Text style={styles.title}>Debate to find the impostor</Text>
-      )}
-      <CountdownCircleTimer
-        key={found ? "found" : "notFound"}
-        isPlaying={isOn}
-        duration={timer - time}
-        colors={[
-          ["#004777", 0.4],
-          ["#F7B801", 0.4],
-          ["#A30000", 0.2],
-        ]}
-      >
-        <Text style={{ fontSize: 20 }}>
-          {Math.floor((timer - time) / 60)}:
-          {(timer - time) % 60 < 10 ? "0" : ""}
-          {(timer - time) % 60}
+    <View
+      style={{ ...styles.container, display: "flex", flexDirection: "column" }}
+    >
+      <View style={{ flex: 4 }}>
+        <Text
+          style={{
+            ...styles.title,
+            color: "white",
+            textAlign: "center",
+            textAlignVertical: "center",
+            margin: 10,
+            borderRadius: 50,
+            backgroundColor: "#004d40",
+          }}
+        >
+          {!found ? " Question time!" : "It's time for debate"}
         </Text>
-      </CountdownCircleTimer>
+      </View>
 
-      <TouchableOpacity
-        style={styles.buttonTouchable}
-        onPress={() => {
-          setIsOn(!isOn)
+      <View style={{ flex: 7, alignItems: "center" }}>
+        <CountdownCircleTimer
+          key={found ? "found" : "notFound"}
+          trailColor="pink"
+          isPlaying={isOn}
+          duration={timer - time}
+          colors={[["#004d40", 1]]}
+        >
+          <Text style={{ fontSize: 25, color: "pink", fontWeight: "bold" }}>
+            {Math.floor((timer - time) / 60)}:
+            {(timer - time) % 60 < 10 ? "0" : ""}
+            {(timer - time) % 60}
+          </Text>
+        </CountdownCircleTimer>
+      </View>
+
+      <View style={{ flex: 2, display: "flex", flexDirection: "row" }}>
+        <TouchableOpacity
+          style={{ ...styles.buttonTouchable, flex: 1 }}
+          onPress={() => {
+            setIsOn(!isOn)
+          }}
+        >
+          <Text style={styles.buttonText}>{isOn ? "Pause" : "Start"}</Text>
+        </TouchableOpacity>
+
+        {isOn ? (
+          !found ? (
+            <TouchableOpacity
+              style={{ ...styles.buttonTouchable, flex: 1 }}
+              onPress={() => {
+                setTimer(time)
+                setTime(0)
+                setFound(true)
+                game.setWordFound(true)
+              }}
+            >
+              <Text style={styles.buttonText}>Word Found</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={{ ...styles.buttonTouchable, flex: 1 }}
+              onPress={() => {
+                setTime(timer)
+              }}
+            >
+              <Text style={styles.buttonText}>Skip</Text>
+            </TouchableOpacity>
+          )
+        ) : null}
+      </View>
+      <View
+        style={{
+          backgroundColor: "#004d40",
+          flex: 1,
         }}
       >
-        <Text style={styles.buttonText}>{isOn ? "Pause" : "Start"}</Text>
-      </TouchableOpacity>
-
-      {isOn ? (
-        !found ? (
-          <TouchableOpacity
-            style={styles.buttonTouchable}
-            onPress={() => {
-              setTimer(time)
-              setTime(0)
-              setFound(true)
-              game.setWordFound(true)
-            }}
-          >
-            <Text style={styles.buttonText}>Word Found</Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            style={styles.buttonTouchable}
-            onPress={() => {
-              setTime(timer)
-            }}
-          >
-            <Text style={styles.buttonText}>Skip</Text>
-          </TouchableOpacity>
-        )
-      ) : null}
+        <Text
+          style={{
+            fontSize: 20,
+            color: "white",
+            textAlign: "center",
+          }}
+        >
+          Insider Online boardgame
+        </Text>
+      </View>
     </View>
   )
 }

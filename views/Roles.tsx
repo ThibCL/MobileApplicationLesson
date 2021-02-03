@@ -71,25 +71,36 @@ export const Roles: FunctionComponent<RolesProps> = ({
     <View
       style={{
         ...styles.container,
+        display: "flex",
+        flexDirection: "column",
         justifyContent: "space-around",
       }}
     >
-      <Text style={{ ...styles.title }}>{game.game.name}</Text>
       <View
         style={{
-          width: "80%",
-          borderWidth: 1,
-          backgroundColor: "#CCCCCC",
+          flex: 1,
+          alignSelf: "center",
+          justifyContent: "center",
+          width: "95%",
         }}
       >
         <View
           style={{
+            borderRadius: 50,
+            borderWidth: 1,
+            backgroundColor: "#004d40",
             display: "flex",
             flexDirection: "row",
-            borderBottomWidth: 1,
           }}
         >
-          <Text style={{ ...styles.title, flex: 1 }}>
+          <Text
+            style={{
+              ...styles.title,
+              textAlign: "center",
+              color: "white",
+              flex: 1,
+            }}
+          >
             {listPlayers[index].name}
           </Text>
           <Switch
@@ -100,6 +111,8 @@ export const Roles: FunctionComponent<RolesProps> = ({
             value={isEnabled}
           />
         </View>
+      </View>
+      <View style={{ flex: 7 }}>
         {isEnabled ? (
           <RoleDisplayer
             player={listPlayers[index]}
@@ -111,10 +124,10 @@ export const Roles: FunctionComponent<RolesProps> = ({
       </View>
       <View
         style={{
-          width: "80%",
+          flex: 1,
           display: "flex",
           flexDirection: "row",
-          justifyContent: "space-between",
+          justifyContent: "space-around",
         }}
       >
         <TouchableOpacity
@@ -123,7 +136,7 @@ export const Roles: FunctionComponent<RolesProps> = ({
             ...(index <= 0
               ? styles.buttonTouchableDisabled
               : styles.buttonTouchable),
-            width: "100%",
+            flex: 1,
           }}
           onPress={() => {
             setIsEnabled(false)
@@ -133,7 +146,7 @@ export const Roles: FunctionComponent<RolesProps> = ({
           <Text style={{ ...styles.buttonText }}>Previous</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={{ ...styles.buttonTouchable, width: "100%" }}
+          style={{ ...styles.buttonTouchable, flex: 1 }}
           onPress={() => {
             if (index < listPlayers.length - 1) {
               setIsEnabled(false)
@@ -150,6 +163,22 @@ export const Roles: FunctionComponent<RolesProps> = ({
             {index < listPlayers.length - 1 ? "Next" : "Begin"}
           </Text>
         </TouchableOpacity>
+      </View>
+      <View
+        style={{
+          backgroundColor: "#004d40",
+          flex: 1,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 20,
+            color: "white",
+            textAlign: "center",
+          }}
+        >
+          Insider Online boardgame
+        </Text>
       </View>
     </View>
   )
@@ -169,29 +198,122 @@ const RoleDisplayer: FunctionComponent<RoleDisplayerProps> = ({
   setWordSelected,
 }: RoleDisplayerProps) => {
   return (
-    <View style={{ alignItems: "center" }}>
-      <Text style={{ fontSize: 20, color: "black" }}>{player.role}</Text>
+    <View
+      style={{
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        borderWidth: 5,
+        margin: 5,
+      }}
+    >
+      <Text
+        style={{ fontSize: 20, color: "#004d40", textAlign: "center", flex: 1 }}
+      >
+        During the game, your role will be:
+      </Text>
+      <Text
+        style={{
+          fontSize: 20,
+          color: "pink",
+          fontWeight: "bold",
+          textAlign: "center",
+          flex: 1,
+        }}
+      >
+        {player.role}
+      </Text>
 
-      {player.role === Role.Master
-        ? words.map((word, index) => (
-            <TouchableOpacity
-              key={index}
-              style={{
-                ...(index === wordSelected
-                  ? styles.buttonTouchable
-                  : styles.buttonTouchableDisabled),
-              }}
-              disabled={index === wordSelected}
-              onPress={() => {
-                setWordSelected(index)
-              }}
-            >
-              <Text style={{ ...styles.buttonText }}>{word.toUpperCase()}</Text>
-            </TouchableOpacity>
-          ))
-        : null}
+      {player.role === Role.Master ? (
+        <View style={{ flex: 5, display: "flex", flexDirection: "column" }}>
+          <Text
+            style={{
+              fontSize: 20,
+              color: "#004d40",
+              textAlign: "center",
+              flex: 1,
+            }}
+          >
+            So, you can choose the word between:
+          </Text>
+          <View
+            style={{
+              flex: 3,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            {words.map((word, index) => (
+              <Text
+                key={index}
+                style={
+                  index === wordSelected
+                    ? {
+                        textAlign: "center",
+                        flex: 2,
+                        fontSize: 25,
+                        fontWeight: "bold",
+                        color: "#004d40",
+                      }
+                    : {
+                        textAlign: "center",
+                        flex: 2,
+                        fontSize: 20,
+                        fontWeight: "bold",
+                        color: "pink",
+                      }
+                }
+                onPress={() => {
+                  setWordSelected(index)
+                }}
+              >
+                {word.toUpperCase()}
+              </Text>
+            ))}
+          </View>
+        </View>
+      ) : null}
 
-      {player.role === Role.Traitor ? <Text>{words[wordSelected]}</Text> : null}
+      {player.role === Role.Traitor ? (
+        <View style={{ flex: 3 }}>
+          <Text style={{ fontSize: 20, textAlign: "center", color: "#004d40" }}>
+            The master choose the following word:
+          </Text>
+          <Text
+            style={{
+              fontSize: 20,
+              textAlign: "center",
+              fontWeight: "bold",
+              color: "pink",
+            }}
+          >
+            {words[wordSelected]}
+          </Text>
+          <Text style={{ fontSize: 20, textAlign: "center", color: "#004d40" }}>
+            No one must know that you are the traitor!
+          </Text>
+        </View>
+      ) : null}
+
+      {player.role === Role.Citizen ? (
+        <View style={{ flex: 3 }}>
+          <Text style={{ fontSize: 20, textAlign: "center", color: "#004d40" }}>
+            During the game you will have to ask questions to find the Master's
+            word, and tries to unmask the traitor!
+          </Text>
+          <Text
+            style={{
+              fontSize: 20,
+              textAlign: "center",
+              fontWeight: "bold",
+              color: "pink",
+            }}
+          >
+            HAVE FUN !
+          </Text>
+        </View>
+      ) : null}
     </View>
   )
 }

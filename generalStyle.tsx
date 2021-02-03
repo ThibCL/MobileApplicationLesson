@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     borderTopLeftRadius: 50,
   },
   title: {
-    color: "#338A3E",
+    color: "#004d40",
     fontSize: 24,
     fontWeight: "bold",
   },
@@ -21,12 +21,13 @@ export const styles = StyleSheet.create({
     backgroundColor: "#004d40",
   },
   buttonTouchableDisabled: {
+    alignItems: "center",
+    justifyContent: "center",
     margin: 5,
-    width: "80%",
     paddingHorizontal: 12,
     paddingVertical: 10,
     backgroundColor: "grey",
-    borderRadius: 10,
+    borderRadius: 50,
   },
   buttonText: {
     textAlign: "center",

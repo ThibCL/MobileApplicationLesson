@@ -4,11 +4,11 @@ import React, {
   useEffect,
   useState,
 } from "react"
-import { View, Text, TouchableOpacity } from "react-native"
+import { View, Text, TouchableOpacity, FlatList } from "react-native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import { styles } from "../generalStyle"
-import { GameContext, Role } from "../GameContext"
+import { GameContext, Player, Role } from "../GameContext"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "RecapVotes">
 
@@ -20,6 +20,8 @@ export const RecapVotes: FunctionComponent<RecapVotesProps> = ({
   navigation,
 }: RecapVotesProps) => {
   const game = useContext(GameContext)
+
+  const [listPlayers, setListPlayers] = useState<Player[]>(game.players)
   const [numVote, setNumVote] = useState<Array<number>>([])
   useEffect(() => {
     const numVote: Array<number> = []
@@ -36,44 +38,83 @@ export const RecapVotes: FunctionComponent<RecapVotesProps> = ({
     <View
       style={{
         ...styles.container,
-        alignItems: "center",
         display: "flex",
         flexDirection: "column",
       }}
     >
-      <Text style={{ ...styles.title }}>{game.game.name}</Text>
-      {game.players.map((elem, index) => (
-        <Text
-          key={index}
+      <View style={{ flex: 1 }}></View>
+      <View style={{ flex: 7 }}>
+        <FlatList
+          keyExtractor={(item, index) => {
+            return item.id?.toString() || ""
+          }}
+          data={listPlayers}
+          renderItem={({ item, index }) => (
+            <View style={{ justifyContent: "center" }}>
+              <Text
+                style={{
+                  backgroundColor: "#004d40",
+                  margin: 5,
+                  borderRadius: 50,
+                  textAlign: "center",
+                  textAlignVertical: "center",
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  color: "white",
+                }}
+              >
+                {item.name}
+              </Text>
+              <Text
+                style={{
+                  textAlign: "center",
+                  textAlignVertical: "center",
+                  fontSize: 16,
+                  fontWeight: "bold",
+                }}
+              >
+                {item.role === Role.Master
+                  ? " You were the Master"
+                  : " " + numVote[index] + " player(s) voted for you"}
+              </Text>
+            </View>
+          )}
+        />
+      </View>
+
+      <View style={{ flex: 1 }}>
+        <TouchableOpacity
           style={{
-            fontSize: 22,
-            margin: 7,
-            textAlign: "center",
-            flex: 1,
+            ...styles.buttonTouchable,
+            backgroundColor: "pink",
+            flex: 3,
+            borderTopRightRadius: 0,
+            borderBottomLeftRadius: 0,
+          }}
+          onPress={() => {
+            navigation.replace("Score")
           }}
         >
-          <Text
-            style={{
-              color: elem.role == Role.Traitor ? "red" : "green",
-              textDecorationLine:
-                game.playersElected[0] === index ? "line-through" : "none",
-            }}
-          >
-            {elem.name}
-          </Text>
-          {elem.role === Role.Master
-            ? " You were the Master"
-            : " " + numVote[index] + " player(s) voted for you"}
-        </Text>
-      ))}
-      <TouchableOpacity
-        style={{ ...styles.buttonTouchable }}
-        onPress={() => {
-          navigation.replace("Score")
+          <Text style={{ ...styles.buttonText }}>Next </Text>
+        </TouchableOpacity>
+      </View>
+
+      <View
+        style={{
+          backgroundColor: "#004d40",
+          flex: 1,
         }}
       >
-        <Text style={{ ...styles.buttonText }}>Next </Text>
-      </TouchableOpacity>
+        <Text
+          style={{
+            fontSize: 20,
+            color: "white",
+            textAlign: "center",
+          }}
+        >
+          Insider Online boardgame
+        </Text>
+      </View>
     </View>
   )
 }

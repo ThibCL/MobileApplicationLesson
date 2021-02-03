@@ -189,6 +189,12 @@ export const Option: FunctionComponent<OptionsProps> = ({
       >
         <Text style={styles.buttonText}>Cancel changes </Text>
       </TouchableOpacity>
+      <View
+        style={{
+          backgroundColor: "#004d40",
+          flex: 1,
+        }}
+      ></View>
     </View>
   )
 }
