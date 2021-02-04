@@ -21,6 +21,8 @@ import { navigatorStyle } from "./generalStyle"
 import { Alert, TouchableOpacity } from "react-native"
 import { MenuProvider } from "react-native-popup-menu"
 import Icon from "react-native-vector-icons/Entypo"
+import { useFonts } from "expo-font"
+import { AppLoading } from "expo"
 
 export type StackParamList = {
   Home: undefined
@@ -72,99 +74,109 @@ const HeaderButton: FunctionComponent<HeaderButtonProps> = ({
 }
 
 export default function App() {
-  return (
-    <MenuProvider
-      style={{ justifyContent: "center" }}
-      customStyles={{ backdrop: { backgroundColor: "red" } }}
-    >
-      <GameProvider>
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName="Auth">
-            <Stack.Screen
-              name="Home"
-              options={{
-                ...navigatorStyle,
-                title: "Insider",
-              }}
-              component={Home}
-            />
-            <Stack.Screen
-              name="Rules"
-              options={{ ...navigatorStyle }}
-              component={Rules}
-            />
-            <Stack.Screen
-              name="History"
-              options={{ ...navigatorStyle }}
-              component={History}
-            />
-            <Stack.Screen
-              name="Roles"
-              options={({ navigation }) => ({
-                ...navigatorStyle,
-                headerRight: () => <HeaderButton navigation={navigation} />,
-              })}
-              component={Roles}
-            />
-            <Stack.Screen
-              name="Votes"
-              options={({ navigation }) => ({
-                ...navigatorStyle,
-                headerRight: () => <HeaderButton navigation={navigation} />,
-              })}
-              component={Votes}
-            />
-            <Stack.Screen
-              name="Tie"
-              options={({ navigation }) => ({
-                ...navigatorStyle,
-                headerRight: () => <HeaderButton navigation={navigation} />,
-              })}
-              component={Tie}
-            />
-            <Stack.Screen
-              name="Score"
-              options={{ ...navigatorStyle }}
-              component={Score}
-            />
-            <Stack.Screen
-              name="Timer"
-              options={({ navigation }) => ({
-                ...navigatorStyle,
-                headerRight: () => <HeaderButton navigation={navigation} />,
-              })}
-              component={Timer}
-            />
-            <Stack.Screen
-              name="CreatePlayer"
-              options={({ navigation }) => ({
-                ...navigatorStyle,
-                headerRight: () => <HeaderButton navigation={navigation} />,
-              })}
-              component={CreatePlayer}
-            />
-            <Stack.Screen
-              name="Option"
-              options={{ ...navigatorStyle }}
-              component={Option}
-            />
-            <Stack.Screen
-              name="RecapVotes"
-              options={({ navigation }) => ({
-                ...navigatorStyle,
-                title: "Votes result",
-                headerRight: () => <HeaderButton navigation={navigation} />,
-              })}
-              component={RecapVotes}
-            />
-            <Stack.Screen
-              name="Auth"
-              options={{ ...navigatorStyle }}
-              component={Auth}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </GameProvider>
-    </MenuProvider>
-  )
+  let [fontsLoaded] = useFonts({
+    "Big-Shoulder": require("./assets/fonts/BigShouldersDisplay-Regular.ttf"),
+  })
+  if (!fontsLoaded) {
+    return <AppLoading />
+  } else {
+    return (
+      <MenuProvider
+        style={{ justifyContent: "center" }}
+        customStyles={{ backdrop: { backgroundColor: "red" } }}
+      >
+        <GameProvider>
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName="Auth">
+              <Stack.Screen
+                name="Home"
+                options={{
+                  ...navigatorStyle,
+                  title: "Insider Online Board Game",
+                }}
+                component={Home}
+              />
+              <Stack.Screen
+                name="Rules"
+                options={{ ...navigatorStyle }}
+                component={Rules}
+              />
+              <Stack.Screen
+                name="History"
+                options={{ ...navigatorStyle }}
+                component={History}
+              />
+              <Stack.Screen
+                name="Roles"
+                options={({ navigation }) => ({
+                  ...navigatorStyle,
+                  title: "Your roles",
+                  headerRight: () => <HeaderButton navigation={navigation} />,
+                })}
+                component={Roles}
+              />
+              <Stack.Screen
+                name="Votes"
+                options={({ navigation }) => ({
+                  ...navigatorStyle,
+                  title: "Time to vote",
+                  headerRight: () => <HeaderButton navigation={navigation} />,
+                })}
+                component={Votes}
+              />
+              <Stack.Screen
+                name="Tie"
+                options={({ navigation }) => ({
+                  ...navigatorStyle,
+                  headerRight: () => <HeaderButton navigation={navigation} />,
+                })}
+                component={Tie}
+              />
+              <Stack.Screen
+                name="Score"
+                options={{ ...navigatorStyle }}
+                component={Score}
+              />
+              <Stack.Screen
+                name="Timer"
+                options={({ navigation }) => ({
+                  ...navigatorStyle,
+                  headerRight: () => <HeaderButton navigation={navigation} />,
+                })}
+                component={Timer}
+              />
+              <Stack.Screen
+                name="CreatePlayer"
+                options={({ navigation }) => ({
+                  ...navigatorStyle,
+                  title: "Players",
+                  headerRight: () => <HeaderButton navigation={navigation} />,
+                })}
+                component={CreatePlayer}
+              />
+              <Stack.Screen
+                name="Option"
+                options={{ ...navigatorStyle }}
+                component={Option}
+              />
+              <Stack.Screen
+                name="RecapVotes"
+                options={({ navigation }) => ({
+                  ...navigatorStyle,
+                  title: "Votes result",
+                  headerRight: () => <HeaderButton navigation={navigation} />,
+                })}
+                component={RecapVotes}
+              />
+              <Stack.Screen
+                name="Auth"
+                options={{ ...navigatorStyle }}
+                component={Auth}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </GameProvider>
+      </MenuProvider>
+    )
+  }
 }

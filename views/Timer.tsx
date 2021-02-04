@@ -11,6 +11,7 @@ import { StackParamList } from "../App"
 import { styles } from "../generalStyle"
 import { GameContext } from "../GameContext"
 import { Footer } from "../components/Footer"
+import Icon from "react-native-vector-icons/Entypo"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "Timer">
 
@@ -49,19 +50,49 @@ export const Timer: FunctionComponent<TimerProps> = ({
       style={{ ...styles.container, display: "flex", flexDirection: "column" }}
     >
       <View style={{ flex: 4 }}>
-        <Text
-          style={{
-            ...styles.title,
-            color: "white",
-            textAlign: "center",
-            textAlignVertical: "center",
-            margin: 10,
-            borderRadius: 50,
-            backgroundColor: "#004d40",
-          }}
-        >
-          {!found ? " Question time!" : "It's time for debate"}
-        </Text>
+        {!found ? (
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              margin: 10,
+              borderRadius: 50,
+              backgroundColor: "#004d40",
+            }}
+          >
+            <Text
+              style={{
+                ...styles.title,
+                color: "white",
+                textAlign: "center",
+                textAlignVertical: "center",
+                flex: 4,
+              }}
+            >
+              Question time!{" "}
+            </Text>
+            <Icon
+              style={{ flex: 1, alignSelf: "center" }}
+              name="stopwatch"
+              color="white"
+              size={20}
+            />
+          </View>
+        ) : (
+          <Text
+            style={{
+              ...styles.title,
+              color: "white",
+              textAlign: "center",
+              textAlignVertical: "center",
+              margin: 10,
+              borderRadius: 50,
+              backgroundColor: "#004d40",
+            }}
+          >
+            It's time for debate
+          </Text>
+        )}
       </View>
 
       <View style={{ flex: 7, alignItems: "center" }}>

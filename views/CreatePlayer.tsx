@@ -92,17 +92,24 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
         flexDirection: "column",
       }}
     >
-      <TextInput
-        style={{
-          ...styles.title,
-          textAlignVertical: "center",
-          textAlign: "center",
-          flex: 1,
-        }}
-        placeholder="Game name"
-        onChangeText={(text) => setGameName(text)}
-        value={gameName}
-      />
+      <View style={{ flex: 1, display: "flex", flexDirection: "row" }}>
+        <Text style={{ ...styles.buttonTextGreen, flex: 1 }}>
+          Name of the game:
+        </Text>
+        <TextInput
+          style={{
+            ...styles.buttonTextPink,
+            fontWeight: "bold",
+            fontSize: 20,
+            textAlignVertical: "center",
+            textAlign: "center",
+            flex: 1,
+          }}
+          placeholder="Game name"
+          onChangeText={(text) => setGameName(text)}
+          value={gameName}
+        />
+      </View>
 
       <View style={{ flex: 7 }}>
         <FlatList
@@ -175,23 +182,27 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
       </View>
       <View style={{ display: "flex", flexDirection: "row" }}>
         {listPlay.length < 10 ? (
-          <TouchableOpacity
-            style={{ ...styles.buttonVote, flex: 1 }}
-            onPress={() => {
-              setListPlay(
-                listPlay.concat({
-                  id: undefined,
-                  name: "",
-                  score: 0,
-                  vote: undefined,
-                  scoreVar: 0,
-                  role: Role.Citizen,
-                })
-              )
-            }}
-          >
-            <Icon name="plus" size={30} color="white" />
-          </TouchableOpacity>
+          <View style={{ flex: 1 }}>
+            <Text style={{ ...styles.buttonTextGreen }}>More players</Text>
+            <TouchableOpacity
+              style={{ ...styles.buttonVote, alignSelf: "center" }}
+              onPress={() => {
+                setListPlay(
+                  listPlay.concat({
+                    id: undefined,
+                    name: "",
+                    score: 0,
+                    vote: undefined,
+                    scoreVar: 0,
+                    role: Role.Citizen,
+                  })
+                )
+              }}
+            >
+              <Icon name="plus" size={30} color="white" />
+            </TouchableOpacity>
+            <Text style={{ ...styles.buttonTextGreen }}>More fun</Text>
+          </View>
         ) : null}
         <TouchableOpacity
           style={{

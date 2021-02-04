@@ -53,21 +53,34 @@ export const Votes: FunctionComponent<VotesProps> = ({
     <View
       style={{ ...styles.container, display: "flex", flexDirection: "column" }}
     >
-      <View style={{ justifyContent: "center", flex: 2 }}>
+      <View
+        style={{
+          justifyContent: "center",
+          flex: 1,
+          display: "flex",
+          flexDirection: "row",
+          margin: 10,
+          backgroundColor: "#004d40",
+          borderRadius: 50,
+        }}
+      >
         <Text
           style={{
             ...styles.title,
             textAlign: "center",
             textAlignVertical: "center",
             color: "white",
-            margin: 10,
-            backgroundColor: "#004d40",
-            borderRadius: 50,
+            flex: 3,
           }}
         >
           {listPlayers[playerIndex].name}
-          <Icon name="flashlight" size={20} color="white" />
         </Text>
+        <Icon
+          style={{ flex: 1, alignSelf: "center" }}
+          name="flashlight"
+          size={20}
+          color="white"
+        />
       </View>
 
       <View
