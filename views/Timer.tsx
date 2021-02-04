@@ -10,6 +10,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import { styles } from "../generalStyle"
 import { GameContext } from "../GameContext"
+import { Footer } from "../components/Footer"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "Timer">
 
@@ -44,62 +45,77 @@ export const Timer: FunctionComponent<TimerProps> = ({
   })
 
   return (
-    <View style={{ ...styles.container, ...styles.view }}>
-      {!found ? (
-        <Text style={styles.title}>Find the word !</Text>
-      ) : (
-        <Text style={styles.title}>Debate to find the impostor</Text>
-      )}
-      <CountdownCircleTimer
-        key={found}
-        isPlaying={isOn}
-        duration={timer - time}
-        colors={[
-          ["#004777", 0.4],
-          ["#F7B801", 0.4],
-          ["#A30000", 0.2],
-        ]}
-      >
-        <Text style={{ fontSize: 20 }}>
-          {Math.floor((timer - time) / 60)}:
-          {(timer - time) % 60 < 10 ? "0" : ""}
-          {(timer - time) % 60}
+    <View
+      style={{ ...styles.container, display: "flex", flexDirection: "column" }}
+    >
+      <View style={{ flex: 4 }}>
+        <Text
+          style={{
+            ...styles.title,
+            color: "white",
+            textAlign: "center",
+            textAlignVertical: "center",
+            margin: 10,
+            borderRadius: 50,
+            backgroundColor: "#004d40",
+          }}
+        >
+          {!found ? " Question time!" : "It's time for debate"}
         </Text>
-      </CountdownCircleTimer>
+      </View>
 
-      <TouchableOpacity
-        style={styles.buttonTouchable}
-        onPress={() => {
-          setIsOn(!isOn)
-        }}
-      >
-        <Text style={styles.buttonText}>{isOn ? "Pause" : "Start"}</Text>
-      </TouchableOpacity>
+      <View style={{ flex: 7, alignItems: "center" }}>
+        <CountdownCircleTimer
+          key={found ? "found" : "notFound"}
+          trailColor="pink"
+          isPlaying={isOn}
+          duration={timer - time}
+          colors={[["#004d40", 1]]}
+        >
+          <Text style={{ fontSize: 25, color: "pink", fontWeight: "bold" }}>
+            {Math.floor((timer - time) / 60)}:
+            {(timer - time) % 60 < 10 ? "0" : ""}
+            {(timer - time) % 60}
+          </Text>
+        </CountdownCircleTimer>
+      </View>
 
-      {isOn ? (
-        !found ? (
-          <TouchableOpacity
-            style={styles.buttonTouchable}
-            onPress={() => {
-              setTimer(time)
-              setTime(0)
-              setFound(true)
-              game.setWordFound(true)
-            }}
-          >
-            <Text style={styles.buttonText}>Word Found</Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            style={styles.buttonTouchable}
-            onPress={() => {
-              setTime(timer)
-            }}
-          >
-            <Text style={styles.buttonText}>Skip</Text>
-          </TouchableOpacity>
-        )
-      ) : null}
+      <View style={{ flex: 2, display: "flex", flexDirection: "row" }}>
+        <TouchableOpacity
+          style={{ ...styles.leafButtonPink, flex: 1 }}
+          onPress={() => {
+            setIsOn(!isOn)
+          }}
+        >
+          <Text style={styles.buttonTextGreen}>{isOn ? "Pause" : "Start"}</Text>
+        </TouchableOpacity>
+
+        {isOn ? (
+          !found ? (
+            <TouchableOpacity
+              style={{ ...styles.leafButtonPink, flex: 1 }}
+              onPress={() => {
+                setTimer(time)
+                setTime(0)
+                setFound(true)
+                game.setWordFound(true)
+              }}
+            >
+              <Text style={styles.buttonTextGreen}>Word Found</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={{ ...styles.leafButtonPink, flex: 1 }}
+              onPress={() => {
+                setTime(timer)
+              }}
+            >
+              <Text style={styles.buttonTextGreen}>Skip</Text>
+            </TouchableOpacity>
+          )
+        ) : null}
+      </View>
+      <Footer />
     </View>
   )
 }

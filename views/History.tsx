@@ -10,6 +10,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import { GameContext, Options, Player } from "../GameContext"
 import { styles } from "../generalStyle"
+import { Footer } from "../components/Footer"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "History">
 
@@ -121,7 +122,7 @@ export const History: FunctionComponent<HistoryProps> = ({
             <View style={{ display: "flex", flexDirection: "row" }}>
               <TouchableOpacity
                 style={{
-                  ...styles.buttonTouchable,
+                  ...styles.buttonVote,
                   width: "45%",
                 }}
                 onPress={() => {
@@ -136,12 +137,12 @@ export const History: FunctionComponent<HistoryProps> = ({
                   navigation.replace("CreatePlayer")
                 }}
               >
-                <Text style={styles.buttonText}>
+                <Text style={styles.buttonTextPink}>
                   {item.finished ? "New game" : "Continue"}
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={{ ...styles.buttonTouchable, width: "45%" }}
+                style={{ ...styles.buttonVote, width: "45%" }}
                 onPress={async () => {
                   await game.apiClient.deleteGame(
                     game.token,
@@ -150,12 +151,13 @@ export const History: FunctionComponent<HistoryProps> = ({
                   setGames(await game.apiClient.listGames(game.token))
                 }}
               >
-                <Text style={styles.buttonText}>Delete</Text>
+                <Text style={styles.buttonTextPink}>Delete</Text>
               </TouchableOpacity>
             </View>
           </View>
         )}
       />
+      <Footer />
     </View>
   )
 }

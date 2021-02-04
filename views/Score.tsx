@@ -4,12 +4,13 @@ import React, {
   useEffect,
   useState,
 } from "react"
-import { View, Text, TouchableOpacity } from "react-native"
+import { View, Text, TouchableOpacity, FlatList } from "react-native"
 import { Bar } from "react-native-progress"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import { GameContext, Player, Role } from "../GameContext"
 import { styles } from "../generalStyle"
+import { Footer } from "../components/Footer"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "Score">
 
@@ -22,6 +23,7 @@ export const Score: FunctionComponent<ScoreProps> = ({
 }: ScoreProps) => {
   const game = useContext(GameContext)
 
+  const [listPlayers, setListPlayers] = useState<Player[]>(game.players)
   const [maxScore, setMaxScore] = useState<number>(0)
 
   useEffect(() => {
@@ -31,6 +33,7 @@ export const Score: FunctionComponent<ScoreProps> = ({
       game.playersElected[0]
     )
     game.setPlayers(players)
+    setListPlayers(players.sort((a, b) => (a.score < b.score ? 1 : -1)))
 
     let max = 0
     for (let player of players) {
@@ -48,72 +51,123 @@ export const Score: FunctionComponent<ScoreProps> = ({
     <View
       style={{
         ...styles.container,
-        alignItems: "center",
-        justifyContent: "space-around",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
-      <Text style={{ ...styles.title }}>
-        {game.game.name}
-        {game.game.finished ? " is finished" : null}
-      </Text>
-      {game.players.map((player, index) => (
-        <View key={index}>
-          <Text
-            style={{
-              fontSize: 24,
-              margin: 5,
-              fontWeight: "bold",
-              borderColor: "red",
-              borderWidth:
-                player.score === maxScore && game.game.finished ? 2 : 0,
-            }}
-          >
-            <Text>{player.name} </Text>
-            <Text style={{ color: "grey" }}>{player.score} </Text>
-            <Text style={{ color: player.scoreVar < 0 ? "red" : "green" }}>
-              ({player.scoreVar < 0 ? "" : "+"}
-              {player.scoreVar})
-            </Text>
-          </Text>
-          <Bar progress={player.score / game.options.score_limit} />
-        </View>
-      ))}
-      <TouchableOpacity
-        style={{ ...styles.buttonTouchable, backgroundColor: "white" }}
-        onPress={async () => {
-          await game.apiClient.saveGame(
-            game.token,
-            game.game,
-            game.players,
-            game.options
-          )
-          navigation.replace("Home")
-        }}
-      >
-        <Text style={{ ...styles.buttonText, color: "#338A3E" }}>Home</Text>
-      </TouchableOpacity>
+      <View style={{ flex: 7 }}>
+        <FlatList
+          keyExtractor={(item, index) => {
+            return item.id?.toString() || ""
+          }}
+          data={listPlayers}
+          renderItem={({ item, index }) => (
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                margin: 10,
+              }}
+            >
+              {game.game.finished ? (
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "#004d40",
+                    borderRadius: 50,
+                    flex: 2,
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 20,
+                      fontWeight: "bold",
+                      textAlign: "center",
+                      textAlignVertical: "center",
+                    }}
+                  >
+                    {index + 1}
+                  </Text>
+                </View>
+              ) : null}
 
-      <TouchableOpacity
-        style={{ ...styles.buttonTouchable, backgroundColor: "white" }}
-        onPress={async () => {
-          await game.apiClient.saveGame(
-            game.token,
-            game.game,
-            game.players,
-            game.options
-          )
-          if (game.game.finished) {
-            game.newGame(game.game, game.players, game.options)
-          } else {
-            game.playAgain()
-          }
-          navigation.replace("CreatePlayer")
-        }}
-      >
-        <Text style={{ ...styles.buttonText, color: "#338A3E" }}>
-          {game.game.finished ? "New game" : "Play again"}
-        </Text>
-      </TouchableOpacity>
+              <View style={{ margin: 5, flex: 9 }}>
+                <Text
+                  style={{
+                    fontSize: 24,
+                    margin: 5,
+                    textAlign: "center",
+                    fontWeight: "bold",
+                  }}
+                >
+                  <Text>{item.name} </Text>
+
+                  {game.game.finished ? null : (
+                    <Text
+                      style={{ color: item.scoreVar < 0 ? "red" : "green" }}
+                    >
+                      {item.scoreVar < 0 ? "" : "+"}
+                      {item.scoreVar}
+                    </Text>
+                  )}
+                </Text>
+
+                {game.game.finished ? null : (
+                  <Bar
+                    style={{ alignSelf: "center" }}
+                    width={300}
+                    height={10}
+                    progress={item.score / game.options.score_limit}
+                    color="#004d40"
+                  />
+                )}
+              </View>
+            </View>
+          )}
+        />
+      </View>
+
+      <View style={{ flex: 1, display: "flex", flexDirection: "row" }}>
+        <TouchableOpacity
+          style={{ ...styles.leafButtonPink, flex: 1 }}
+          onPress={async () => {
+            await game.apiClient.saveGame(
+              game.token,
+              game.game,
+              game.players,
+              game.options
+            )
+            navigation.replace("Home")
+          }}
+        >
+          <Text style={{ ...styles.buttonTextGreen }}>Home</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{ ...styles.leafButtonPink, flex: 1 }}
+          onPress={async () => {
+            await game.apiClient.saveGame(
+              game.token,
+              game.game,
+              game.players,
+              game.options
+            )
+            if (game.game.finished) {
+              game.newGame(game.game, game.players, game.options)
+            } else {
+              game.playAgain()
+            }
+            navigation.replace("CreatePlayer")
+          }}
+        >
+          <Text style={{ ...styles.buttonTextGreen }}>
+            {game.game.finished ? "New game" : "Play again"}
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <Footer />
     </View>
   )
 }

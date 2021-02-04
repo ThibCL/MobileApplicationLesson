@@ -59,12 +59,14 @@ export const Auth: FunctionComponent<AuthProps> = ({
   }
 
   return (
-    <View style={{ ...styles.container, ...styles.view }}>
+    <View style={{ ...styles.container }}>
       {loading ? (
         <ActivityIndicator size="large" color="#7F0000" />
       ) : (
-        <TouchableOpacity style={styles.buttonTouchable} onPress={login}>
-          <Text style={styles.buttonText}>Sign in with Google</Text>
+        <TouchableOpacity style={styles.buttonVote} onPress={login}>
+          <Text style={{ ...styles.buttonTextGreen, color: "white" }}>
+            Sign in with Google
+          </Text>
         </TouchableOpacity>
       )}
     </View>

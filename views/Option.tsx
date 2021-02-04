@@ -5,6 +5,8 @@ import { StackParamList } from "../App"
 import { styles } from "../generalStyle"
 import { GameContext, Options } from "../GameContext"
 import { RouteProp } from "@react-navigation/native"
+import { color } from "react-native-reanimated"
+import { Footer } from "../components/Footer"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "Option">
 type ScreenRouteProp = RouteProp<StackParamList, "Option">
@@ -43,16 +45,16 @@ export const Option: FunctionComponent<OptionsProps> = ({
         <TouchableOpacity
           disabled={numChoice < 2}
           style={{
-            ...(numChoice < 2
-              ? styles.buttonTouchableDisabled
-              : styles.buttonTouchable),
+            ...(numChoice < 2 ? styles.buttonVote : styles.buttonVoteDisabled),
             flex: 1,
           }}
           onPress={() => {
             setNumChoice(numChoice - 1)
           }}
         >
-          <Text style={{ ...styles.buttonText, flex: 1 }}>-</Text>
+          <Text style={{ ...styles.buttonTextGreen, color: "white", flex: 1 }}>
+            -
+          </Text>
         </TouchableOpacity>
         <Text
           style={{ flex: 1, textAlign: "center", textAlignVertical: "center" }}
@@ -63,16 +65,14 @@ export const Option: FunctionComponent<OptionsProps> = ({
         <TouchableOpacity
           disabled={numChoice > 6}
           style={{
-            ...(numChoice > 6
-              ? styles.buttonTouchableDisabled
-              : styles.buttonTouchable),
+            ...(numChoice > 6 ? styles.buttonVoteDisabled : styles.buttonVote),
             flex: 1,
           }}
           onPress={() => {
             setNumChoice(numChoice + 1)
           }}
         >
-          <Text style={styles.buttonText}>+</Text>
+          <Text style={{ ...styles.buttonTextGreen, color: "white" }}>+</Text>
         </TouchableOpacity>
       </View>
       <Text style={styles.textNormal}>Always vote</Text>
@@ -89,15 +89,17 @@ export const Option: FunctionComponent<OptionsProps> = ({
           disabled={timerDuration < 2}
           style={{
             ...(timerDuration < 2
-              ? styles.buttonTouchableDisabled
-              : styles.buttonTouchable),
+              ? styles.buttonVoteDisabled
+              : styles.buttonVote),
             flex: 1,
           }}
           onPress={() => {
             setTimerDuration(timerDuration - 1)
           }}
         >
-          <Text style={{ ...styles.buttonText, flex: 1 }}>-</Text>
+          <Text style={{ ...styles.buttonTextGreen, color: "white", flex: 1 }}>
+            -
+          </Text>
         </TouchableOpacity>
         <Text
           style={{ flex: 1, textAlignVertical: "center", textAlign: "center" }}
@@ -109,8 +111,8 @@ export const Option: FunctionComponent<OptionsProps> = ({
           disabled={timerDuration > 10}
           style={{
             ...(timerDuration > 10
-              ? styles.buttonTouchableDisabled
-              : styles.buttonTouchable),
+              ? styles.buttonVoteDisabled
+              : styles.buttonVote),
 
             flex: 1,
           }}
@@ -118,7 +120,7 @@ export const Option: FunctionComponent<OptionsProps> = ({
             setTimerDuration(timerDuration + 1)
           }}
         >
-          <Text style={styles.buttonText}>+</Text>
+          <Text style={{ ...styles.buttonTextGreen, color: "white" }}>+</Text>
         </TouchableOpacity>
       </View>
 
@@ -128,15 +130,17 @@ export const Option: FunctionComponent<OptionsProps> = ({
           disabled={scoreLimit <= 20}
           style={{
             ...(scoreLimit <= 20
-              ? styles.buttonTouchableDisabled
-              : styles.buttonTouchable),
+              ? styles.buttonVoteDisabled
+              : styles.buttonVote),
             flex: 1,
           }}
           onPress={() => {
             setScoreLimit(scoreLimit - 5)
           }}
         >
-          <Text style={{ ...styles.buttonText, flex: 1 }}>-</Text>
+          <Text style={{ ...styles.buttonTextGreen, color: "white", flex: 1 }}>
+            -
+          </Text>
         </TouchableOpacity>
         <Text
           style={{ flex: 1, textAlignVertical: "center", textAlign: "center" }}
@@ -146,19 +150,17 @@ export const Option: FunctionComponent<OptionsProps> = ({
 
         <TouchableOpacity
           style={{
-            ...styles.buttonTouchable,
+            ...styles.buttonVote,
             flex: 1,
           }}
           onPress={() => {
             setScoreLimit(scoreLimit + 5)
           }}
-        >
-          <Text style={styles.buttonText}>+</Text>
-        </TouchableOpacity>
+        ></TouchableOpacity>
       </View>
 
       <TouchableOpacity
-        style={styles.buttonTouchable}
+        style={styles.buttonVote}
         onPress={async () => {
           const opt: Options = {
             id: game.options.id,
@@ -179,16 +181,17 @@ export const Option: FunctionComponent<OptionsProps> = ({
           navigation.goBack()
         }}
       >
-        <Text style={styles.buttonText}>Validate options </Text>
+        <Text style={{ ...styles.leafButtonPink }}>Validate options </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.buttonTouchable}
+        style={styles.buttonVote}
         onPress={() => {
           navigation.goBack()
         }}
       >
-        <Text style={styles.buttonText}>Cancel changes </Text>
+        <Text style={styles.buttonTextGreen}>Cancel changes </Text>
       </TouchableOpacity>
+      <Footer />
     </View>
   )
 }
