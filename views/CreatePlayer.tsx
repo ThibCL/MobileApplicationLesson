@@ -176,7 +176,7 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
       <View style={{ display: "flex", flexDirection: "row" }}>
         {listPlay.length < 10 ? (
           <TouchableOpacity
-            style={{ ...styles.buttonTouchable, flex: 1 }}
+            style={{ ...styles.buttonVote, flex: 1 }}
             onPress={() => {
               setListPlay(
                 listPlay.concat({
@@ -195,11 +195,8 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
         ) : null}
         <TouchableOpacity
           style={{
-            ...styles.buttonTouchable,
+            ...styles.leafButtonPink,
             flex: 1,
-            borderRadius: 30,
-            borderTopRightRadius: 0,
-            borderBottomLeftRadius: 0,
           }}
           onPress={async () => {
             const valid = validation()
@@ -224,7 +221,7 @@ export const CreatePlayer: FunctionComponent<CreatePlayerProps> = ({
             }
           }}
         >
-          <Text style={styles.buttonText}>GO!</Text>
+          <Text style={{ ...styles.buttonTextGreen, fontSize: 30 }}>GO!</Text>
         </TouchableOpacity>
       </View>
       <View

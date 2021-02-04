@@ -93,7 +93,7 @@ export const Home: FunctionComponent<HomeProps> = ({
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
           <TouchableOpacity
-            style={{ ...styles.buttonTouchable, width: "40%", height: "60%" }}
+            style={{ ...styles.homeButton }}
             onPress={() => {
               let opt = game.options
               opt.id = 0
@@ -101,42 +101,38 @@ export const Home: FunctionComponent<HomeProps> = ({
               navigation.replace("CreatePlayer")
             }}
           >
-            <Text style={styles.buttonText}>Play</Text>
+            <Text style={styles.buttonTextGreen}>PLAY</Text>
           </TouchableOpacity>
         </View>
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
           <TouchableOpacity
-            style={{ ...styles.buttonTouchable, width: "40%", height: "60%" }}
+            style={{ ...styles.homeButton }}
             onPress={() => {
               navigation.navigate("History")
             }}
           >
-            <Text style={styles.buttonText}>Continue</Text>
+            <Text style={styles.buttonTextGreen}>CONTINUE</Text>
           </TouchableOpacity>
         </View>
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
           <TouchableOpacity
-            style={{ ...styles.buttonTouchable, width: "40%", height: "60%" }}
+            style={{ ...styles.homeButton }}
             onPress={() => {
               navigation.navigate("Rules")
             }}
           >
-            <Text style={styles.buttonText}>Rules</Text>
+            <Text style={styles.buttonTextGreen}>RULES</Text>
           </TouchableOpacity>
         </View>
       </View>
 
       <View
         style={{
-          backgroundColor: "#004d40",
-          flex: 1,
-          padding: 10,
-          display: "flex",
-          flexDirection: "row",
+          ...styles.footer,
         }}
       >
         <TouchableOpacity

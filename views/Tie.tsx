@@ -4,6 +4,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import { GameContext, Player } from "../GameContext"
 import { styles } from "../generalStyle"
+import { Footer } from "../components/Footer"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "Tie">
 
@@ -55,56 +56,42 @@ export const Tie: FunctionComponent<TieProps> = ({ navigation }: TieProps) => {
             key={index}
             style={
               index === playerSelected
-                ? styles.buttonTouchable
-                : styles.buttonTouchableDisabled
+                ? styles.buttonVote
+                : styles.buttonVoteDisabled
             }
             disabled={index === playerSelected}
             onPress={() => {
               setPlayerSelected(index)
             }}
           >
-            <Text style={styles.buttonText}>{listPlayers[player].name}</Text>
+            <Text
+              style={{
+                ...styles.buttonTextPink,
+                color: index === playerSelected ? "pink" : "white",
+              }}
+            >
+              {listPlayers[player].name}
+            </Text>
           </TouchableOpacity>
         ))}
       </View>
 
-      <View style={{ flex: 3 }}>
+      <View style={{ flex: 3, justifyContent: "center", margin: 10 }}>
         {playerSelected != undefined ? (
           <TouchableOpacity
             style={{
-              ...styles.buttonTouchable,
-              backgroundColor: "pink",
-              flex: 3,
-              borderTopRightRadius: 0,
-              borderBottomLeftRadius: 0,
+              ...styles.leafButtonPink,
             }}
             onPress={() => {
               game.setPlayersElected([game.playersElected[playerSelected]])
               navigation.replace("RecapVotes")
             }}
           >
-            <Text style={{ ...styles.buttonText, color: "#338A3E" }}>
-              Confirm
-            </Text>
+            <Text style={{ ...styles.buttonTextGreen }}>Confirm</Text>
           </TouchableOpacity>
         ) : null}
       </View>
-      <View
-        style={{
-          backgroundColor: "#004d40",
-          flex: 1,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 20,
-            color: "white",
-            textAlign: "center",
-          }}
-        >
-          Insider Online boardgame
-        </Text>
-      </View>
+      <Footer />
     </View>
   )
 }

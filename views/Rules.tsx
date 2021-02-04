@@ -39,12 +39,12 @@ export const Rules: FunctionComponent<RulesProps> = ({
         points.
       </Text>
       <TouchableOpacity
-        style={{ ...styles.buttonTouchable, backgroundColor: "white" }}
+        style={{ ...styles.leafButtonPink }}
         onPress={() => {
           navigation.goBack()
         }}
       >
-        <Text style={{ ...styles.buttonText, color: "#338A3E" }}>Okay</Text>
+        <Text style={{ ...styles.buttonTextGreen }}>Okay</Text>
       </TouchableOpacity>
     </ScrollView>
   )

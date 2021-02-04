@@ -5,6 +5,7 @@ import { StackParamList } from "../App"
 import { GameContext, Player } from "../GameContext"
 import { styles } from "../generalStyle"
 import Icon from "react-native-vector-icons/Entypo"
+import { Footer } from "../components/Footer"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "Votes">
 
@@ -94,30 +95,36 @@ export const Votes: FunctionComponent<VotesProps> = ({
                 key={index}
                 style={
                   index === playerSelected
-                    ? styles.buttonTouchable
-                    : styles.buttonTouchableDisabled
+                    ? styles.buttonVote
+                    : styles.buttonVoteDisabled
                 }
                 disabled={index === playerSelected}
                 onPress={() => {
                   setPlayerSelected(index)
                 }}
               >
-                <Text style={styles.buttonText}>{item.name}</Text>
+                <Text
+                  style={{
+                    ...styles.buttonTextPink,
+                    color: index === playerSelected ? "pink" : "white",
+                  }}
+                >
+                  {item.name}
+                </Text>
               </TouchableOpacity>
             ) : null
           }
         />
       </View>
 
-      {playerSelected === undefined ? null : (
+      <View style={{ flex: 2, justifyContent: "center" }}>
         <TouchableOpacity
           style={{
-            ...styles.buttonTouchable,
-            backgroundColor: "pink",
-            flex: 3,
-            borderTopRightRadius: 0,
-            borderBottomLeftRadius: 0,
+            ...styles.leafButtonPink,
+            backgroundColor: playerSelected === undefined ? "grey" : "pink",
+            margin: 15,
           }}
+          disabled={playerSelected === undefined}
           onPress={() => {
             let updatedPlayers = [...listPlayers]
             updatedPlayers[playerIndex].vote = playerSelected
@@ -138,27 +145,12 @@ export const Votes: FunctionComponent<VotesProps> = ({
             }
           }}
         >
-          <Text style={{ ...styles.buttonText, color: "#004d40" }}>
+          <Text style={{ ...styles.buttonTextGreen }}>
             That is my final answer!
           </Text>
         </TouchableOpacity>
-      )}
-      <View
-        style={{
-          backgroundColor: "#004d40",
-          flex: 1,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 20,
-            color: "white",
-            textAlign: "center",
-          }}
-        >
-          Insider Online boardgame
-        </Text>
       </View>
+      <Footer />
     </View>
   )
 }

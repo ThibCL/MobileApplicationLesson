@@ -10,6 +10,7 @@ import { StackParamList } from "../App"
 import { GameContext, Player, Role } from "../GameContext"
 import { styles } from "../generalStyle"
 import { TouchableOpacity } from "react-native-gesture-handler"
+import { Footer } from "../components/Footer"
 var randomWords = require("random-words")
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "Roles">
@@ -73,24 +74,22 @@ export const Roles: FunctionComponent<RolesProps> = ({
         ...styles.container,
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-around",
       }}
     >
       <View
         style={{
-          flex: 1,
-          alignSelf: "center",
+          flex: 2,
           justifyContent: "center",
-          width: "95%",
+          margin: 5,
         }}
       >
         <View
           style={{
             borderRadius: 50,
-            borderWidth: 1,
             backgroundColor: "#004d40",
             display: "flex",
             flexDirection: "row",
+            justifyContent: "center",
           }}
         >
           <Text
@@ -112,7 +111,8 @@ export const Roles: FunctionComponent<RolesProps> = ({
           />
         </View>
       </View>
-      <View style={{ flex: 7 }}>
+
+      <View style={{ flex: 8 }}>
         {isEnabled ? (
           <RoleDisplayer
             player={listPlayers[index]}
@@ -124,62 +124,50 @@ export const Roles: FunctionComponent<RolesProps> = ({
       </View>
       <View
         style={{
-          flex: 1,
+          flex: 2,
           display: "flex",
           flexDirection: "row",
-          justifyContent: "space-around",
+          justifyContent: "center",
         }}
       >
-        <TouchableOpacity
-          disabled={index <= 0}
-          style={{
-            ...(index <= 0
-              ? styles.buttonTouchableDisabled
-              : styles.buttonTouchable),
-            flex: 1,
-          }}
-          onPress={() => {
-            setIsEnabled(false)
-            setIndex(index - 1)
-          }}
-        >
-          <Text style={{ ...styles.buttonText }}>Previous</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{ ...styles.buttonTouchable, flex: 1 }}
-          onPress={() => {
-            if (index < listPlayers.length - 1) {
+        <View style={{ flex: 1, justifyContent: "center" }}>
+          <TouchableOpacity
+            disabled={index <= 0}
+            style={{
+              ...styles.arrowLeftButton,
+              backgroundColor: index <= 0 ? "grey" : "pink",
+            }}
+            onPress={() => {
               setIsEnabled(false)
-              setIndex(index + 1)
-            } else {
-              game.setWord(words[wordSelected])
-              game.setWordFound(false)
-              game.setPlayers(listPlayers)
-              navigation.replace("Timer")
-            }
-          }}
-        >
-          <Text style={styles.buttonText}>
-            {index < listPlayers.length - 1 ? "Next" : "Begin"}
-          </Text>
-        </TouchableOpacity>
+              setIndex(index - 1)
+            }}
+          >
+            <Text style={{ ...styles.buttonTextGreen }}>Previous</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={{ flex: 1, justifyContent: "center" }}>
+          <TouchableOpacity
+            style={{ ...styles.arrowRightButton }}
+            onPress={() => {
+              if (index < listPlayers.length - 1) {
+                setIsEnabled(false)
+                setIndex(index + 1)
+              } else {
+                game.setWord(words[wordSelected])
+                game.setWordFound(false)
+                game.setPlayers(listPlayers)
+                navigation.replace("Timer")
+              }
+            }}
+          >
+            <Text style={styles.buttonTextGreen}>
+              {index < listPlayers.length - 1 ? "Next" : "Begin"}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
-      <View
-        style={{
-          backgroundColor: "#004d40",
-          flex: 1,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 20,
-            color: "white",
-            textAlign: "center",
-          }}
-        >
-          Insider Online boardgame
-        </Text>
-      </View>
+      <Footer />
     </View>
   )
 }

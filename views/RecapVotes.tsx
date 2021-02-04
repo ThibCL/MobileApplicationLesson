@@ -9,6 +9,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import { styles } from "../generalStyle"
 import { GameContext, Player, Role } from "../GameContext"
+import { Footer } from "../components/Footer"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "RecapVotes">
 
@@ -85,36 +86,18 @@ export const RecapVotes: FunctionComponent<RecapVotesProps> = ({
       <View style={{ flex: 1 }}>
         <TouchableOpacity
           style={{
-            ...styles.buttonTouchable,
-            backgroundColor: "pink",
+            ...styles.leafButtonPink,
             flex: 3,
-            borderTopRightRadius: 0,
-            borderBottomLeftRadius: 0,
           }}
           onPress={() => {
             navigation.replace("Score")
           }}
         >
-          <Text style={{ ...styles.buttonText }}>Next </Text>
+          <Text style={{ ...styles.buttonTextGreen }}>Next </Text>
         </TouchableOpacity>
       </View>
 
-      <View
-        style={{
-          backgroundColor: "#004d40",
-          flex: 1,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 20,
-            color: "white",
-            textAlign: "center",
-          }}
-        >
-          Insider Online boardgame
-        </Text>
-      </View>
+      <Footer />
     </View>
   )
 }

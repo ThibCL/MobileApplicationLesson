@@ -22,6 +22,7 @@ export const Score: FunctionComponent<ScoreProps> = ({
 }: ScoreProps) => {
   const game = useContext(GameContext)
 
+  const [listPlayers, setListPlayers] = useState<Player[]>(game.players)
   const [maxScore, setMaxScore] = useState<number>(0)
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export const Score: FunctionComponent<ScoreProps> = ({
       game.playersElected[0]
     )
     game.setPlayers(players)
+    setListPlayers(players.sort((a, b) => (a.score < b.score ? 1 : -1)))
 
     let max = 0
     for (let player of players) {
@@ -48,46 +50,87 @@ export const Score: FunctionComponent<ScoreProps> = ({
     <View
       style={{
         ...styles.container,
+        display: "flex",
+        flexDirection: "column",
       }}
     >
-      <View>
+      <View style={{ flex: 7 }}>
         <FlatList
           keyExtractor={(item, index) => {
             return item.id?.toString() || ""
           }}
-          data={game.players}
+          data={listPlayers}
           renderItem={({ item, index }) => (
-            <View key={index}>
-              <Text
-                style={{
-                  fontSize: 24,
-                  margin: 5,
-                  textAlign: "center",
-                  fontWeight: "bold",
-                  borderColor: "red",
-                  borderWidth:
-                    item.score === maxScore && game.game.finished ? 2 : 0,
-                }}
-              >
-                <Text>{item.name} </Text>
-                <Text style={{ color: "grey" }}>{item.score} </Text>
-                <Text style={{ color: item.scoreVar < 0 ? "red" : "green" }}>
-                  ({item.scoreVar < 0 ? "" : "+"}
-                  {item.scoreVar})
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                margin: 10,
+              }}
+            >
+              {game.game.finished ? (
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "#004d40",
+                    borderRadius: 50,
+                    flex: 2,
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "white",
+                      fontSize: 20,
+                      fontWeight: "bold",
+                      textAlign: "center",
+                      textAlignVertical: "center",
+                    }}
+                  >
+                    {index + 1}
+                  </Text>
+                </View>
+              ) : null}
+
+              <View style={{ margin: 5, flex: 9 }}>
+                <Text
+                  style={{
+                    fontSize: 24,
+                    margin: 5,
+                    textAlign: "center",
+                    fontWeight: "bold",
+                  }}
+                >
+                  <Text>{item.name} </Text>
+
+                  {game.game.finished ? null : (
+                    <Text
+                      style={{ color: item.scoreVar < 0 ? "red" : "green" }}
+                    >
+                      {item.scoreVar < 0 ? "" : "+"}
+                      {item.scoreVar}
+                    </Text>
+                  )}
                 </Text>
-              </Text>
-              <Bar
-                style={{ alignSelf: "center" }}
-                progress={item.score / game.options.score_limit}
-                color="#004d40"
-              />
+
+                {game.game.finished ? null : (
+                  <Bar
+                    style={{ alignSelf: "center" }}
+                    width={300}
+                    height={10}
+                    progress={item.score / game.options.score_limit}
+                    color="#004d40"
+                  />
+                )}
+              </View>
             </View>
           )}
         />
       </View>
-      <View>
+
+      <View style={{ flex: 1, display: "flex", flexDirection: "row" }}>
         <TouchableOpacity
-          style={{ ...styles.buttonTouchable, backgroundColor: "white" }}
+          style={{ ...styles.leafButtonPink, flex: 1 }}
           onPress={async () => {
             await game.apiClient.saveGame(
               game.token,
@@ -98,11 +141,11 @@ export const Score: FunctionComponent<ScoreProps> = ({
             navigation.replace("Home")
           }}
         >
-          <Text style={{ ...styles.buttonText, color: "#338A3E" }}>Home</Text>
+          <Text style={{ ...styles.buttonTextGreen }}>Home</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={{ ...styles.buttonTouchable, backgroundColor: "white" }}
+          style={{ ...styles.leafButtonPink, flex: 1 }}
           onPress={async () => {
             await game.apiClient.saveGame(
               game.token,
@@ -118,7 +161,7 @@ export const Score: FunctionComponent<ScoreProps> = ({
             navigation.replace("CreatePlayer")
           }}
         >
-          <Text style={{ ...styles.buttonText, color: "#338A3E" }}>
+          <Text style={{ ...styles.buttonTextGreen }}>
             {game.game.finished ? "New game" : "Play again"}
           </Text>
         </TouchableOpacity>
