@@ -10,6 +10,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import { GameContext, Player, Role } from "../GameContext"
 import { styles } from "../generalStyle"
+import { Footer } from "../components/Footer"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "Score">
 
@@ -166,6 +167,7 @@ export const Score: FunctionComponent<ScoreProps> = ({
           </Text>
         </TouchableOpacity>
       </View>
+      <Footer />
     </View>
   )
 }

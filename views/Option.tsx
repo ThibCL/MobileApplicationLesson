@@ -6,6 +6,7 @@ import { styles } from "../generalStyle"
 import { GameContext, Options } from "../GameContext"
 import { RouteProp } from "@react-navigation/native"
 import { color } from "react-native-reanimated"
+import { Footer } from "../components/Footer"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "Option">
 type ScreenRouteProp = RouteProp<StackParamList, "Option">
@@ -190,12 +191,7 @@ export const Option: FunctionComponent<OptionsProps> = ({
       >
         <Text style={styles.buttonTextGreen}>Cancel changes </Text>
       </TouchableOpacity>
-      <View
-        style={{
-          backgroundColor: "#004d40",
-          flex: 1,
-        }}
-      ></View>
+      <Footer />
     </View>
   )
 }

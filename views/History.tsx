@@ -10,6 +10,7 @@ import { StackNavigationProp } from "@react-navigation/stack"
 import { StackParamList } from "../App"
 import { GameContext, Options, Player } from "../GameContext"
 import { styles } from "../generalStyle"
+import { Footer } from "../components/Footer"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "History">
 
@@ -156,6 +157,7 @@ export const History: FunctionComponent<HistoryProps> = ({
           </View>
         )}
       />
+      <Footer />
     </View>
   )
 }
