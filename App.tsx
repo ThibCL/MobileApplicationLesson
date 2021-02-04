@@ -92,24 +92,53 @@ export default function App() {
                 name="Home"
                 options={{
                   ...navigatorStyle,
+                  headerStyle: { backgroundColor: "#004d40" },
+                  headerTitleAlign: "center",
+                  headerTintColor: "#FFFFFF",
+                  headerTitleStyle: {
+                    fontFamily: "Big-Shoulder",
+                    fontSize: 30,
+                  },
                   title: "Insider Online Board Game",
                 }}
                 component={Home}
               />
               <Stack.Screen
                 name="Rules"
-                options={{ ...navigatorStyle }}
+                options={{
+                  headerStyle: { backgroundColor: "#004d40" },
+                  headerTitleAlign: "center",
+                  headerTintColor: "#FFFFFF",
+                  headerTitleStyle: {
+                    fontFamily: "Big-Shoulder",
+                    fontSize: 30,
+                  },
+                }}
                 component={Rules}
               />
               <Stack.Screen
                 name="History"
-                options={{ ...navigatorStyle }}
+                options={{
+                  headerStyle: { backgroundColor: "#004d40" },
+                  headerTitleAlign: "center",
+                  headerTintColor: "#FFFFFF",
+                  headerTitleStyle: {
+                    fontFamily: "Big-Shoulder",
+                    fontSize: 30,
+                  },
+                }}
                 component={History}
               />
               <Stack.Screen
                 name="Roles"
                 options={({ navigation }) => ({
-                  ...navigatorStyle,
+                  headerStyle: { backgroundColor: "#004d40" },
+                  headerTitleAlign: "center",
+                  headerTintColor: "#FFFFFF",
+                  headerTitleStyle: {
+                    fontFamily: "Big-Shoulder",
+                    fontSize: 30,
+                  },
                   title: "Your roles",
                   headerRight: () => <HeaderButton navigation={navigation} />,
                 })}
@@ -118,7 +147,13 @@ export default function App() {
               <Stack.Screen
                 name="Votes"
                 options={({ navigation }) => ({
-                  ...navigatorStyle,
+                  headerStyle: { backgroundColor: "#004d40" },
+                  headerTitleAlign: "center",
+                  headerTintColor: "#FFFFFF",
+                  headerTitleStyle: {
+                    fontFamily: "Big-Shoulder",
+                    fontSize: 30,
+                  },
                   title: "Time to vote",
                   headerRight: () => <HeaderButton navigation={navigation} />,
                 })}
@@ -127,20 +162,40 @@ export default function App() {
               <Stack.Screen
                 name="Tie"
                 options={({ navigation }) => ({
-                  ...navigatorStyle,
+                  headerStyle: { backgroundColor: "#004d40" },
+                  headerTitleAlign: "center",
+                  headerTintColor: "#FFFFFF",
+                  headerTitleStyle: {
+                    fontFamily: "Big-Shoulder",
+                    fontSize: 30,
+                  },
                   headerRight: () => <HeaderButton navigation={navigation} />,
                 })}
                 component={Tie}
               />
               <Stack.Screen
                 name="Score"
-                options={{ ...navigatorStyle }}
+                options={{
+                  headerStyle: { backgroundColor: "#004d40" },
+                  headerTitleAlign: "center",
+                  headerTintColor: "#FFFFFF",
+                  headerTitleStyle: {
+                    fontFamily: "Big-Shoulder",
+                    fontSize: 30,
+                  },
+                }}
                 component={Score}
               />
               <Stack.Screen
                 name="Timer"
                 options={({ navigation }) => ({
-                  ...navigatorStyle,
+                  headerStyle: { backgroundColor: "#004d40" },
+                  headerTitleAlign: "center",
+                  headerTintColor: "#FFFFFF",
+                  headerTitleStyle: {
+                    fontFamily: "Big-Shoulder",
+                    fontSize: 30,
+                  },
                   headerRight: () => <HeaderButton navigation={navigation} />,
                 })}
                 component={Timer}
@@ -148,7 +203,13 @@ export default function App() {
               <Stack.Screen
                 name="CreatePlayer"
                 options={({ navigation }) => ({
-                  ...navigatorStyle,
+                  headerStyle: { backgroundColor: "#004d40" },
+                  headerTitleAlign: "center",
+                  headerTintColor: "#FFFFFF",
+                  headerTitleStyle: {
+                    fontFamily: "Big-Shoulder",
+                    fontSize: 30,
+                  },
                   title: "Players",
                   headerRight: () => <HeaderButton navigation={navigation} />,
                 })}
@@ -156,13 +217,27 @@ export default function App() {
               />
               <Stack.Screen
                 name="Option"
-                options={{ ...navigatorStyle }}
+                options={{
+                  headerStyle: { backgroundColor: "#004d40" },
+                  headerTitleAlign: "center",
+                  headerTintColor: "#FFFFFF",
+                  headerTitleStyle: {
+                    fontFamily: "Big-Shoulder",
+                    fontSize: 30,
+                  },
+                }}
                 component={Option}
               />
               <Stack.Screen
                 name="RecapVotes"
                 options={({ navigation }) => ({
-                  ...navigatorStyle,
+                  headerStyle: { backgroundColor: "#004d40" },
+                  headerTitleAlign: "center",
+                  headerTintColor: "#FFFFFF",
+                  headerTitleStyle: {
+                    fontFamily: "Big-Shoulder",
+                    fontSize: 30,
+                  },
                   title: "Votes result",
                   headerRight: () => <HeaderButton navigation={navigation} />,
                 })}
@@ -170,7 +245,15 @@ export default function App() {
               />
               <Stack.Screen
                 name="Auth"
-                options={{ ...navigatorStyle }}
+                options={{
+                  headerStyle: { backgroundColor: "#004d40" },
+                  headerTitleAlign: "center",
+                  headerTintColor: "#FFFFFF",
+                  headerTitleStyle: {
+                    fontFamily: "Big-Shoulder",
+                    fontSize: 30,
+                  },
+                }}
                 component={Auth}
               />
             </Stack.Navigator>
