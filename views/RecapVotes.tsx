@@ -10,6 +10,7 @@ import { StackParamList } from "../App"
 import { styles } from "../generalStyle"
 import { GameContext, Player, Role } from "../GameContext"
 import { Footer } from "../components/Footer"
+import Icon from "react-native-vector-icons/Entypo"
 
 type ScreenNavigationProp = StackNavigationProp<StackParamList, "RecapVotes">
 
@@ -51,23 +52,54 @@ export const RecapVotes: FunctionComponent<RecapVotesProps> = ({
           }}
           data={listPlayers}
           renderItem={({ item, index }) => (
-            <View style={{ justifyContent: "center" }}>
-              <Text
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <View
                 style={{
                   backgroundColor: "#004d40",
                   margin: 5,
                   borderRadius: 50,
-                  textAlign: "center",
-                  textAlignVertical: "center",
-                  fontSize: 20,
-                  fontWeight: "bold",
-                  color: "white",
+                  flex: 1,
+                  display: "flex",
+                  flexDirection: "row",
                 }}
               >
-                {item.name}
-              </Text>
+                {item.role === Role.Traitor ? (
+                  <Icon
+                    style={{ margin: 5, alignSelf: "center", flex: 1 }}
+                    name="mask"
+                    color="white"
+                    size={20}
+                  />
+                ) : null}
+                {index === game.playersElected[0] ? (
+                  <Icon
+                    style={{ margin: 5, alignSelf: "center", flex: 1 }}
+                    name="remove-user"
+                    color="white"
+                    size={20}
+                  />
+                ) : null}
+                <Text
+                  style={{
+                    flex: 10,
+                    textAlign: "center",
+                    textAlignVertical: "center",
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    color: "white",
+                  }}
+                >
+                  {item.name}
+                </Text>
+              </View>
               <Text
                 style={{
+                  flex: 1,
                   textAlign: "center",
                   textAlignVertical: "center",
                   fontSize: 16,

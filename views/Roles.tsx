@@ -72,6 +72,7 @@ export const Roles: FunctionComponent<RolesProps> = ({
     <View
       style={{
         ...styles.container,
+        flex: 1,
         display: "flex",
         flexDirection: "column",
       }}
@@ -104,6 +105,8 @@ export const Roles: FunctionComponent<RolesProps> = ({
           </Text>
           <Switch
             style={{ flex: 1 }}
+            trackColor={{ true: "white", false: "grey" }}
+            thumbColor="pink"
             onValueChange={() => {
               setIsEnabled(!isEnabled)
             }}
@@ -142,7 +145,7 @@ export const Roles: FunctionComponent<RolesProps> = ({
               setIndex(index - 1)
             }}
           >
-            <Text style={{ ...styles.buttonTextGreen }}>Previous</Text>
+            <Text style={{ ...styles.buttonTextGreen }}>PREVIOUS</Text>
           </TouchableOpacity>
         </View>
 
@@ -162,7 +165,7 @@ export const Roles: FunctionComponent<RolesProps> = ({
             }}
           >
             <Text style={styles.buttonTextGreen}>
-              {index < listPlayers.length - 1 ? "Next" : "Begin"}
+              {index < listPlayers.length - 1 ? "NEXT" : "BEGIN"}
             </Text>
           </TouchableOpacity>
         </View>
@@ -192,13 +195,14 @@ const RoleDisplayer: FunctionComponent<RoleDisplayerProps> = ({
         display: "flex",
         flexDirection: "column",
         borderWidth: 5,
+        borderColor: "#004d40",
         margin: 5,
       }}
     >
       <Text
         style={{ fontSize: 20, color: "#004d40", textAlign: "center", flex: 1 }}
       >
-        During the game, your role will be:
+        During the game, your will be:
       </Text>
       <Text
         style={{
@@ -206,6 +210,7 @@ const RoleDisplayer: FunctionComponent<RoleDisplayerProps> = ({
           color: "pink",
           fontWeight: "bold",
           textAlign: "center",
+          textAlignVertical: "center",
           flex: 1,
         }}
       >
@@ -240,7 +245,7 @@ const RoleDisplayer: FunctionComponent<RoleDisplayerProps> = ({
                     ? {
                         textAlign: "center",
                         flex: 2,
-                        fontSize: 25,
+                        fontSize: 20,
                         fontWeight: "bold",
                         color: "#004d40",
                       }

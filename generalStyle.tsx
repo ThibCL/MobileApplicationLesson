@@ -99,8 +99,8 @@ export const styles = StyleSheet.create({
   buttonTextPink: {
     textAlign: "center",
     textAlignVertical: "center",
-    color: "pink",
     fontWeight: "bold",
+    color: "pink",
     fontSize: 16,
   },
   textNormal: {
@@ -114,5 +114,5 @@ export const navigatorStyle = {
   headerStyle: { backgroundColor: "#004d40" },
   headerTitleAlign: "center",
   headerTintColor: "#FFFFFF",
-  headerTitleStyle: { fontFamily: "serif" },
+  headerTitleStyle: { fontFamily: "Big-Shoulder", fontSize: 30 },
 }
