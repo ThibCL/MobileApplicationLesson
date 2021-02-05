@@ -18,30 +18,236 @@ export const Rules: FunctionComponent<RulesProps> = ({
     <View style={{ flex: 1, display: "flex", flexDirection: "column" }}>
       <View style={{ flex: 9 }}>
         <ScrollView style={{ ...styles.container }}>
-          <Text style={{ margin: 10 }}>
-            The application is a game where players ask questions to the game
-            master to find the secret word, but among them there is a traitor
-            that already knows theword and that will have to act like he
-            doesn’t. Will the citizens and the master succeed to unmask the
-            traitor? Will the traitor succeed to help the citizens tofind the
-            word without being unmasked? After all the players have been enter,
-            the role of every players is reveal. Theplayers will have to pass to
-            each other the phone to reveal their role and for thegame master and
-            the traitor, the secret word. The game master take back thephone and
-            launch the timer. The players have a limited time to find the
-            word.If the word is not found at the end of the timer the game
-            stopped and the traitor looses. If the word is found the game master
-            stop the timer and anothertimer is launch with the same amount of
-            time the players took to find the word.This second timer is to
-            debate on who is the traitor, then when the timer is finished
-            everyone vote by passing the phone and selecting the player they
-            think is the traitor.The recap of the game is shown to said who
-            wins, the citizens or the traitor.Finally the score are shown and
-            you can replay or stop to play. The traitor winspoints if he is not
-            discover, the citizens win points if they have discovered the
-            traitor and some bonus point if they have voted for him. Finally the
-            player whofound the word wins some points.
-          </Text>
+          <View>
+            <Text style={{ ...styles.buttonTextGreen }}>
+              This application allows you to play the board game: INSIDER
+            </Text>
+          </View>
+
+          <View style={{ ...styles.buttonVote, backgroundColor: "#dcbeba" }}>
+            <Text style={{ ...styles.buttonTextGreen }}>What's the goal?</Text>
+          </View>
+          <View
+            style={{
+              borderColor: "#004d40",
+              borderWidth: 3,
+              margin: 5,
+              padding: 5,
+              borderRadius: 5,
+            }}
+          >
+            <View
+              style={{
+                flex: 1,
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Text style={{ ...styles.buttonTextGreen, flex: 1 }}>
+                There are 3 roles:
+              </Text>
+              <Text
+                style={{
+                  ...styles.buttonTextGreen,
+                  flex: 1,
+                  fontWeight: "normal",
+                }}
+              >
+                - The master: he chooses a word from a list, it is the word that
+                the orher players will have to guess. The other players will ask
+                him questions to guess, the master will have to answer the
+                questions with "yes" or "no".
+              </Text>
+              <Text
+                style={{
+                  ...styles.buttonTextGreen,
+                  flex: 1,
+                  fontWeight: "normal",
+                }}
+              >
+                - The citizens: they will have to ask questions to the master in
+                order to succeed in guessing the word he has chosen
+              </Text>
+              <Text
+                style={{
+                  ...styles.buttonTextGreen,
+                  flex: 1,
+                  fontWeight: "normal",
+                }}
+              >
+                -The traitor: this player will also see the master's word,
+                however no one must know that he knows the word! It's up to him
+                to discreetly ask question in order to guide the other players
+                without being unmasked.
+              </Text>
+            </View>
+          </View>
+
+          <View style={{ ...styles.buttonVote, backgroundColor: "#dcbeba" }}>
+            <Text style={{ ...styles.buttonTextGreen }}>
+              And how do we win?
+            </Text>
+          </View>
+          <View
+            style={{
+              borderColor: "#004d40",
+              borderWidth: 3,
+              margin: 5,
+              padding: 5,
+              borderRadius: 5,
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <Text
+              style={{
+                ...styles.buttonTextGreen,
+                flex: 1,
+                fontWeight: "normal",
+              }}
+            >
+              At the end of the time, the players must vote to decide who is the
+              traitor. The traitor's goal is not to be unmasked: if he succeeds
+              (if nobody votes for him at the end), he wins points.
+            </Text>
+            <Text
+              style={{
+                ...styles.buttonTextGreen,
+                flex: 1,
+                fontWeight: "normal",
+              }}
+            >
+              Citizens must not be elimenated: they must make sure that no one
+              votes for them in order to be eliminated.
+            </Text>
+          </View>
+
+          <View style={{ ...styles.buttonVote, backgroundColor: "#dcbeba" }}>
+            <Text style={{ ...styles.buttonTextGreen }}>Tips</Text>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              borderColor: "#004d40",
+              borderWidth: 3,
+              margin: 5,
+              borderRadius: 5,
+              padding: 5,
+            }}
+          >
+            <Text
+              style={{
+                ...styles.buttonTextGreen,
+                flex: 1,
+                fontWeight: "normal",
+              }}
+            >
+              In the options set the times of your games, the number of points
+              to win, the choices of word, ect...
+            </Text>
+            <Text
+              style={{
+                ...styles.buttonTextGreen,
+                flex: 1,
+                fontWeight: "normal",
+              }}
+            >
+              In the history find your previous games.
+            </Text>
+          </View>
+
+          <View style={{ ...styles.buttonVote, backgroundColor: "#dcbeba" }}>
+            <Text style={{ ...styles.buttonTextGreen }}>
+              What about the app, how do we use it?
+            </Text>
+          </View>
+          <View
+            style={{
+              borderColor: "#004d40",
+              borderWidth: 3,
+              margin: 5,
+              padding: 5,
+              borderRadius: 5,
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <Text
+              style={{
+                ...styles.buttonTextGreen,
+                flex: 1,
+                fontWeight: "normal",
+              }}
+            >
+              It's simple, all tou have to do is follow the instructions:
+            </Text>
+            <Text
+              style={{
+                ...styles.buttonTextGreen,
+                flex: 1,
+                fontWeight: "normal",
+              }}
+            >
+              1. Register the players
+            </Text>
+            <Text
+              style={{
+                ...styles.buttonTextGreen,
+                flex: 1,
+                fontWeight: "normal",
+              }}
+            >
+              2. Put the phone through the different players so they can see
+              their roles.
+            </Text>
+            <Text
+              style={{
+                ...styles.buttonTextGreen,
+                flex: 1,
+                fontWeight: "normal",
+              }}
+            >
+              3. Put the phone back in the middle and start the stopwatch.
+            </Text>
+            <Text
+              style={{
+                ...styles.buttonTextGreen,
+                flex: 1,
+                fontWeight: "normal",
+              }}
+            >
+              4. Once tou have found the word, click on "word found".
+            </Text>
+            <Text
+              style={{
+                ...styles.buttonTextGreen,
+                flex: 1,
+                fontWeight: "normal",
+              }}
+            >
+              5. The clock starts ticking, it's time to debate.
+            </Text>
+            <Text
+              style={{
+                ...styles.buttonTextGreen,
+                flex: 1,
+                fontWeight: "normal",
+              }}
+            >
+              6. Voting: Put each player back on the phone to vote.
+            </Text>
+            <Text
+              style={{
+                ...styles.buttonTextGreen,
+                flex: 1,
+                fontWeight: "normal",
+              }}
+            >
+              7. End of the game
+            </Text>
+          </View>
           <TouchableOpacity
             style={{ ...styles.leafButtonPink }}
             onPress={() => {

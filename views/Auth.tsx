@@ -59,7 +59,7 @@ export const Auth: FunctionComponent<AuthProps> = ({
   }
 
   return (
-    <View style={{ ...styles.container }}>
+    <View style={{ ...styles.container, justifyContent: "center" }}>
       {loading ? (
         <ActivityIndicator size="large" color="#7F0000" />
       ) : (

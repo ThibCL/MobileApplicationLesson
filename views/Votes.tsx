@@ -119,7 +119,7 @@ export const Votes: FunctionComponent<VotesProps> = ({
                 <Text
                   style={{
                     ...styles.buttonTextPink,
-                    color: index === playerSelected ? "pink" : "white",
+                    color: index === playerSelected ? "#dcbeba" : "white",
                   }}
                 >
                   {item.name}
@@ -134,7 +134,7 @@ export const Votes: FunctionComponent<VotesProps> = ({
         <TouchableOpacity
           style={{
             ...styles.leafButtonPink,
-            backgroundColor: playerSelected === undefined ? "grey" : "pink",
+            backgroundColor: playerSelected === undefined ? "grey" : "#dcbeba",
             margin: 15,
           }}
           disabled={playerSelected === undefined}

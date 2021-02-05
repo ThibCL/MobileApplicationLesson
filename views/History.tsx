@@ -46,117 +46,141 @@ export const History: FunctionComponent<HistoryProps> = ({
   }, [])
 
   return (
-    <View style={{ ...styles.container }}>
-      <FlatList
-        keyExtractor={(item) => {
-          return item.id.toString()
-        }}
-        ListHeaderComponent={
-          <Text style={{ ...styles.title, color: "black" }}>
-            Previous games
-          </Text>
-        }
-        ListEmptyComponent={<Text>You have no previous game</Text>}
-        onRefresh={async () => {
-          await getGames()
-        }}
-        refreshing={loading}
-        data={games}
-        renderItem={({ item }) => (
-          <View
-            style={{
-              borderColor: "black",
-              borderWidth: 1,
-              margin: 5,
-              borderRadius: 5,
-              backgroundColor: "#DDDDDD",
-            }}
-          >
-            <TouchableOpacity
-              activeOpacity={1.0}
-              onPress={() => {
-                if (item.id === gameExpanded) {
-                  setGameExpanded(0)
-                } else {
-                  setGameExpanded(item.id)
-                }
+    <View
+      style={{ ...styles.container, display: "flex", flexDirection: "column" }}
+    >
+      <View style={{ flex: 9 }}>
+        <FlatList
+          keyExtractor={(item) => {
+            return item.id.toString()
+          }}
+          onRefresh={async () => {
+            await getGames()
+          }}
+          refreshing={loading}
+          data={games}
+          renderItem={({ item }) => (
+            <View
+              style={{
+                display: "flex",
               }}
             >
-              <View
-                style={{
-                  padding: 5,
-                  borderBottomWidth: 1,
-                  display: "flex",
-                  flexDirection: "row",
+              <TouchableOpacity
+                style={{ ...styles.buttonVote }}
+                activeOpacity={1.0}
+                onPress={() => {
+                  if (item.id === gameExpanded) {
+                    setGameExpanded(0)
+                  } else {
+                    setGameExpanded(item.id)
+                  }
                 }}
               >
-                <Text style={{ fontSize: 16, fontWeight: "bold", flex: 3 }}>
-                  {item.name}
-                </Text>
-                {item.finished ? (
+                <View
+                  style={{
+                    padding: 5,
+                    display: "flex",
+                    flexDirection: "row",
+                  }}
+                >
                   <Text
                     style={{
-                      flex: 1,
-                      textAlign: "center",
-                      color: "grey",
-                      borderWidth: 1,
-                      borderColor: "grey",
-                      borderRadius: 10,
-                      backgroundColor: "lightgrey",
+                      ...styles.buttonTextGreen,
+                      color: "white",
+                      margin: 0,
+                      padding: 0,
+                      flex: 3,
                     }}
                   >
-                    Finished
+                    {item.name}
                   </Text>
-                ) : null}
-                {gameExpanded === item.id ? (
-                  <Icon name="down" size={20} />
-                ) : (
-                  <Icon name="left" size={20} />
-                )}
-              </View>
-            </TouchableOpacity>
 
-            {gameExpanded === item.id ? (
-              <GameDisplayer players={item.players}></GameDisplayer>
-            ) : null}
-            <View style={{ display: "flex", flexDirection: "row" }}>
-              <TouchableOpacity
-                style={{
-                  ...styles.buttonVote,
-                  width: "45%",
-                }}
-                onPress={() => {
-                  if (item.finished) {
-                    game.newGame(item, item.players, item.option)
-                  } else {
-                    game.setGame(item)
-                    game.setPlayers(item.players)
-                    game.setOptions(item.option)
-                  }
-                  navigation.pop()
-                  navigation.replace("CreatePlayer")
-                }}
-              >
-                <Text style={styles.buttonTextPink}>
-                  {item.finished ? "New game" : "Continue"}
-                </Text>
+                  <View
+                    style={{
+                      ...styles.buttonVote,
+                      backgroundColor: item.finished ? "#dcbeba" : "#004d40",
+                      flex: 2,
+                    }}
+                  >
+                    {item.finished ? (
+                      <Text
+                        style={{
+                          ...styles.buttonTextGreen,
+                          fontSize: 12,
+                        }}
+                      >
+                        FINISHED
+                      </Text>
+                    ) : null}
+                  </View>
+
+                  <View
+                    style={{
+                      flex: 1,
+                      alignItems: "flex-end",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {gameExpanded === item.id ? (
+                      <Icon name="down" size={25} color="white" />
+                    ) : (
+                      <Icon name="left" size={25} color="white" />
+                    )}
+                  </View>
+                </View>
               </TouchableOpacity>
-              <TouchableOpacity
-                style={{ ...styles.buttonVote, width: "45%" }}
-                onPress={async () => {
-                  await game.apiClient.deleteGame(
-                    game.token,
-                    item.id.toString()
-                  )
-                  setGames(await game.apiClient.listGames(game.token))
-                }}
-              >
-                <Text style={styles.buttonTextPink}>Delete</Text>
-              </TouchableOpacity>
+
+              {gameExpanded === item.id ? (
+                <GameDisplayer players={item.players}></GameDisplayer>
+              ) : null}
+              <View style={{ display: "flex", flexDirection: "row" }}>
+                <TouchableOpacity
+                  style={{
+                    ...styles.buttonVote,
+                    backgroundColor: "transparent",
+                    borderWidth: 2,
+                    borderColor: "#004d40",
+                    flex: 1,
+                  }}
+                  onPress={() => {
+                    if (item.finished) {
+                      game.newGame(item, item.players, item.option)
+                    } else {
+                      game.setGame(item)
+                      game.setPlayers(item.players)
+                      game.setOptions(item.option)
+                    }
+                    navigation.pop()
+                    navigation.replace("CreatePlayer")
+                  }}
+                >
+                  <Text style={styles.buttonTextGreen}>
+                    {item.finished ? "New game" : "Continue"}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    ...styles.buttonVote,
+                    backgroundColor: "transparent",
+                    borderWidth: 2,
+                    borderColor: "#004d40",
+                    flex: 1,
+                  }}
+                  onPress={async () => {
+                    await game.apiClient.deleteGame(
+                      game.token,
+                      item.id.toString()
+                    )
+                    setGames(await game.apiClient.listGames(game.token))
+                  }}
+                >
+                  <Text style={styles.buttonTextGreen}>Delete</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        )}
-      />
+          )}
+        />
+      </View>
       <Footer />
     </View>
   )
@@ -170,13 +194,12 @@ const GameDisplayer: FunctionComponent<GameDisplayerProps> = ({
   players,
 }: GameDisplayerProps) => {
   return (
-    <View>
+    <View style={{ borderWidth: 3, borderColor: "#004d40", margin: 5 }}>
       {players.map((value) => (
         <Text
           key={value.id?.toString()}
           style={{
-            fontSize: 14,
-            padding: 5,
+            ...styles.buttonTextGreen,
           }}
         >
           {value.name} : {value.score}
