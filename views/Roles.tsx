@@ -106,7 +106,7 @@ export const Roles: FunctionComponent<RolesProps> = ({
           <Switch
             style={{ flex: 1 }}
             trackColor={{ true: "white", false: "grey" }}
-            thumbColor="pink"
+            thumbColor="#dcbeba"
             onValueChange={() => {
               setIsEnabled(!isEnabled)
             }}
@@ -138,7 +138,7 @@ export const Roles: FunctionComponent<RolesProps> = ({
             disabled={index <= 0}
             style={{
               ...styles.arrowLeftButton,
-              backgroundColor: index <= 0 ? "grey" : "pink",
+              backgroundColor: index <= 0 ? "grey" : "#dcbeba",
             }}
             onPress={() => {
               setIsEnabled(false)
@@ -207,7 +207,7 @@ const RoleDisplayer: FunctionComponent<RoleDisplayerProps> = ({
       <Text
         style={{
           fontSize: 20,
-          color: "pink",
+          color: "#dcbeba",
           fontWeight: "bold",
           textAlign: "center",
           textAlignVertical: "center",
@@ -254,7 +254,7 @@ const RoleDisplayer: FunctionComponent<RoleDisplayerProps> = ({
                         flex: 2,
                         fontSize: 20,
                         fontWeight: "bold",
-                        color: "pink",
+                        color: "#dcbeba",
                       }
                 }
                 onPress={() => {
@@ -278,7 +278,7 @@ const RoleDisplayer: FunctionComponent<RoleDisplayerProps> = ({
               fontSize: 20,
               textAlign: "center",
               fontWeight: "bold",
-              color: "pink",
+              color: "#dcbeba",
             }}
           >
             {words[wordSelected]}
@@ -300,7 +300,7 @@ const RoleDisplayer: FunctionComponent<RoleDisplayerProps> = ({
               fontSize: 20,
               textAlign: "center",
               fontWeight: "bold",
-              color: "pink",
+              color: "#dcbeba",
             }}
           >
             HAVE FUN !

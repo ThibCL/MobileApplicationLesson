@@ -67,7 +67,7 @@ export const Tie: FunctionComponent<TieProps> = ({ navigation }: TieProps) => {
             <Text
               style={{
                 ...styles.buttonTextPink,
-                color: index === playerSelected ? "pink" : "white",
+                color: index === playerSelected ? "#dcbeba" : "white",
               }}
             >
               {listPlayers[player].name}

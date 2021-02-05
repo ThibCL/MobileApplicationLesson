@@ -98,12 +98,12 @@ export const Timer: FunctionComponent<TimerProps> = ({
       <View style={{ flex: 7, alignItems: "center" }}>
         <CountdownCircleTimer
           key={found ? "found" : "notFound"}
-          trailColor="pink"
+          trailColor="#dcbeba"
           isPlaying={isOn}
           duration={timer - time}
           colors={[["#004d40", 1]]}
         >
-          <Text style={{ fontSize: 25, color: "pink", fontWeight: "bold" }}>
+          <Text style={{ fontSize: 25, color: "#dcbeba", fontWeight: "bold" }}>
             {Math.floor((timer - time) / 60)}:
             {(timer - time) % 60 < 10 ? "0" : ""}
             {(timer - time) % 60}
